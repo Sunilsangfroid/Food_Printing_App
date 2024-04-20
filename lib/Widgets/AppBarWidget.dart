@@ -38,7 +38,10 @@ class AppBarWidget extends StatelessWidget{
             ) ,
           ),
           InkWell(
-            onTap: (){},
+            onTap: (){
+              Navigator.pushNamed(context,
+                  '/notification');
+            },
             child:Container(
               padding: const EdgeInsets.all(8),
               decoration: BoxDecoration(

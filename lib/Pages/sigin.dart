@@ -230,6 +230,44 @@ class _SignInScreenState extends State<SignInScreen> {
                       const SizedBox(
                         height: 20,
                       ),
+                      GestureDetector(
+                        onTap: () {
+                        
+                        },
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: ClipOval(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                splashColor: Colors.grey, // splash color
+                                onTap: () {
+                                  // Handle Google sign-in
+                                },
+                                child: SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: Image.asset(
+                                    'assets/images/google.png',
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       const SizedBox(
                         height: 20,
                       ),
@@ -260,7 +298,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             ),
                           ),
                         ],
-                      )
+                      ),
                     ],
                   ),
                 ),

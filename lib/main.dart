@@ -1,7 +1,9 @@
 // import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'package:itrm_screen/Pages/chatbot.dart';
+import 'Pages/chatbot.dart';
+import 'Pages/notification.dart';
+import 'Pages/setting.dart';
 import 'Pages/myaccount.dart';
 import 'Pages/sigin.dart';
 import 'Pages/signup.dart';
@@ -51,6 +53,8 @@ void main() {
       '/feedback': (context) => UI22(),
       '/profile': (context) => const MyAccountPage(),
       '/aiassi': (context) => const ChatScreen(),
+      '/setting': (context) => const SettingsPage(),
+      '/notification': (context) => const NotificationScreen(),
     },
   ));
 }

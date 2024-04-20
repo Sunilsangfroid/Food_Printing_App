@@ -70,13 +70,16 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          const ListTile(
-            leading: Icon(
-              CupertinoIcons.cart_fill,
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, "/cart");
+            },
+            leading: const Icon(
+              CupertinoIcons.printer,
               color: Colors.blue,
             ),
-            title: Text(
-              "My Food",
+            title: const Text(
+              "Printed Food",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
@@ -116,12 +119,15 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, "/setting");
+            },
+            leading: const Icon(
               CupertinoIcons.settings,
               color: Colors.blue,
             ),
-            title: Text(
+            title: const Text(
               "Setting",
               style: TextStyle(
                   fontSize: 18,

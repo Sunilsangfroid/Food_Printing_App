@@ -20,7 +20,7 @@ class CartPage extends StatelessWidget {
                 children: [
                   AppBarWidget(),
                   const Padding(
-                    padding:  EdgeInsets.only(
+                    padding: EdgeInsets.only(
                       top: 20,
                       left: 10,
                       bottom: 10,
@@ -63,7 +63,7 @@ class CartPage extends StatelessWidget {
                           ),
                           const SizedBox(
                             width: 180,
-                            child:  Column(
+                            child: Column(
                               children: [
                                 Text(
                                   "Spicy Burger",
@@ -86,7 +86,7 @@ class CartPage extends StatelessWidget {
                             ),
                           ),
                           Padding(
-                            padding:const EdgeInsets.symmetric(vertical: 10),
+                            padding: const EdgeInsets.symmetric(vertical: 10),
                             child: Container(
                               padding: const EdgeInsets.all(5),
                               decoration: BoxDecoration(
@@ -95,7 +95,7 @@ class CartPage extends StatelessWidget {
                               ),
                               child: const Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(
                                     CupertinoIcons.minus,
@@ -181,7 +181,7 @@ class CartPage extends StatelessWidget {
                               ),
                               child: const Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(
                                     CupertinoIcons.minus,
@@ -207,7 +207,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding:  EdgeInsets.symmetric(vertical: 9),
+                    padding: EdgeInsets.symmetric(vertical: 9),
                     child: Container(
                       width: 380,
                       height: 100,
@@ -267,7 +267,7 @@ class CartPage extends StatelessWidget {
                               ),
                               child: const Column(
                                 mainAxisAlignment:
-                                MainAxisAlignment.spaceBetween,
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Icon(
                                     CupertinoIcons.minus,
@@ -293,7 +293,8 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20,vertical: 30),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 30),
                     child: Container(
                       padding: const EdgeInsets.all(20),
                       decoration: BoxDecoration(
@@ -310,9 +311,10 @@ class CartPage extends StatelessWidget {
                       ),
                       child: const Column(
                         children: [
-                          Padding(padding: EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -330,9 +332,10 @@ class CartPage extends StatelessWidget {
                           Divider(
                             color: Colors.black,
                           ),
-                          Padding(padding: EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -350,9 +353,10 @@ class CartPage extends StatelessWidget {
                           Divider(
                             color: Colors.black,
                           ),
-                          Padding(padding: EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
@@ -370,26 +374,30 @@ class CartPage extends StatelessWidget {
                           Divider(
                             color: Colors.black,
                           ),
-                          Padding(padding: EdgeInsets.symmetric(
-                            vertical: 10,
-                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 10,
+                            ),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
                                 Text(
                                   "Total",
-                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue),
                                 ),
                                 Text(
                                   "\$80",
-                                  style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold,color: Colors.blue),
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Colors.blue),
                                 ),
                               ],
                             ),
                           ),
-
-
-
                         ],
                       ),
                     ),
