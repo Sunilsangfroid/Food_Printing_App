@@ -2,7 +2,10 @@
 import 'package:flutter/material.dart';
 
 class UI22 extends StatefulWidget {
+  const UI22({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _UI22State createState() => _UI22State();
 }
 
@@ -94,22 +97,29 @@ class _UI22State extends State<UI22> {
             buildNumberField(),
             const Spacer(),
             Row(
-              children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "SUBMIT",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  style: const ButtonStyle(
-                    backgroundColor: Color(0xFFE5E5E5),
+  children: [
+    Expanded(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: TextButton(
+          onPressed: () {},
+          style: TextButton.styleFrom(
+            backgroundColor: const Color(0xFFE5E5E5),
+            padding: const EdgeInsets.all(16.0),
+          ),
+          child: const Text(
+            "SUBMIT",
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+      ),
+    ),
+  ],
+)
 
-                  ),
-                  padding: const EdgeInsets.all(16.0),
-                ),
-              ],
-            )
           ],
         ),
       ),
@@ -172,7 +182,7 @@ class _UI22State extends State<UI22> {
   }
 
   buildFeedbackForm() {
-    return Container(
+    return SizedBox(
       height: 200,
       child: Stack(
         children: [
@@ -236,7 +246,7 @@ class _UI22State extends State<UI22> {
     );
   }
 
-  Widget buildCheckItem({String title, bool isSelected}) {
+  Widget buildCheckItem({required String title, required bool isSelected}) {
     return Container(
       padding: const EdgeInsets.all(6.0),
       child: Row(

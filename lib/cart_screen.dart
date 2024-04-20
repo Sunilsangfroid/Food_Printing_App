@@ -71,7 +71,7 @@ class _CartScreenState extends State<CartScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       child: Row(
                         children: [
-                          Container(
+                          SizedBox(
                             width: 100,
                             height: 100,
                             child: ClipRRect(
@@ -92,7 +92,7 @@ class _CartScreenState extends State<CartScreen> {
                             children: [
                               Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
                                 Text(availFood[id]!.name,style: const TextStyle(fontSize: 19,fontWeight: FontWeight.w800),),
-                                Container(height: 30,child: IconButton(onPressed: ()=>deleteFromCart(id), icon: const Icon(Icons.close),color: defaultBlue,iconSize: 20,))
+                                SizedBox(height: 30,child: IconButton(onPressed: ()=>deleteFromCart(id), icon: const Icon(Icons.close),color: defaultBlue,iconSize: 20,))
                               ],),
                               Text(availFood[id]!.shortDesc,style: const TextStyle(color: Colors.grey),),
                               Row(crossAxisAlignment: CrossAxisAlignment.center,children: [

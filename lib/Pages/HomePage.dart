@@ -8,17 +8,19 @@ import '../Widgets/NewestItemsWidget.dart';
 import '../Widgets/PopularItemsWidget.dart';
 
 class HomePage extends StatelessWidget{
+  const HomePage({super.key});
+
   @override
   Widget build(BuildContext context){
     return Scaffold(
     body: ListView(
       children: [
         //Custom App Bar Widget
-        AppBarWidget(),
+        const AppBarWidget(),
 
         //search
         Padding(
-          padding: EdgeInsets.symmetric(
+          padding: const EdgeInsets.symmetric(
             vertical: 10,
             horizontal: 15,
           ),
@@ -33,27 +35,27 @@ class HomePage extends StatelessWidget{
                   color:Colors.grey.withOpacity(0.5),
                   spreadRadius: 5,
                   blurRadius: 10,
-                  offset: Offset(0,3),
+                  offset: const Offset(0,3),
                 ),
               ]),
               child: Padding(
-                padding: EdgeInsets.symmetric(
+                padding: const EdgeInsets.symmetric(
                   horizontal: 10,
                 ),
                 child: Row(children: [
-                  Icon(
+                  const Icon(
                     CupertinoIcons.search,
                     color: Colors.blue,
                   ),
-                  Container(
+                  SizedBox(
                     height: 50,
                     width: 300,
                     child: Padding(
-                      padding:EdgeInsets.symmetric(
+                      padding:const EdgeInsets.symmetric(
                         horizontal: 15,
                       ),
                       child: TextFormField(
-                        decoration: InputDecoration(
+                        decoration: const InputDecoration(
                           hintText: "What would you like to eat ?",
                           border:InputBorder.none,
                         ),
@@ -69,7 +71,7 @@ class HomePage extends StatelessWidget{
         ),
 
         //Category
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(top: 10,left: 8),
           child: Text(
             "Categories",
@@ -79,8 +81,8 @@ class HomePage extends StatelessWidget{
             ),
           ),
         ),
-        CategoriesWidget(),
-        Padding(
+        const CategoriesWidget(),
+        const Padding(
           padding: EdgeInsets.only(top: 0,left: 10),
           child: Text(
             "Popular",
@@ -95,7 +97,7 @@ class HomePage extends StatelessWidget{
         PopularItemsWidget(),
 
         // Newest Items
-        Padding(
+        const Padding(
           padding: EdgeInsets.only(top: 0,left: 10),
           child: Text(
             "Newest",
@@ -107,10 +109,10 @@ class HomePage extends StatelessWidget{
         ),
 
         // Newest Item Widget
-        NewestItemsWidget(),
+        const NewestItemsWidget(),
       ],
     ),
-    drawer: DrawerWidget(),
+    drawer: const DrawerWidget(),
     floatingActionButton: Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
@@ -119,7 +121,7 @@ class HomePage extends StatelessWidget{
               color:Colors.grey.withOpacity(0.5),
               spreadRadius: 2,
               blurRadius: 10,
-              offset: Offset(0,3),
+              offset: const Offset(0,3),
             ),
           ]
       ),
@@ -127,12 +129,12 @@ class HomePage extends StatelessWidget{
         onPressed: (){
           Navigator.pushNamed(context,"/cart");
         },
-        child: Icon(
+        backgroundColor: Colors.white,
+        child: const Icon(
           CupertinoIcons.cart,
           size: 28,
           color: Colors.blue,
         ),
-        backgroundColor: Colors.white,
       ),
     ),
     );

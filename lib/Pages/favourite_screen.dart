@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import '../foodclass.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,12 +15,14 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: FoodDeliveryScreen(),
+      home: const FoodDeliveryScreen(),
     );
   }
 }
 
 class FoodDeliveryScreen extends StatefulWidget {
+  const FoodDeliveryScreen({super.key});
+
   @override
   _FoodDeliveryScreenState createState() => _FoodDeliveryScreenState();
 }
