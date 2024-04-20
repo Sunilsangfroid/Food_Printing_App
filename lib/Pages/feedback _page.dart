@@ -95,18 +95,19 @@ class _UI22State extends State<UI22> {
             const Spacer(),
             Row(
               children: [
-                TextButton(
-                  onPressed: () {},
-                  child: const Text(
-                    "SUBMIT",
-                    style: TextStyle(
-                        color: Colors.white, fontWeight: FontWeight.bold),
-                  ),
-                  style: const ButtonStyle(
-                    backgroundColor: Color(0xFFE5E5E5),
-
-                  ),
+                Padding(
                   padding: const EdgeInsets.all(16.0),
+                  child: TextButton(
+                    onPressed: () {},
+                    child: const Text(
+                      "SUBMIT",
+                      style: TextStyle(
+                          color: Colors.white, fontWeight: FontWeight.bold),
+                    ),
+                    style: ButtonStyle(
+                      backgroundColor:  MaterialStateProperty.all<Color>(Color(0xFFE5E5E5)),
+                    ),
+                  ),
                 ),
               ],
             )
@@ -236,7 +237,7 @@ class _UI22State extends State<UI22> {
     );
   }
 
-  Widget buildCheckItem({String title, bool isSelected}) {
+  Widget buildCheckItem({required String title, required bool isSelected}) {
     return Container(
       padding: const EdgeInsets.all(6.0),
       child: Row(

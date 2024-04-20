@@ -3,8 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import "../foodclass.dart";
 
-class NewestItemsWidget extends StatelessWidget {
+
+
+class NewestItemsWidget extends StatefulWidget {
+  const NewestItemsWidget({super.key});
+
   @override
+  State<NewestItemsWidget> createState() => _NewestItemsWidgetState();
+}
+
+class _NewestItemsWidgetState extends State<NewestItemsWidget> {
+  @override
+  void favouriteItem(id){
+    if (favourites.contains(id))favourites.remove(id);
+    else favourites.add(id);
+    setState((){});
+  }
+
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -17,7 +32,7 @@ class NewestItemsWidget extends StatelessWidget {
             //Single Item
             for (int id in newest.keys)
             GestureDetector(
-              onTap: (){Navigator.pushNamed(context, "/item",arguments: id);},
+              onTap: (){Navigator.pushNamed(context, "/item",arguments: id).then((value) => setState((){}));},
               child: Padding(
                 padding: EdgeInsets.symmetric(vertical: 10),
                 child: Container(
@@ -63,7 +78,7 @@ class NewestItemsWidget extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-              
+
                             Text(
                               newest[id]!.shortDesc,
                               style: TextStyle(
@@ -92,7 +107,7 @@ class NewestItemsWidget extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-              
+
                         ],),
                       ),
                       Padding(
@@ -100,10 +115,13 @@ class NewestItemsWidget extends StatelessWidget {
                         child:Column(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 26,
+                            IconButton(
+                              onPressed: (){favouriteItem(id);},
+                              icon: Icon(
+                                favourites.contains(id)?Icons.favorite:Icons.favorite_border,
+                                color: Colors.blue,
+                                size: 26,
+                              ),
                             ),
                             IconButton(onPressed: (){cart[id]=0;},
                               icon: Icon(
@@ -114,14 +132,14 @@ class NewestItemsWidget extends StatelessWidget {
                           ],
                         ),
                       ),
-              
-              
-              
-              
+
+
+
+
                     ],
                   ),
                 ),
-              
+
               ),
             ),
 

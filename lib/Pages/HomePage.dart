@@ -1,3 +1,5 @@
+import 'package:itrm_screen/foodclass.dart';
+
 import '../Widgets/DrawerWidget.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -7,7 +9,12 @@ import '../Widgets/CategoriesWidget.dart';
 import '../Widgets/NewestItemsWidget.dart';
 import '../Widgets/PopularItemsWidget.dart';
 
-class HomePage extends StatelessWidget{
+class HomePage extends StatefulWidget{
+  @override
+  State<HomePage> createState() => _HomePageState();
+}
+
+class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context){
     return Scaffold(
@@ -107,10 +114,10 @@ class HomePage extends StatelessWidget{
         ),
 
         // Newest Item Widget
-        NewestItemsWidget(),
+        NewestItemsWidget(key: ValueKey(favourites),),
       ],
     ),
-    drawer: DrawerWidget(),
+    drawer: DrawerWidget((){setState(() {});print(favourites);print("hi");}),
     floatingActionButton: Container(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

@@ -45,6 +45,8 @@ class _ItemScreenState extends State<ItemScreen> {
     setState(() {
       favourite=!favourite;
     });
+    if (favourite)favourites.add(id);
+    else favourites.remove(id);
     if (favourite)ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
   // int id=availFood.keys.first;
@@ -60,8 +62,10 @@ class _ItemScreenState extends State<ItemScreen> {
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
+
     id = id<0 ? ModalRoute.of(context)!.settings.arguments as int : id;
     print("id = $id");
+    favourite=favourites.contains(id);
 
     if (qty==0 && cart.keys.contains(id)) {
       qty = cart[id]!;
