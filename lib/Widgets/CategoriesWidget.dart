@@ -12,48 +12,62 @@ class CategoriesWidget extends StatelessWidget {
         child: Row(
           children: [
             // Single Item
-            _buildCategoryItem("assets/images/fast_food.png"),
-            _buildCategoryItem("assets/images/burger.jpg"),
-            _buildCategoryItem("assets/images/alooparatha.jpg"),
-            _buildCategoryItem("assets/images/biryani.jpg"),
-            _buildCategoryItem("assets/images/frenchfries.jpg"),
-            _buildCategoryItem("assets/images/sandwich.jpg"),
-            _buildCategoryItem("assets/images/chholebhature.jpg"),
-            _buildCategoryItem("assets/images/poha.jpg"),
+            _buildCategoryItem("assets/images/fast_food.png", "Fast Food"),
+            _buildCategoryItem("assets/images/sweet.png", "Sweet"),
+            _buildCategoryItem(
+                "assets/images/south_indian.png", "South Indian"),
+            _buildCategoryItem("assets/images/icecream.png", "Icecream"),
+            _buildCategoryItem("assets/images/frenchfries.jpg", "French Fries"),
+            _buildCategoryItem("assets/images/sandwich.jpg", "Sandwich"),
+            _buildCategoryItem(
+                "assets/images/chholebhature.jpg", "Chhole Bhature"),
+            _buildCategoryItem("assets/images/poha.jpg", "Poha"),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCategoryItem(String imagePath) {
+  Widget _buildCategoryItem(String imagePath, String categoryName) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
         width: 100,
-        height: 100,
-        child: Container(
-          padding: const EdgeInsets.all(8),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(50),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.grey.withOpacity(0.5),
-                spreadRadius: 2,
-                blurRadius: 10,
-                offset: const Offset(0, 3),
-              )
-            ],
-          ),
-          child: ClipOval(
-            child: Image.asset(
-              imagePath,
-              fit: BoxFit.cover,
+        height: 130,
+        child: Column(
+          children: [
+            Container(
               width: 80,
               height: 80,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                shape: BoxShape.circle,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 2,
+                    blurRadius: 10,
+                    offset: const Offset(0, 3),
+                  ),
+                ],
+              ),
+              child: ClipOval(
+                child: Image.asset(
+                  imagePath,
+                  fit: BoxFit.cover,
+                ),
+              ),
             ),
-          ),
+            const SizedBox(height: 8),
+            Text(
+              categoryName,
+              textAlign: TextAlign.center,
+              style: const TextStyle(
+                fontSize: 14,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ],
         ),
       ),
     );

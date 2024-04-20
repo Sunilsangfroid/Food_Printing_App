@@ -4,7 +4,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
-  const DrawerWidget({super.key});
+  const DrawerWidget({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -67,12 +69,15 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, "/cart");
+            },
+            leading: const Icon(
               CupertinoIcons.cart_fill,
               color: Colors.blue,
             ),
-            title: Text(
+            title: const Text(
               "My Food",
               style: TextStyle(
                 fontSize: 18,
@@ -115,12 +120,15 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          const ListTile(
-            leading: Icon(
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, "/setting");
+            },
+            leading: const Icon(
               CupertinoIcons.settings,
               color: Colors.blue,
             ),
-            title: Text(
+            title: const Text(
               "Setting",
               style: TextStyle(
                   fontSize: 18,

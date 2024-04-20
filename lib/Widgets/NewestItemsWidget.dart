@@ -75,6 +75,9 @@ class NewestItemsWidget extends StatelessWidget {
                                     fontSize: 14,
                                   ),
                                 ),
+                                const SizedBox(
+                                  height: 31,
+                                ),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -93,9 +96,9 @@ class NewestItemsWidget extends StatelessWidget {
                                       ),
                                       onRatingUpdate: (index) {},
                                     ),
-                                    Text(
+                                    const Text(
                                       "\$10",
-                                      style: const TextStyle(
+                                      style: TextStyle(
                                         fontSize: 20,
                                         color: Colors.blue,
                                         fontWeight: FontWeight.bold,
@@ -118,6 +121,9 @@ class NewestItemsWidget extends StatelessWidget {
                                   Icons.favorite_border,
                                   color: Colors.blue,
                                   size: 26,
+                                ),
+                                const SizedBox(
+                                  height: 65,
                                 ),
                                 IconButton(
                                   onPressed: () {
