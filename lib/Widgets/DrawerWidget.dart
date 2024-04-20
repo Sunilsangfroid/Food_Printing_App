@@ -21,6 +21,7 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
+            onTap: (){Navigator.pushNamed(context,"/");},
             leading: Icon(
               CupertinoIcons.home,
               color: Colors.red,
@@ -30,6 +31,7 @@ class DrawerWidget extends StatelessWidget {
             ),),
           ),
           ListTile(
+            onTap: (){Navigator.pushNamed(context,"/profile");},
             leading: Icon(
               CupertinoIcons.person,
               color: Colors.red,
@@ -48,6 +50,7 @@ class DrawerWidget extends StatelessWidget {
             ),),
           ),
           ListTile(
+            onTap: (){Navigator.pushNamed(context,"/aiassi");},
             leading: Icon(
               CupertinoIcons.chat_bubble,
               color: Colors.red,
