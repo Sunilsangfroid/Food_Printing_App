@@ -1,6 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 class MyAccountPage extends StatefulWidget {
+  const MyAccountPage({Key? key}) : super(key: key);
+
   @override
   _MyAccountPageState createState() => _MyAccountPageState();
 }
@@ -27,14 +30,14 @@ class _MyAccountPageState extends State<MyAccountPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('My Account'),
+        title: const Text('My Account'),
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -47,33 +50,41 @@ class _MyAccountPageState extends State<MyAccountPage> {
                       shape: BoxShape.circle,
                       color: Colors.grey[200],
                     ),
-                    child: Icon(Icons.camera_alt, size: 60),
+                    child: const Icon(Icons.camera_alt, size: 60),
                   ),
                 ),
               ],
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             buildContainerWithLabel('Name', buildInputField(nameController)),
             buildContainerWithLabel('Email', buildInputField(emailController)),
             buildContainerWithLabel('Phone', buildInputField(phoneController)),
-            SizedBox(height: 20.0),
-            Divider(),
-            buildContainerWithDropdown('Gender', [
-              'Male',
-              'Female',
-            ], selectedGender, (value) {
+            const SizedBox(height: 20.0),
+            const Divider(),
+            buildContainerWithDropdown(
+                'Gender',
+                [
+                  'Male',
+                  'Female',
+                ],
+                selectedGender, (value) {
               setState(() {
                 selectedGender = value;
               });
             }),
-            buildContainerWithLabel('Height (cm)', buildInputField(heightController)),
-            buildContainerWithLabel('Weight (kg)', buildInputField(weightController)),
+            buildContainerWithLabel(
+                'Height (cm)', buildInputField(heightController)),
+            buildContainerWithLabel(
+                'Weight (kg)', buildInputField(weightController)),
             buildContainerWithLabel('BMI', buildBMIField()),
-            SizedBox(height: 20.0),
-            Divider(),
-            buildContainerWithLabel('Medical History', buildInputField(TextEditingController())), // Medical history input field
-            SizedBox(height: 20.0),
-            Divider(),
+            const SizedBox(height: 20.0),
+            const Divider(),
+            buildContainerWithLabel(
+                'Medical History',
+                buildInputField(
+                    TextEditingController())), // Medical history input field
+            const SizedBox(height: 20.0),
+            const Divider(),
           ],
         ),
       ),
@@ -81,35 +92,49 @@ class _MyAccountPageState extends State<MyAccountPage> {
   }
 
   Widget buildInputField(TextEditingController controller) {
-    return TextFormField(
-      controller: controller,
-      decoration: InputDecoration(
-        border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue), // Set boundary color to blue
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1), // Shadow color
+            spreadRadius: 2, // Spread radius
+            blurRadius: 5, // Blur radius
+            offset: const Offset(0, 3), // Offset in x and y direction
+          ),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+            borderSide:
+                BorderSide(color: Colors.blue), // Set boundary color to blue
+          ),
         ),
       ),
     );
   }
 
-  Widget buildContainerWithDropdown(
-      String label, List<String> options, String selectedOption, Function onChanged) {
+  Widget buildContainerWithDropdown(String label, List<String> options,
+      String selectedOption, Function onChanged) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           DropdownButtonFormField(
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               border: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.blue), // Set boundary color to blue
+                borderSide: BorderSide(
+                    color: Colors.blue), // Set boundary color to blue
               ),
             ),
             value: selectedOption,
@@ -130,18 +155,18 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   Widget buildContainerWithLabel(String label, Widget child) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           child,
         ],
       ),
@@ -152,9 +177,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
     return TextFormField(
       controller: TextEditingController(text: bmi.toStringAsFixed(2)),
       readOnly: true,
-      decoration: InputDecoration(
+      decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.blue), // Set boundary color to blue
+          borderSide:
+              BorderSide(color: Colors.blue), // Set boundary color to blue
         ),
       ),
     );
@@ -174,7 +200,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
   void _chooseImage() {
     // Function to choose an image
     // Implement image picker functionality here
-    print('Choose image');
+    if (kDebugMode) {
+      print('Choose image');
+    }
   }
 
   @override

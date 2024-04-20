@@ -1,217 +1,60 @@
 import 'package:flutter/material.dart';
 
-class CategoriesWidget extends StatelessWidget{
+class CategoriesWidget extends StatelessWidget {
+  const CategoriesWidget({Key? key}) : super(key: key);
+
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
-      child:
-      Padding(
-        padding: EdgeInsets.symmetric(vertical: 30,horizontal: 5),
-        child:Row(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 5),
+        child: Row(
           children: [
+            // Single Item
+            _buildCategoryItem("assets/images/fast_food.png"),
+            _buildCategoryItem("assets/images/burger.jpg"),
+            _buildCategoryItem("assets/images/alooparatha.jpg"),
+            _buildCategoryItem("assets/images/biryani.jpg"),
+            _buildCategoryItem("assets/images/frenchfries.jpg"),
+            _buildCategoryItem("assets/images/sandwich.jpg"),
+            _buildCategoryItem("assets/images/chholebhature.jpg"),
+            _buildCategoryItem("assets/images/poha.jpg"),
+          ],
+        ),
+      ),
+    );
+  }
 
-          // Single Item
-          // for(int i=0;i<10;i++)
-          Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
-            padding: EdgeInsets.all(8),
-            decoration: BoxDecoration(
-              color:Colors.white,
-              borderRadius: BorderRadius.circular(10),
-              boxShadow: [
-                BoxShadow(
-                  color:Colors.grey.withOpacity(0.5),
-                  spreadRadius: 2,
-                  blurRadius: 10,
-                  offset: Offset(0,3),
-                )
-              ]
-
-            ),
+  Widget _buildCategoryItem(String imagePath) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10),
+      child: SizedBox(
+        width: 100,
+        height: 100,
+        child: Container(
+          padding: const EdgeInsets.all(8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(50),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 10,
+                offset: const Offset(0, 3),
+              )
+            ],
+          ),
+          child: ClipOval(
             child: Image.asset(
-                "images/pizza.jpg",
-                 height: 80,
-                 width: 90,
-
+              imagePath,
+              fit: BoxFit.cover,
+              width: 80,
+              height: 80,
             ),
           ),
-         ),
-
-          // Single Item
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset("images/burger.jpg",
-                  height: 80,
-                  width: 90,),
-              ),
-            ),
-
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset(
-                    "images/alooparatha.jpg",
-                  height: 80,
-                  width: 90,
-
-                ),
-              ),
-            ),
-
-            // Single Item
-
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset("images/biryani.jpg"),
-                height: 80,
-                width: 90,
-              ),
-            ),
-
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset(
-                    "images/frenchfries.jpg",
-                  height: 80,
-                  width: 90,
-
-                ),
-              ),
-            ),
-
-            // Single Item
-
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset("images/sandwich.jpg"),
-                height: 80,
-                width: 90,
-              ),
-            ),
-
-            // Single Item
-
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset("images/chholebhature.jpg"),
-                height: 80,
-                width: 90,
-              ),
-            ),
-
-            // Single Item
-
-            Padding(padding: EdgeInsets.symmetric(horizontal: 10),
-              child: Container(
-                padding: EdgeInsets.all(8),
-                decoration: BoxDecoration(
-                    color:Colors.white,
-                    borderRadius: BorderRadius.circular(10),
-                    boxShadow: [
-                      BoxShadow(
-                        color:Colors.grey.withOpacity(0.5),
-                        spreadRadius: 2,
-                        blurRadius: 10,
-                        offset: Offset(0,3),
-                      )
-                    ]
-
-                ),
-                child: Image.asset("images/poha.jpg"),
-                height: 80,
-                width: 90,
-              ),
-            ),
-
-
-
-
-
-          ]),
+        ),
       ),
     );
   }
