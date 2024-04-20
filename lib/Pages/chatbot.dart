@@ -2,10 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:speech_to_text/speech_to_text.dart' as stt;
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -13,18 +15,21 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: ChatScreen(),
+      home: const ChatScreen(),
     );
   }
 }
 
 class ChatScreen extends StatefulWidget {
+  const ChatScreen({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  stt.SpeechToText _speech = stt.SpeechToText();
+  final stt.SpeechToText _speech = stt.SpeechToText();
   bool _isListening = false;
   String _text = '';
 
@@ -36,12 +41,15 @@ class _ChatScreenState extends State<ChatScreen> {
 
   void _initSpeech() async {
     bool available = await _speech.initialize(
+      // ignore: avoid_print
       onStatus: (status) => print('Status: $status'),
+      // ignore: avoid_print
       onError: (error) => print('Error: $error'),
     );
     if (available) {
       setState(() => _isListening = true);
     } else {
+      // ignore: avoid_print
       print('The user has denied the use of speech recognition.');
     }
   }
@@ -50,7 +58,7 @@ class _ChatScreenState extends State<ChatScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Chatbot'),
+        title: const Text('Chatbot'),
       ),
       body: Column(
         children: <Widget>[
@@ -58,11 +66,11 @@ class _ChatScreenState extends State<ChatScreen> {
             child: ListView(
               children: <Widget>[
                 // Chat messages display area
-                ChatMessage(
+                const ChatMessage(
                   text: 'Hello! How can I help you today?',
                   isMe: false,
                 ),
-                ChatMessage(
+                const ChatMessage(
                   text: 'I want to know about your products.',
                   isMe: true,
                 ),
@@ -78,17 +86,17 @@ class _ChatScreenState extends State<ChatScreen> {
 
   Widget _buildInputArea() {
     return Container(
-      padding: EdgeInsets.all(8.0),
+      padding: const EdgeInsets.all(8.0),
       color: Colors.grey[200],
       child: Row(
         children: <Widget>[
           IconButton(
-            icon: Icon(Icons.keyboard_voice),
+            icon: const Icon(Icons.keyboard_voice),
             onPressed: _isListening ? null : _startListening,
           ),
           Expanded(
             child: TextField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Type your message here...',
               ),
               onChanged: (value) {
@@ -99,7 +107,7 @@ class _ChatScreenState extends State<ChatScreen> {
             ),
           ),
           IconButton(
-            icon: Icon(Icons.send),
+            icon: const Icon(Icons.send),
             onPressed: _text.trim().isEmpty ? null : _handleSubmit,
           ),
         ],
@@ -139,15 +147,15 @@ class ChatMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 10.0),
-      padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+      margin: const EdgeInsets.symmetric(vertical: 10.0),
+      padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
       decoration: BoxDecoration(
         color: isMe ? Colors.blue : Colors.grey[300],
         borderRadius: BorderRadius.only(
           topLeft: Radius.circular(isMe ? 20.0 : 5.0),
           topRight: Radius.circular(isMe ? 5.0 : 20.0),
-          bottomLeft: Radius.circular(20.0),
-          bottomRight: Radius.circular(20.0),
+          bottomLeft: const Radius.circular(20.0),
+          bottomRight: const Radius.circular(20.0),
         ),
       ),
       child: Text(

@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -5,7 +7,6 @@ class DrawerWidget extends StatelessWidget {
   VoidCallback func = (){};
 
   DrawerWidget(VoidCallback func){
-
     this.func = func;
   }
   @override
@@ -14,86 +15,135 @@ class DrawerWidget extends StatelessWidget {
       backgroundColor: Colors.white,
       child: ListView(
         children: [
-          DrawerHeader(
+          const DrawerHeader(
             padding: EdgeInsets.zero,
             child: UserAccountsDrawerHeader(
               decoration: BoxDecoration(
-                color: Colors.red,
+                color: Colors.blue,
               ),
-              accountName: Text("Ch.Sunil Patra",style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),),
-              accountEmail: Text("sunilsangfroid@gmail.com",style: TextStyle(fontSize: 16),),
-              currentAccountPicture: CircleAvatar(backgroundImage: AssetImage("images/avatar.png")),
-              margin:EdgeInsets.only(bottom: 1),
+              accountName: Text(
+                "Ch.Sunil Patra",
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
+              accountEmail: Text(
+                "sunilsangfroid@gmail.com",
+                style: TextStyle(fontSize: 16, color: Colors.white),
+              ),
+              currentAccountPicture: CircleAvatar(
+                  backgroundImage: AssetImage("assets/images/avatar.png")),
+              margin: EdgeInsets.only(bottom: 1),
             ),
           ),
           ListTile(
-            onTap: (){Navigator.pushNamed(context,"/");},
-            leading: Icon(
+            onTap: () {
+              Navigator.pushNamed(context, "/home");
+            },
+            leading: const Icon(
               CupertinoIcons.home,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("Home",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: const Text(
+              "Home",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
           ),
           ListTile(
-            onTap: (){Navigator.pushNamed(context,"/profile");},
-            leading: Icon(
+            onTap: () {
+              Navigator.pushNamed(context, "/profile");
+            },
+            leading: const Icon(
               CupertinoIcons.person,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("My Account",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: const Text(
+              "My Account",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(
               CupertinoIcons.cart_fill,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("My Orders",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              "My Food",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
           ListTile(
-            onTap: (){
-              // Navigator.pushNamed(context,"/aiassi");
-              },
-            leading: Icon(
+            onTap: () {
+              Navigator.pushNamed(context, "/aiassi");
+            },
+            leading: const Icon(
               CupertinoIcons.chat_bubble,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("Chatbot",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: const Text(
+              "Chatbot",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
           ListTile(
             onTap: () async {await Navigator.pushNamed(context,"/favourite"); func();},
             leading: Icon(
               CupertinoIcons.heart_fill,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("Favourites",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: const Text(
+              "Favourites",
+              style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+                color: Colors.black,
+              ),
+            ),
           ),
-          ListTile(
+          const ListTile(
             leading: Icon(
               CupertinoIcons.settings,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("Setting",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: Text(
+              "Setting",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
           ),
           ListTile(
-            leading: Icon(
+            onTap: () {
+              Navigator.pushNamed(context, "/signin");
+            },
+            leading: const Icon(
               Icons.exit_to_app,
-              color: Colors.red,
+              color: Colors.blue,
             ),
-            title: Text("Log Out",style: TextStyle(
-              fontSize: 18, fontWeight: FontWeight.bold,
-            ),),
+            title: const Text(
+              "Log Out",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
           )
         ],
       ),
