@@ -12,7 +12,6 @@ import 'item_screen.dart';
 import 'cart_screen.dart';
 import 'colors_ext.dart';
 import 'foodclass.dart';
-import 'Pages/CartPage.dart';
 // import 'Pages/forget_password.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/favourite_screen.dart';
@@ -46,7 +45,7 @@ void main() {
       '/signup': (context) => const SignUpScreen(),
       '/signin': (context) => const SignInScreen(),
       // '/forget_password': (context) => ForgetPasswordScreen(),
-      "/home": (context) => const HomePage(),
+      "/home": (context) => HomePage(),
       '/item': (context) => const ItemScreen(),
       '/cart': (context) => const CartScreen(),
       '/favourite': (context) => const FoodDeliveryScreen(),

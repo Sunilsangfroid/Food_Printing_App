@@ -40,6 +40,7 @@ class _ItemScreenState extends State<ItemScreen> {
       duration: const Duration(seconds: 3),action: SnackBarAction(label: "Undo",onPressed: (){
         setState(() {
           favourite=false;
+          favourites.remove(id);
         });}),);
   }
   void favouriteItem(){
@@ -95,15 +96,18 @@ class _ItemScreenState extends State<ItemScreen> {
             children: [
               Stack(
                 children: [
-                  AspectRatio(
-                      aspectRatio: 4/3,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.asset(
-                            chococake.imagePath,
-                            fit: BoxFit.fitWidth,
-                          )
-                      )
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                        aspectRatio: 16/11,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image.asset(
+                              chococake.imagePath,
+                              fit: BoxFit.fitWidth,
+                            )
+                        )
+                    ),
                   ),
                   Align(
                       alignment: Alignment.topRight,

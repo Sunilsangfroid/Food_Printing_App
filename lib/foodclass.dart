@@ -47,7 +47,7 @@ void initList(){
       shortDesc: "Spicy chicken, beef",
       rating: 4.2,
       reviews: 187,
-      imagePath: "assets/images/chocolate_cake.jpg"
+      imagePath: "assets/images/pizza.jpg"
   ));
   addFood(FoodItem(name: "Greek Salad",
       description: "Greek Salad with baked salmon combines crisp lettuce, cherry tomatoes, cucumber, Kalamata olives, and red onions, tossed in a zesty dressing. Topped with tender baked salmon, it offers a refreshing Mediterranean-inspired dish with a protein-packed twist.",
