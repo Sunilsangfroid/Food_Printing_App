@@ -51,7 +51,7 @@ void main() {
       '/favourite': (context) => const FoodDeliveryScreen(),
       '/profile': (context) => const MyAccountPage(),
       '/aiassi': (context) => const ChatScreen(),
-      '/setting': (context) =>  SettingsPage(),
+      '/setting': (context) => const SettingsPage(),
       '/notification': (context) => const NotificationScreen(),
     },
   ));

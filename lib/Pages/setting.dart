@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SettingsPage extends StatefulWidget {
+  const SettingsPage({Key? key}) : super(key: key);
+
   @override
   _SettingsPageState createState() => _SettingsPageState();
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
   String selectedPrinter = '';
   String selectedFilamentMaterial = '';
   String selectedFilamentThickness = '';
@@ -28,20 +29,25 @@ class _SettingsPageState extends State<SettingsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Settings'),
+        title: const Text('Settings'),
+        backgroundColor: Colors.transparent,
       ),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text(
+            const Text(
               'Printer Configuration',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(
+              height: 20,
+            ),
             DropdownButtonFormField(
               value: selectedPrinter,
-              decoration: InputDecoration(labelText: 'Select Printer Type'),
+              decoration:
+                  const InputDecoration(labelText: 'Select Printer Type'),
               items: printerTypes.map((type) {
                 return DropdownMenuItem(
                   value: type,
@@ -54,14 +60,18 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               'Filament Settings',
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
+            const SizedBox(
+              height: 30,
+            ),
             DropdownButtonFormField(
               value: selectedFilamentMaterial,
-              decoration: InputDecoration(labelText: 'Select Filament Material'),
+              decoration:
+                  const InputDecoration(labelText: 'Select Filament Material'),
               items: filamentMaterials.map((material) {
                 return DropdownMenuItem(
                   value: material,
@@ -74,9 +84,13 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
               },
             ),
+            const SizedBox(
+              height: 20,
+            ),
             DropdownButtonFormField(
               value: selectedFilamentThickness,
-              decoration: InputDecoration(labelText: 'Select Filament Thickness'),
+              decoration:
+                  const InputDecoration(labelText: 'Select Filament Thickness'),
               items: filamentThicknessOptions.map((thickness) {
                 return DropdownMenuItem(
                   value: thickness,
@@ -89,17 +103,22 @@ class _SettingsPageState extends State<SettingsPage> {
                 });
               },
             ),
-            SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: () {
-                print('Selected Printer: $selectedPrinter');
-                print('Selected Filament Material: $selectedFilamentMaterial');
-                print('Selected Filament Thickness: $selectedFilamentThickness');
-              },
-              // Apply TextStyle with color black to the button text
-              child: Text(
-                'Save Settings',
-                style: TextStyle(color: Colors.black),
+            const SizedBox(height: 30),
+            Center(
+              // Centering the button
+              child: ElevatedButton(
+                onPressed: () {
+                  print('Selected Printer: $selectedPrinter');
+                  print(
+                      'Selected Filament Material: $selectedFilamentMaterial');
+                  print(
+                      'Selected Filament Thickness: $selectedFilamentThickness');
+                },
+                // Apply TextStyle with color black to the button text
+                child: const Text(
+                  'Save Settings',
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
           ],
@@ -110,7 +129,7 @@ class _SettingsPageState extends State<SettingsPage> {
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: SettingsPage(),
   ));
 }

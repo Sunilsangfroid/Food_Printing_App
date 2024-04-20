@@ -184,17 +184,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           onPressed: () {
                             if (_formSignupKey.currentState!.validate() &&
                                 agreePersonalData) {
-                              // Perform sign-up logic here
-                              // For demonstration purposes, let's assume sign-up is successful
                               bool signUpSuccess = true;
 
                               if (signUpSuccess) {
-                                // If sign-up is successful, navigate to the home page
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
                                 // ignore: dead_code
                               } else {
-                                // If sign-up fails, show a snackbar with an error message
                                 ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                     content: Text(
@@ -217,6 +213,43 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: const Text(
                             'Sign up',
                             style: TextStyle(color: Colors.black),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 25,
+                      ),
+                      GestureDetector(
+                        onTap: () {},
+                        child: Container(
+                          padding: const EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.white,
+                            boxShadow: [
+                              BoxShadow(
+                                color: Colors.black.withOpacity(0.2),
+                                spreadRadius: 1,
+                                blurRadius: 4,
+                                offset: const Offset(0, 2),
+                              ),
+                            ],
+                          ),
+                          child: ClipOval(
+                            child: Material(
+                              color: Colors.transparent,
+                              child: InkWell(
+                                splashColor: Colors.grey,
+                                onTap: () {},
+                                child: SizedBox(
+                                  width: 30,
+                                  height: 30,
+                                  child: Image.asset(
+                                    'assets/images/google.png',
+                                  ),
+                                ),
+                              ),
+                            ),
                           ),
                         ),
                       ),

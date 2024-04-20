@@ -74,11 +74,11 @@ class DrawerWidget extends StatelessWidget {
               Navigator.pushNamed(context, "/cart");
             },
             leading: const Icon(
-              CupertinoIcons.cart_fill,
+              CupertinoIcons.printer,
               color: Colors.blue,
             ),
             title: const Text(
-              "My Food",
+              "Printed Food",
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.bold,
