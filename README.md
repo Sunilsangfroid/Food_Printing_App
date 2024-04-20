@@ -1,6 +1,4 @@
-# itrm_screen
-
-item screen for printer
+# Food Printer App
 
 ## Getting Started
 
