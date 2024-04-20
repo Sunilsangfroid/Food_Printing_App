@@ -24,34 +24,27 @@ class FoodDeliveryScreen extends StatefulWidget {
 }
 
 class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
-
-  List<String> wishlistItems = [];
-
-  void addToWishlist(String item) {
+  void deleteFromFs(int id) {
     setState(() {
-      wishlistItems.add(item);
-    });
-  }
-
-  void deleteFromCart(int id){
-    setState(() {
-      cart.remove(id);
+      favourites.remove(id);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Color defaultBlue =Theme.of(context).primaryColor;
+    Color defaultBlue = Theme.of(context).primaryColor;
 
     return Scaffold(
       floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40.0,horizontal: 10.0),
+        padding: const EdgeInsets.symmetric(vertical: 30.0, horizontal: 10.0),
         child: BackButton(
           color: Colors.black,
           style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.white),
             shape: MaterialStateProperty.all(
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.0))
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           ),
         ),
@@ -61,23 +54,26 @@ class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
         padding: const EdgeInsets.all(20.0),
         child: Column(
           children: [
-            const SizedBox(height: 31,),
+            const SizedBox(height: 31),
             const Center(
-              child: Text("Favourites",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w500),),
+              child: Text(
+                "Favourites",
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w500),
+              ),
             ),
-            const SizedBox(height: 40,),
+            const SizedBox(height: 30),
             Expanded(
               child: ListView(
                 children: [
-                  // ...cart.keys.map((id) => Placeholder())
                   for (int id in favourites)
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 15),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 100,
-                            child: ClipRRect(
+                    Column(
+                      children: [
+                        Stack(
+                          children: [
+                            Container(
+                              width: double.infinity,
+                              height: 300,
+                              child: ClipRRect(
                                 borderRadius: BorderRadius.circular(25.0),
                                 child: AspectRatio(
                                   aspectRatio: 1,
@@ -85,91 +81,43 @@ class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
                                     availFood[id]!.imagePath,
                                     fit: BoxFit.cover,
                                   ),
-                                )
+                                ),
+                              ),
                             ),
-                          ),
-                          const SizedBox(width: 20,),
-                          Expanded(child:Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            Positioned(
+                              top: 5,
+                              right: 5,
+                              child: IconButton(
+                                onPressed: () => deleteFromFs(id),
+                                icon: const Icon(Icons.close),
+                                color: defaultBlue,
+                                iconSize: 20,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 15.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Row(mainAxisAlignment: MainAxisAlignment.spaceBetween,children: [
-                                Text(availFood[id]!.name,style: const TextStyle(fontSize: 19,fontWeight: FontWeight.w800),),
-                                Container(height: 30,child: IconButton(onPressed: ()=>deleteFromCart(id), icon: const Icon(Icons.close),color: defaultBlue,iconSize: 20,))
-                              ],),
-                              Text(availFood[id]!.shortDesc,style: const TextStyle(color: Colors.grey),),
+                              Text(
+                                availFood[id]!.name,
+                                style: const TextStyle(
+                                  fontSize: 19,
+                                  fontWeight: FontWeight.w800,
+                                ),
+                              ),
                             ],
-                          ))
-                        ],
-                      ),
-                    )
+                          ),
+                        ),
+                      ],
+                    ),
                 ],
               ),
             ),
           ],
         ),
-      ),
-    );
-  }
-  //   return Scaffold(
-  //     appBar: AppBar(
-  //       title: Text('Food Delivery App'),
-  //     ),
-  //     body: ListView.builder(
-  //       itemCount: foodItems.length,
-  //       itemBuilder: (context, index) {
-  //         final foodItem = foodItems[index];
-  //         final isInWishlist = wishlistItems.contains(foodItem);
-  //         return ListTile(
-  //           title: Text(foodItem),
-  //           trailing: IconButton(
-  //             icon: isInWishlist
-  //                 ? Icon(Icons.favorite, color: Colors.red)
-  //                 : Icon(Icons.favorite_border),
-  //             onPressed: () {
-  //               if (isInWishlist) {
-  //                 setState(() {
-  //                   wishlistItems.remove(foodItem);
-  //                 });
-  //               } else {
-  //                 addToWishlist(foodItem);
-  //               }
-  //             },
-  //           ),
-  //         );
-  //       },
-  //     ),
-  //     floatingActionButton: FloatingActionButton(
-  //       onPressed: () {
-  //         Navigator.push(
-  //           context,
-  //           MaterialPageRoute(builder: (context) => WishlistScreen(wishlistItems)),
-  //         );
-  //       },
-  //       child: Icon(Icons.favorite),
-  //     ),
-  //   );
-  // }
-}
-
-class WishlistScreen extends StatelessWidget {
-  final List<String> wishlistItems;
-
-  WishlistScreen(this.wishlistItems);
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Wishlist'),
-      ),
-      body: ListView.builder(
-        itemCount: wishlistItems.length,
-        itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(wishlistItems[index]),
-          );
-        },
       ),
     );
   }
