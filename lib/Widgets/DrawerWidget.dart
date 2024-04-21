@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class DrawerWidget extends StatelessWidget {
-  VoidCallback func = (){};
+  VoidCallback func = () {};
 
   DrawerWidget(this.func, {super.key});
   @override
@@ -103,7 +103,10 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () async {await Navigator.pushNamed(context,"/favourite"); func();},
+            onTap: () async {
+              await Navigator.pushNamed(context, "/favourite");
+              func();
+            },
             leading: const Icon(
               CupertinoIcons.heart_fill,
               color: Colors.blue,
@@ -127,6 +130,22 @@ class DrawerWidget extends StatelessWidget {
             ),
             title: const Text(
               "Setting",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
+            ),
+          ),
+          ListTile(
+            onTap: () {
+              Navigator.pushNamed(context, "/help");
+            },
+            leading: const Icon(
+              CupertinoIcons.question,
+              color: Colors.blue,
+            ),
+            title: const Text(
+              "Help&FAQ",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,

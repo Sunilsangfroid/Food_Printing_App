@@ -18,6 +18,7 @@ import 'Pages/favourite_screen.dart';
 // import 'Pages/chatbot.dart';
 import 'Pages/feedback _page.dart';
 import 'Pages/chats.dart';
+import 'Pages/help.dart';
 
 const defaultBlue = Color(0xff4c7efe);
 const starColor = Color(0xffffc529);
@@ -53,7 +54,8 @@ void main() {
       '/profile': (context) => const MyAccountPage(),
       '/setting': (context) => const SettingsPage(),
       '/notification': (context) => const NotificationScreen(),
-      '/aiassi':(context) => const ChatScreen(),
+      '/aiassi': (context) => const ChatScreen(),
+      '/help': (context) => const HelpFAQPage(),
     },
   ));
 }
