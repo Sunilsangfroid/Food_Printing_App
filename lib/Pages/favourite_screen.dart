@@ -8,7 +8,9 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +25,9 @@ class MyApp extends StatelessWidget {
 }
 
 class FoodDeliveryScreen extends StatefulWidget {
-  const FoodDeliveryScreen({super.key});
+  const FoodDeliveryScreen({
+    super.key,
+  });
 
   @override
   _FoodDeliveryScreenState createState() => _FoodDeliveryScreenState();
@@ -32,11 +36,17 @@ class FoodDeliveryScreen extends StatefulWidget {
 class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
   void deleteFromFs(int id) {
     var index = favourites.indexOf(id);
-    SnackBar snackbar= SnackBar(content: Text("${availFood[id]!.name} has been removed from Favourites"),
-      duration: const Duration(seconds: 3),action: SnackBarAction(label: "Undo",onPressed: (){
-        setState(() {
-          favourites.insert(index,id);
-        });}),);
+    SnackBar snackbar = SnackBar(
+      content: Text("${availFood[id]!.name} has been removed from Favourites"),
+      duration: const Duration(seconds: 3),
+      action: SnackBarAction(
+          label: "Undo",
+          onPressed: () {
+            setState(() {
+              favourites.insert(index, id);
+            });
+          }),
+    );
     setState(() {
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
       favourites.remove(id);
@@ -66,6 +76,7 @@ class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             const SizedBox(height: 31),
             const Center(
@@ -76,57 +87,61 @@ class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
             ),
             const SizedBox(height: 30),
             Expanded(
-              child: ListView(
-                children: [
-                  for (int id in favourites)
-                    Column(
-                      children: [
-                        Stack(
-                          children: [
-                            Container(
-                              width: double.infinity,
-                              height: 300,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(25.0),
-                                child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: Image.asset(
-                                    availFood[id]!.imagePath,
-                                    fit: BoxFit.cover,
-                                  ),
+              child: ListView.builder(
+                itemCount: favourites.length,
+                itemBuilder: (BuildContext context, int index) {
+                  int id = favourites[index];
+                  return Column(
+                    children: [
+                      Stack(
+                        children: [
+                          SizedBox(
+                            width: double.infinity,
+                            height: 300,
+                            child: ClipRRect(
+                              borderRadius: BorderRadius.circular(25.0),
+                              child: AspectRatio(
+                                aspectRatio: 1,
+                                child: Image.asset(
+                                  availFood[id]!.imagePath,
+                                  fit: BoxFit.cover,
                                 ),
                               ),
                             ),
-                            Positioned(
-                              top: 5,
-                              right: 5,
-                              child: IconButton(
-                                onPressed: () => deleteFromFs(id),
-                                icon: const Icon(Icons.close),
-                                color: defaultBlue,
-                                iconSize: 20,
-                              ),
+                          ),
+                          Positioned(
+                            top: 5,
+                            right: 5,
+                            child: IconButton(
+                              onPressed: () => deleteFromFs(id),
+                              icon: const Icon(Icons.close),
+                              color: defaultBlue,
+                              iconSize: 20,
                             ),
-                          ],
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(top: 15.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(top: 15.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              child: Text(
                                 availFood[id]!.name,
                                 style: const TextStyle(
                                   fontSize: 19,
                                   fontWeight: FontWeight.w800,
                                 ),
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                ],
+                      ),
+                    ],
+                  );
+                },
               ),
             ),
           ],

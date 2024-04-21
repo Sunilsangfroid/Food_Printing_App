@@ -1,4 +1,4 @@
-import 'package:flutter/foundation.dart';
+// import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'foodclass.dart';
@@ -47,8 +47,11 @@ class _ItemScreenState extends State<ItemScreen> {
     setState(() {
       favourite=!favourite;
     });
-    if (favourite)favourites.add(id);
-    else favourites.remove(id);
+    if (favourite) {
+      favourites.add(id);
+    } else {
+      favourites.remove(id);
+    }
     if (favourite)ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
   // int id=availFood.keys.first;

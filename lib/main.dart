@@ -15,8 +15,7 @@ import 'foodclass.dart';
 // import 'Pages/forget_password.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/favourite_screen.dart';
-import 'Pages/chatbot.dart';
-// import 'Pages/feedback _page.dart';
+// import 'Pages/chatbot.dart';
 import 'Pages/feedback _page.dart';
 
 const defaultBlue = Color(0xff4c7efe);
@@ -45,11 +44,11 @@ void main() {
       '/signup': (context) => const SignUpScreen(),
       '/signin': (context) => const SignInScreen(),
       // '/forget_password': (context) => ForgetPasswordScreen(),
-      "/home": (context) => HomePage(),
+      "/home": (context) => const HomePage(),
       '/item': (context) => const ItemScreen(),
       '/cart': (context) => const CartScreen(),
       '/favourite': (context) => const FoodDeliveryScreen(),
-      '/feedback': (context) => UI22(),
+      '/feedback': (context) => const UI22(),
       '/profile': (context) => const MyAccountPage(),
       '/aiassi': (context) => const ChatScreen(),
       '/setting': (context) => const SettingsPage(),

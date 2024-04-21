@@ -65,13 +65,13 @@ class _ChatScreenState extends State<ChatScreen> {
         children: <Widget>[
           Expanded(
             child: ListView(
-              children: <Widget>[
+              children: const <Widget>[
                 // Chat messages display area
-                const ChatMessage(
+                ChatMessage(
                   text: 'Hello! How can I help you today?',
                   isMe: false,
                 ),
-                const ChatMessage(
+                ChatMessage(
                   text: 'I want to know about your products.',
                   isMe: true,
                 ),

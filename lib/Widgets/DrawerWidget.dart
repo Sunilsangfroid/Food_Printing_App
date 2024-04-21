@@ -6,9 +6,7 @@ import 'package:flutter/material.dart';
 class DrawerWidget extends StatelessWidget {
   VoidCallback func = (){};
 
-  DrawerWidget(VoidCallback func){
-    this.func = func;
-  }
+  DrawerWidget(this.func, {super.key});
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -106,7 +104,7 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () async {await Navigator.pushNamed(context,"/favourite"); func();},
-            leading: Icon(
+            leading: const Icon(
               CupertinoIcons.heart_fill,
               color: Colors.blue,
             ),

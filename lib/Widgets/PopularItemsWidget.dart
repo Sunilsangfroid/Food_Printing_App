@@ -2,17 +2,23 @@ import 'package:flutter/material.dart';
 import '../foodclass.dart';
 
 class PopularItemsWidget extends StatefulWidget {
+  const PopularItemsWidget({super.key});
+
   @override
   State<PopularItemsWidget> createState() => _PopularItemsWidgetState();
 }
 
 class _PopularItemsWidgetState extends State<PopularItemsWidget> {
-  @override
-  void favouriteItem(id){
-    if (favourites.contains(id))favourites.remove(id);
-    else favourites.add(id);
-    setState((){});
+  void favouriteItem(id) {
+    if (favourites.contains(id)) {
+      favourites.remove(id);
+    } else {
+      favourites.add(id);
+    }
+    setState(() {});
   }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
@@ -23,7 +29,10 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
               // Single Item
               for (int id in popular.keys)
                 GestureDetector(
-                  onTap: (){Navigator.pushNamed(context, "/item",arguments: id).then((value) => setState((){}));},
+                  onTap: () {
+                    Navigator.pushNamed(context, "/item", arguments: id)
+                        .then((value) => setState(() {}));
+                  },
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 7),
                     child: Container(
@@ -56,7 +65,7 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                               fit: BoxFit.scaleDown,
                               child: Text(
                                 popular[id]!.name,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 20,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -66,8 +75,10 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                             FittedBox(
                               fit: BoxFit.scaleDown,
                               child: Text(
-                                popular[id]!.shortDesc!=""?popular[id]!.shortDesc: "No Description",
-                                style: TextStyle(
+                                popular[id]!.shortDesc != ""
+                                    ? popular[id]!.shortDesc
+                                    : "No Description",
+                                style: const TextStyle(
                                   fontSize: 15,
                                   // fontWeight: FontWeight.bold,
                                 ),
@@ -77,23 +88,19 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                Text(
-                                  "\$10",
-                                  style: TextStyle(
-                                    fontSize: 17,
-                                    color: Colors.blue,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                                ),
-                                Container(
+                                SizedBox(
                                   width: 16,
                                   height: 16,
                                   child: IconButton(
                                     padding: EdgeInsets.zero,
-                                    onPressed: (){favouriteItem(id);},
+                                    onPressed: () {
+                                      favouriteItem(id);
+                                    },
                                     iconSize: 16,
                                     icon: Icon(
-                                      favourites.contains(id)?Icons.favorite:Icons.favorite_border,
+                                      favourites.contains(id)
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
                                       color: Colors.blue,
                                       size: 16,
                                     ),
@@ -155,14 +162,6 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "\$10",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Icon(
                               Icons.favorite_border,
                               color: Colors.blue,
@@ -223,14 +222,6 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "\$10",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Icon(
                               Icons.favorite_border,
                               color: Colors.blue,
@@ -291,14 +282,6 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "\$10",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Icon(
                               Icons.favorite_border,
                               color: Colors.blue,
@@ -359,14 +342,6 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "\$10",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Icon(
                               Icons.favorite_border,
                               color: Colors.blue,
@@ -427,14 +402,6 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "\$10",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Icon(
                               Icons.favorite_border,
                               color: Colors.blue,
@@ -495,14 +462,6 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                         const Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "\$10",
-                              style: TextStyle(
-                                fontSize: 17,
-                                color: Colors.blue,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
                             Icon(
                               Icons.favorite_border,
                               color: Colors.blue,

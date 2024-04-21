@@ -88,7 +88,7 @@ void _verifyEmail(BuildContext context) {
               Navigator.of(context).pop();
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => ResetPassword()),
+                MaterialPageRoute(builder: (context) => const ResetPassword()),
               );
             },
             child: const Text('OK'),

@@ -18,7 +18,7 @@ class CartPage extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Column(
                 children: [
-                  AppBarWidget(),
+                  const AppBarWidget(),
                   const Padding(
                     padding: EdgeInsets.only(
                       top: 20,
@@ -207,7 +207,7 @@ class CartPage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: EdgeInsets.symmetric(vertical: 9),
+                    padding: const EdgeInsets.symmetric(vertical: 9),
                     child: Container(
                       width: 380,
                       height: 100,
@@ -408,8 +408,8 @@ class CartPage extends StatelessWidget {
           ),
         ],
       ),
-      drawer: DrawerWidget(),
-      bottomNavigationBar: CartBottomNavBar(),
+      drawer: DrawerWidget(() {}),
+      bottomNavigationBar: const CartBottomNavBar(),
     );
   }
 }
