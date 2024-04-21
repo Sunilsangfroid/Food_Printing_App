@@ -217,7 +217,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 25,
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.7,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                          ),
+                          const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 0,
+                              horizontal: 10,
+                            ),
+                            child: Text(
+                              'Sign up with',
+                              style: TextStyle(
+                                color: Colors.black45,
+                              ),
+                            ),
+                          ),
+                          Expanded(
+                            child: Divider(
+                              thickness: 0.7,
+                              color: Colors.grey.withOpacity(0.5),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
                       ),
                       GestureDetector(
                         onTap: () {},
@@ -239,8 +271,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             child: Material(
                               color: Colors.transparent,
                               child: InkWell(
-                                splashColor: Colors.grey,
-                                onTap: () {},
+                                splashColor: Colors.grey, // splash color
+                                onTap: () {
+                                  // Handle Google sign-in
+                                },
                                 child: SizedBox(
                                   width: 30,
                                   height: 30,
