@@ -1,5 +1,6 @@
 // import 'dart:js';
-
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/notification.dart';
@@ -23,7 +24,14 @@ import 'Pages/help.dart';
 const defaultBlue = Color(0xff4c7efe);
 const starColor = Color(0xffffc529);
 
+Future<void> initFireBase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+}
+
 void main() {
+  initFireBase();
   initList();
   printAvail();
   initCart();

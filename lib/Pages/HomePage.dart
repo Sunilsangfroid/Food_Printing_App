@@ -1,8 +1,11 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import '../foodclass.dart';
+import 'dart:io';
+
+import 'package:itrm_screen/foodclass.dart';
 
 import '../Widgets/DrawerWidget.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+
 import '../Widgets/AppBarWidget.dart';
 import '../Widgets/CategoriesWidget.dart';
 import '../Widgets/NewestItemsWidget.dart';
@@ -16,9 +19,42 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  Future<bool> _onWillPop(BuildContext context) async {
+    bool? exitResult = await showDialog(
+      context: context,
+      builder: (context) => _buildExitDialog(context),
+    );
+    return exitResult ?? false;
+  }
+
+  Future<bool?> _showExitDialog(BuildContext context) async {
+    return await showDialog(
+      context: context,
+      builder: (context) => _buildExitDialog(context),
+    );
+  }
+
+  AlertDialog _buildExitDialog(BuildContext context) {
+    return AlertDialog(
+      title: const Text('Please confirm'),
+      content: const Text('Do you want to exit the app?'),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () => Navigator.of(context).pop(false),
+          child: Text('No'),
+        ),
+        TextButton(
+          onPressed: () => exit(0),
+          child: Text('Yes'),
+        ),
+      ],
+    );
+  }
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () => _onWillPop(context),
+    child: Scaffold(
       body: ListView(
         children: [
           // Custom App Bar Widget
@@ -150,6 +186,6 @@ class _HomePageState extends State<HomePage> {
           ),
         ),
       ),
-    );
+    ));
   }
 }

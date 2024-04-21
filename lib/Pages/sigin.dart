@@ -1,8 +1,23 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
 import '../Pages/forget_passwod.dart';
 import '../Pages/signup.dart';
-import '../Widgets/custom_scaffold.dart';
 import '../theme/theme.dart';
+import '../Widgets/custom_scaffold.dart';
+
+void checkSigned(){
+  FirebaseAuth.instance
+      .authStateChanges()
+      .listen((User? user) {
+    if (user == null) {
+      print('User is currently signed out!');
+    } else {
+      print('User is signed in!');
+      print(user.uid);
+    }
+  });
+}
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -173,6 +188,7 @@ class _SignInScreenState extends State<SignInScreen> {
 
                               if (loginSuccess) {
                                 // If login is successful, navigate to the home page
+                                Navigator.pop(context);
                                 Navigator.pushReplacementNamed(
                                     context, '/home');
                                 // ignore: dead_code
