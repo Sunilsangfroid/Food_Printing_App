@@ -40,12 +40,15 @@ class _ItemScreenState extends State<ItemScreen> {
       duration: const Duration(seconds: 3),action: SnackBarAction(label: "Undo",onPressed: (){
         setState(() {
           favourite=false;
+          favourites.remove(id);
         });}),);
   }
   void favouriteItem(){
     setState(() {
       favourite=!favourite;
     });
+    if (favourite)favourites.add(id);
+    else favourites.remove(id);
     if (favourite)ScaffoldMessenger.of(context).showSnackBar(snackbar);
   }
   // int id=availFood.keys.first;
@@ -62,9 +65,8 @@ class _ItemScreenState extends State<ItemScreen> {
     SystemChrome.setEnabledSystemUIMode(SystemUiMode.leanBack);
 
     id = id<0 ? ModalRoute.of(context)!.settings.arguments as int : id;
-    if (kDebugMode) {
-      print("id = $id");
-    }
+    print("id = $id");
+    favourite=favourites.contains(id);
 
     if (qty==0 && cart.keys.contains(id)) {
       qty = cart[id]!;
@@ -94,15 +96,18 @@ class _ItemScreenState extends State<ItemScreen> {
             children: [
               Stack(
                 children: [
-                  AspectRatio(
-                      aspectRatio: 4/3,
-                      child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.0),
-                          child: Image.asset(
-                            chococake.imagePath,
-                            fit: BoxFit.fitWidth,
-                          )
-                      )
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: AspectRatio(
+                        aspectRatio: 16/11,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(20.0),
+                            child: Image.asset(
+                              chococake.imagePath,
+                              fit: BoxFit.fitWidth,
+                            )
+                        )
+                    ),
                   ),
                   Align(
                       alignment: Alignment.topRight,

@@ -31,7 +31,14 @@ class FoodDeliveryScreen extends StatefulWidget {
 
 class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
   void deleteFromFs(int id) {
+    var index = favourites.indexOf(id);
+    SnackBar snackbar= SnackBar(content: Text("${availFood[id]!.name} has been removed from Favourites"),
+      duration: const Duration(seconds: 3),action: SnackBarAction(label: "Undo",onPressed: (){
+        setState(() {
+          favourites.insert(index,id);
+        });}),);
     setState(() {
+      ScaffoldMessenger.of(context).showSnackBar(snackbar);
       favourites.remove(id);
     });
   }

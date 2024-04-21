@@ -3,10 +3,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../foodclass.dart';
 
-class NewestItemsWidget extends StatelessWidget {
-  const NewestItemsWidget({Key? key});
+
+
+class NewestItemsWidget extends StatefulWidget {
+  const NewestItemsWidget({super.key});
 
   @override
+  State<NewestItemsWidget> createState() => _NewestItemsWidgetState();
+}
+
+class _NewestItemsWidgetState extends State<NewestItemsWidget> {
+  @override
+  void favouriteItem(id){
+    if (favourites.contains(id))favourites.remove(id);
+    else favourites.add(id);
+    setState((){});
+  }
+
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
@@ -16,10 +29,10 @@ class NewestItemsWidget extends StatelessWidget {
           children: [
             // Single Item
             for (int id in newest.keys)
-              GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(context, "/item", arguments: id);
-                },
+            GestureDetector(
+              onTap: (){Navigator.pushNamed(context, "/item",arguments: id).then((value) => setState((){}));},
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: 10),
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 10),
                   child: Container(
@@ -80,7 +93,7 @@ class NewestItemsWidget extends StatelessWidget {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     RatingBar.builder(
                                       initialRating: 4,
@@ -117,10 +130,13 @@ class NewestItemsWidget extends StatelessWidget {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                const Icon(
-                                  Icons.favorite_border,
-                                  color: Colors.blue,
-                                  size: 26,
+                                IconButton(
+                                  onPressed: (){favouriteItem(id);},
+                                  icon: Icon(
+                                    favourites.contains(id)?Icons.favorite:Icons.favorite_border,
+                                    color: Colors.blue,
+                                    size: 26,
+                                  ),
                                 ),
                                 const SizedBox(
                                   height: 65,
@@ -143,7 +159,8 @@ class NewestItemsWidget extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
+              )
+            )
             // Other items go here...
           ],
         ),
