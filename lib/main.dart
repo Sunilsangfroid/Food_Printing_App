@@ -1,7 +1,7 @@
 // import 'dart:js';
 
 import 'package:flutter/material.dart';
-import 'Pages/chatbot.dart';
+
 import 'Pages/notification.dart';
 import 'Pages/setting.dart';
 import 'Pages/myaccount.dart';
@@ -17,6 +17,7 @@ import 'Pages/HomePage.dart';
 import 'Pages/favourite_screen.dart';
 // import 'Pages/chatbot.dart';
 import 'Pages/feedback _page.dart';
+import 'Pages/chats.dart';
 
 const defaultBlue = Color(0xff4c7efe);
 const starColor = Color(0xffffc529);
@@ -50,9 +51,9 @@ void main() {
       '/favourite': (context) => const FoodDeliveryScreen(),
       '/feedback': (context) => const UI22(),
       '/profile': (context) => const MyAccountPage(),
-      '/aiassi': (context) => const ChatScreen(),
       '/setting': (context) => const SettingsPage(),
       '/notification': (context) => const NotificationScreen(),
+      '/aiassi':(context) => const ChatScreen(),
     },
   ));
 }
