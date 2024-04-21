@@ -12,7 +12,20 @@
           "package_name": "com.example.itrm_screen"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "280398067236-dpm5agl7nc02ntnc8ve0qr175hjjta7e.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.itrm_screen",
+            "certificate_hash": "573567cfa8da16c64bbe54702ac2de678f85b4c5"
+          }
+        },
+        {
+          "client_id": "280398067236-lje60o0dq859th0jjebfd1vlm51po6dt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBP9ZdFsBZJPWL_Nb4_UT811L2i634-84k"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "280398067236-lje60o0dq859th0jjebfd1vlm51po6dt.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "280398067236-b151h4j9dlrfa23jbitqu12co56o4jg7.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.foodprinter.dp"
+              }
+            }
+          ]
         }
       }
     }
