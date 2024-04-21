@@ -1,14 +1,15 @@
-import "dart:convert";
-import "dart:io";
+import 'dart:convert';
+import 'dart:io';
 
-import "package:flutter/material.dart";
-import "package:itrm_screen/Pages/api_key.dart";
-import "package:itrm_screen/Pages/chat_model.dart";
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import "package:image_picker/image_picker.dart";
+import 'package:image_picker/image_picker.dart';
+
+import 'api_key.dart';
+import 'chat_model.dart';
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
   State<ChatScreen> createState() => _ChatScreenState();
@@ -40,6 +41,9 @@ class _ChatScreenState extends State<ChatScreen> {
 
     setState(() {});
 
+    // Clear the text field after sending the message
+    controller.clear();
+
     final geminiModel = await sendRequestToGemini(model);
 
     chatList.insert(0, geminiModel);
@@ -47,8 +51,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void selectImage() async {
-    final picker = await ImagePicker.platform
-        .getImageFromSource(source: ImageSource.gallery);
+    final picker = await ImagePicker().pickImage(source: ImageSource.gallery);
 
     if (picker != null) {
       image = File(picker.path);
