@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "280398067236",
+    "project_id": "foodprinter-1aa35",
+    "storage_bucket": "foodprinter-1aa35.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:280398067236:android:15b072e05328c6cbe0cab1",
+        "android_client_info": {
+          "package_name": "com.example.itrm_screen"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBP9ZdFsBZJPWL_Nb4_UT811L2i634-84k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
