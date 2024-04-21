@@ -39,6 +39,25 @@ class _MyAccountPageState extends State<MyAccountPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+          Align(
+              alignment: Alignment.bottomRight,
+              // Centering the button
+              child: ElevatedButton(
+                onPressed: () {
+                  print('Saved Name: $nameController.text');
+                  print(
+                      'Saved Email-id: $emailController.text');
+                  print(
+                      'Saved Phone_number: $phoneController.text');
+                },
+                // Apply TextStyle with color black to the button text
+                child: const Text(
+                  'Save',
+                  style: TextStyle(color: Colors.black),
+                ),
+              ),
+            ),
+
             const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
