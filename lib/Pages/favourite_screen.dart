@@ -9,8 +9,8 @@ void main() {
 
 class MyApp extends StatelessWidget {
   const MyApp({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,8 +26,8 @@ class MyApp extends StatelessWidget {
 
 class FoodDeliveryScreen extends StatefulWidget {
   const FoodDeliveryScreen({
-    super.key,
-  });
+    Key? key,
+  }) : super(key: key);
 
   @override
   _FoodDeliveryScreenState createState() => _FoodDeliveryScreenState();
@@ -40,12 +40,13 @@ class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
       content: Text("${availFood[id]!.name} has been removed from Favourites"),
       duration: const Duration(seconds: 3),
       action: SnackBarAction(
-          label: "Undo",
-          onPressed: () {
-            setState(() {
-              favourites.insert(index, id);
-            });
-          }),
+        label: "Undo",
+        onPressed: () {
+          setState(() {
+            favourites.insert(index, id);
+          });
+        },
+      ),
     );
     setState(() {
       ScaffoldMessenger.of(context).showSnackBar(snackbar);
@@ -97,15 +98,12 @@ class _FoodDeliveryScreenState extends State<FoodDeliveryScreen> {
                         children: [
                           SizedBox(
                             width: double.infinity,
-                            height: 300,
+                            height: 200,
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(25.0),
-                              child: AspectRatio(
-                                aspectRatio: 1,
-                                child: Image.asset(
-                                  availFood[id]!.imagePath,
-                                  fit: BoxFit.cover,
-                                ),
+                              child: Image.asset(
+                                availFood[id]!.imagePath,
+                                fit: BoxFit.cover,
                               ),
                             ),
                           ),
