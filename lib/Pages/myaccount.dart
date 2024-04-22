@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:itrm_screen/main.dart' show myApp;
+import 'package:google_sign_in/google_sign_in.dart';
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({Key? key}) : super(key: key);
 
@@ -17,13 +19,15 @@ class _MyAccountPageState extends State<MyAccountPage> {
   TextEditingController weightController = TextEditingController();
   String selectedGender = 'Male'; // Default selected gender
   double bmi = 0.0;
+  User? user;
 
   @override
   void initState() {
     super.initState();
     // Initialize controllers with default values
+    user = FirebaseAuth.instance.currentUser;
     nameController.text = 'Name';
-    emailController.text = 'example@example.com';
+    emailController.text = user!.email!;
     phoneController.text = '+91';
   }
 
@@ -106,6 +110,36 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     TextEditingController())), // Medical history input field
             const SizedBox(height: 20.0),
             const Divider(),
+            Center(
+              child: ElevatedButton(onPressed: () async {
+                  try {
+                    switch (user?.providerData[0].providerId) {
+                      case 'password':
+                        await FirebaseAuth.instance.signOut();
+                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+                        break;
+                      case 'google.com':
+                        await FirebaseAuth.instance.signOut();
+                        await GoogleSignIn().signOut();
+                        print(FirebaseAuth.instance.currentUser);
+                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+                        break;
+                    }
+                  }on FirebaseAuthException catch (e) {
+                    print(e);
+                  }catch (e){
+                    print(e);
+                  }
+                  runApp(myApp);
+                  print(FirebaseAuth.instance.currentUser?.email);
+                },
+                child: Text("Sign Out"),
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.all(Colors.red),
+                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                ),
+              ),
+            ),
           ],
         ),
       ),

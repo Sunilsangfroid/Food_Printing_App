@@ -3,12 +3,21 @@ import '../Pages/signup.dart';
 import '../Widgets/custom_scaffold.dart';
 import '../Widgets/welcome_button.dart';
 import 'package:flutter/material.dart';
+import 'package:itrm_screen/globals.dart';
 
 class WelcomeScreen extends StatelessWidget {
   const WelcomeScreen({super.key});
 
+  void check(context) async {
+    await Future.delayed(Duration(seconds: 1), () {
+        if (isSignedIn){
+          print("switch");Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+        }
+    });
+  }
   @override
-  Widget build(BuildContext context) {
+  build(BuildContext context) {
+    check(context);
     return CustomScaffold(
       child: Column(
         children: [

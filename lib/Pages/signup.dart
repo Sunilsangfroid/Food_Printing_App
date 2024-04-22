@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../Pages/sigin.dart';
 import '../theme/theme.dart';
 import '../Widgets/custom_scaffold.dart';
@@ -13,6 +15,52 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formSignupKey = GlobalKey<FormState>();
   bool agreePersonalData = true;
+  TextEditingController emailAddress=TextEditingController();
+  TextEditingController password=TextEditingController();
+
+  Future<void> createAccount() async {
+    if (_formSignupKey.currentState!.validate() &&
+        agreePersonalData) {
+      bool signUpSuccess = false;
+      try {
+        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+          email: emailAddress.text,
+          password: password.text,
+        );
+        signUpSuccess = true;
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'weak-password') {
+          print('The password provided is too weak.');
+        } else if (e.code == 'email-already-in-use') {
+          print('The account already exists for that email.');
+        }
+      } catch (e) {
+        print(e);
+      }
+
+
+      if (signUpSuccess) {
+        print("signUpSuccess= ${signUpSuccess}");
+        Navigator.pushReplacementNamed(context, '/home');
+        // ignore: dead_code
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text(
+                'Sign-up failed. Please try again.'),
+          ),
+        );
+      }
+    } else if (!agreePersonalData) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Please agree to the processing of personal data'),
+        ),
+      );
+    }
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -84,6 +132,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 25.0,
                       ),
                       TextFormField(
+                        controller: emailAddress,
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty ||
@@ -116,6 +165,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         height: 25.0,
                       ),
                       TextFormField(
+                        controller: password,
                         obscureText: true,
                         obscuringCharacter: '*',
                         validator: (value) {
@@ -181,32 +231,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (_formSignupKey.currentState!.validate() &&
-                                agreePersonalData) {
-                              bool signUpSuccess = true;
-
-                              if (signUpSuccess) {
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                                // ignore: dead_code
-                              } else {
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text(
-                                        'Sign-up failed. Please try again.'),
-                                  ),
-                                );
-                              }
-                            } else if (!agreePersonalData) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Please agree to the processing of personal data'),
-                                ),
-                              );
-                            }
-                          },
+                          onPressed: () => createAccount(),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                           ),

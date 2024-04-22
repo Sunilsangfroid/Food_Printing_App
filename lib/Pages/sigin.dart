@@ -1,23 +1,13 @@
+// import 'dart:html';
+
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/material.dart';
 import '../Pages/forget_passwod.dart';
 import '../Pages/signup.dart';
 import '../theme/theme.dart';
 import '../Widgets/custom_scaffold.dart';
-
-void checkSigned(){
-  FirebaseAuth.instance
-      .authStateChanges()
-      .listen((User? user) {
-    if (user == null) {
-      print('User is currently signed out!');
-    } else {
-      print('User is signed in!');
-      print(user.uid);
-    }
-  });
-}
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -29,6 +19,78 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   final _formSignInKey = GlobalKey<FormState>();
   bool rememberPassword = true;
+  TextEditingController emailAddress=TextEditingController();
+  TextEditingController password=TextEditingController();
+
+  Future<void> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(
+          context, '/home');
+    }catch (e){
+      print(e);
+    }
+  }
+  Future<void> login() async {
+    if (_formSignInKey.currentState!.validate() &&
+        rememberPassword) {
+      // Validate login credentials here
+      // For demonstration purposes, let's assume the login is successful
+      bool loginSuccess = false;
+      try {
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+            email: emailAddress.text,
+            password: password.text
+        );
+        loginSuccess = true;
+
+      } on FirebaseAuthException catch (e) {
+        if (e.code == 'user-not-found') {
+          print('No user found for that email.');
+        } else if (e.code == 'wrong-password') {
+          print('Wrong password provided for that user.');
+        }
+      } catch (e){
+        print(e);
+      }
+      if (loginSuccess) {
+        // If login is successful, navigate to the home page
+        print("loginSuccess= ${loginSuccess}");
+        Navigator.pop(context);
+        Navigator.pushReplacementNamed(
+            context, '/home');
+        // ignore: dead_code
+      } else {
+        // If login fails, show a snackbar with an error message
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Invalid email or password'),
+          ),
+        );
+      }
+    } else if (!rememberPassword) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+              'Please agree to the processing of personal'),
+        ),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,6 +130,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       const SizedBox(height: 45),
                       TextFormField(
+                        controller: emailAddress,
                         validator: (value) {
                           if (value == null ||
                               value.isEmpty ||
@@ -98,6 +161,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       const SizedBox(height: 12),
                       TextFormField(
+                        controller: password,
                         obscureText: true,
                         obscuringCharacter: '*',
                         validator: (value) {
@@ -179,36 +243,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       SizedBox(
                         width: double.infinity,
                         child: ElevatedButton(
-                          onPressed: () {
-                            if (_formSignInKey.currentState!.validate() &&
-                                rememberPassword) {
-                              // Validate login credentials here
-                              // For demonstration purposes, let's assume the login is successful
-                              bool loginSuccess = true;
-
-                              if (loginSuccess) {
-                                // If login is successful, navigate to the home page
-                                Navigator.pop(context);
-                                Navigator.pushReplacementNamed(
-                                    context, '/home');
-                                // ignore: dead_code
-                              } else {
-                                // If login fails, show a snackbar with an error message
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                    content: Text('Invalid email or password'),
-                                  ),
-                                );
-                              }
-                            } else if (!rememberPassword) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                  content: Text(
-                                      'Please agree to the processing of personal'),
-                                ),
-                              );
-                            }
-                          },
+                          onPressed: () =>login(),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                           ),
@@ -274,9 +309,9 @@ class _SignInScreenState extends State<SignInScreen> {
                               color: Colors.transparent,
                               child: InkWell(
                                 splashColor: Colors.grey, // splash color
-                                onTap: () {
+                                onTap: () => signInWithGoogle()
                                   // Handle Google sign-in
-                                },
+                                ,
                                 child: SizedBox(
                                   width: 30,
                                   height: 30,
