@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+
 import '../Pages/sigin.dart';
 import '../Pages/signup.dart';
 import '../Widgets/custom_scaffold.dart';
@@ -11,6 +13,11 @@ class WelcomeScreen extends StatelessWidget {
   void check(context) async {
     await Future.delayed(Duration(seconds: 1), () {
         if (isSignedIn){
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('Signed in as ${FirebaseAuth.instance.currentUser?.email}.'),
+            ),
+          );
           print("switch");Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
         }
     });

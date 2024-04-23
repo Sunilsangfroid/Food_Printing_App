@@ -1,4 +1,6 @@
 // ignore_for_file: file_names
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -153,8 +155,37 @@ class DrawerWidget extends StatelessWidget {
             ),
           ),
           ListTile(
-            onTap: () {
-              Navigator.pushNamed(context, "/signin");
+            onTap:
+              () async {
+                try {
+                  switch (FirebaseAuth.instance.currentUser?.providerData[0].providerId) {
+                    case 'password':
+                      await FirebaseAuth.instance.signOut();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Signed out successfully.'),
+                        ),
+                      );
+                      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+                      break;
+                    case 'google.com':
+                      await FirebaseAuth.instance.signOut();
+                      await GoogleSignIn().signOut();
+                      print(FirebaseAuth.instance.currentUser);
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Signed out successfully.'),
+                        ),
+                      );
+                      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+                      break;
+                  }
+                }on FirebaseAuthException catch (e) {
+                  print(e);
+                }catch (e){
+                  print(e);
+                }
+
             },
             leading: const Icon(
               Icons.exit_to_app,
