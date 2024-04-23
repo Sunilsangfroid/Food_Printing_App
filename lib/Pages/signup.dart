@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 import '../Pages/sigin.dart';
 import '../theme/theme.dart';
@@ -18,6 +19,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController emailAddress = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  Future<void> signUpWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      Navigator.pop(context);
+      Navigator.pushReplacementNamed(
+          context, '/home');
+    }catch (e){
+      print(e);
+    }
+  }
   Future<void> createAccount() async {
     if (_formSignupKey.currentState!.validate() && agreePersonalData) {
       bool signUpSuccess = false;
@@ -293,9 +317,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               color: Colors.transparent,
                               child: InkWell(
                                 splashColor: Colors.grey, // splash color
-                                onTap: () {
+                                onTap: () => signUpWithGoogle()
                                   // Handle Google sign-in
-                                },
+                                ,
                                 child: SizedBox(
                                   width: 30,
                                   height: 30,
