@@ -121,6 +121,12 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     switch (user?.providerData[0].providerId) {
                       case 'password':
                         await FirebaseAuth.instance.signOut();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Signed out successfully.'),
+                          ),
+                        );
+                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
                         Navigator.pushNamedAndRemoveUntil(
                             context, "/", (route) => false);
                         break;
@@ -128,6 +134,12 @@ class _MyAccountPageState extends State<MyAccountPage> {
                         await FirebaseAuth.instance.signOut();
                         await GoogleSignIn().signOut();
                         print(FirebaseAuth.instance.currentUser);
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Signed out successfully.'),
+                          ),
+                        );
+                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
                         Navigator.pushNamedAndRemoveUntil(
                             context, "/", (route) => false);
                         break;
@@ -137,8 +149,6 @@ class _MyAccountPageState extends State<MyAccountPage> {
                   } catch (e) {
                     print(e);
                   }
-                  runApp(myApp);
-                  print(FirebaseAuth.instance.currentUser?.email);
                 },
                 child: Text("Sign Out"),
                 style: ButtonStyle(

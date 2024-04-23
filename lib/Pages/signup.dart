@@ -15,15 +15,15 @@ class SignUpScreen extends StatefulWidget {
 class _SignUpScreenState extends State<SignUpScreen> {
   final _formSignupKey = GlobalKey<FormState>();
   bool agreePersonalData = true;
-  TextEditingController emailAddress=TextEditingController();
-  TextEditingController password=TextEditingController();
+  TextEditingController emailAddress = TextEditingController();
+  TextEditingController password = TextEditingController();
 
   Future<void> createAccount() async {
-    if (_formSignupKey.currentState!.validate() &&
-        agreePersonalData) {
+    if (_formSignupKey.currentState!.validate() && agreePersonalData) {
       bool signUpSuccess = false;
       try {
-        final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        final credential =
+            await FirebaseAuth.instance.createUserWithEmailAndPassword(
           email: emailAddress.text,
           password: password.text,
         );
@@ -38,7 +38,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         print(e);
       }
 
-
       if (signUpSuccess) {
         print("signUpSuccess= ${signUpSuccess}");
         Navigator.pushReplacementNamed(context, '/home');
@@ -46,20 +45,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(
-            content: Text(
-                'Sign-up failed. Please try again.'),
+            content: Text('Sign-up failed. Please try again.'),
           ),
         );
       }
     } else if (!agreePersonalData) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text(
-              'Please agree to the processing of personal data'),
+          content: Text('Please agree to the processing of personal data'),
         ),
       );
     }
-
   }
 
   @override
@@ -197,7 +193,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 25.0,
+                        height: 10.0,
                       ),
                       Row(
                         children: [
@@ -226,7 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ],
                       ),
                       const SizedBox(
-                        height: 25.0,
+                        height: 10.0,
                       ),
                       SizedBox(
                         width: double.infinity,
@@ -313,7 +309,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       const SizedBox(
-                        height: 30.0,
+                        height: 20.0,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -342,9 +338,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                         ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
                       ),
                     ],
                   ),

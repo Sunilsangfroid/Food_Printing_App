@@ -86,7 +86,7 @@ class _SignInScreenState extends State<SignInScreen> {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text(
-              'Please agree to the processing of personal'),
+              'Please agree to Remember Password'),
         ),
       );
     }
