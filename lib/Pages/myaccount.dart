@@ -1,9 +1,11 @@
+import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/services.dart';
 import 'package:itrm_screen/main.dart' show myApp;
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:image_picker/image_picker.dart';
 
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({Key? key}) : super(key: key);
@@ -23,6 +25,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
   double bmi = 0.0;
   User? user;
   String selectedCountryCode = '+91';
+  File? selectedImage; // Define a File variable to hold the selected image
 
   @override
   void initState() {
@@ -59,21 +62,35 @@ class _MyAccountPageState extends State<MyAccountPage> {
                 ),
               ),
             ),
-            const SizedBox(height: 20.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            const SizedBox(height: 0.0),
+            Stack(
+              alignment: Alignment.bottomRight,
               children: [
                 GestureDetector(
                   onTap: _chooseImage,
                   child: Container(
-                    width: 120,
-                    height: 120,
+                    width: 160,
+                    height: 160,
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.grey[200],
                     ),
-                    child: const Icon(Icons.camera_alt, size: 60),
+                    child: selectedImage != null
+                        ? ClipOval(
+                            child: Image.file(
+                              selectedImage!,
+                              width: 120,
+                              height: 120,
+                              fit: BoxFit.cover,
+                            ),
+                          )
+                        : const Icon(Icons.camera_alt, size: 60),
                   ),
+                ),
+                IconButton(
+                  onPressed: _chooseImage,
+                  icon: Icon(Icons.camera_alt),
+                  tooltip: 'Choose Image',
                 ),
               ],
             ),
@@ -338,44 +355,45 @@ class _MyAccountPageState extends State<MyAccountPage> {
     }
   }
 
-  void _chooseImage() {
-    if (kDebugMode) {
-      print('Choose image');
+  void _chooseImage() async {
+    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        selectedImage = File(pickedFile.path); // Store the selected image file
+      });
     }
   }
 
   void _saveAccount() {
-  print('Saved Name: ${nameController.text}');
-  print('Saved Email-id: ${emailController.text}');
-  print('Saved Phone_number: ${phoneController.text}');
-  print('Saved Medical History: ${medicalHistoryController.text}');
-  
-  ScaffoldMessenger.of(context).showSnackBar(
-    SnackBar(
-      behavior: SnackBarBehavior.floating,
-      margin: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
+    print('Saved Name: ${nameController.text}');
+    print('Saved Email-id: ${emailController.text}');
+    print('Saved Phone_number: ${phoneController.text}');
+    print('Saved Medical History: ${medicalHistoryController.text}');
+    
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
+        backgroundColor: Colors.green,
+        content: Row(
+          children: [
+            Icon(
+              Icons.check_circle,
+              color: Colors.white,
+            ),
+            SizedBox(width: 8.0),
+            Text(
+              'Account saved successfully',
+              style: TextStyle(color: Colors.white),
+            ),
+          ],
+        ),
       ),
-      backgroundColor: Colors.green,
-      content: Row(
-        children: [
-          Icon(
-            Icons.check_circle,
-            color: Colors.white,
-          ),
-          SizedBox(width: 8.0),
-          Text(
-            'Account saved successfully',
-            style: TextStyle(color: Colors.white),
-          ),
-        ],
-      ),
-    ),
-  );
-}
-
-
+    );
+  }
 
   @override
   void dispose() {
