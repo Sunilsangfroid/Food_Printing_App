@@ -10,9 +10,9 @@ class Profile{
   String gender;
   int? height=null;
   int? weight=null;
-  String medHistory="";
+  String medHistory;
 
-  Profile({required this.name, required this.phoneNo, required this.gender, this.height, this.weight,this.medHistory=""});
+  Profile({required this.name, this.phoneNo="", this.gender="", this.height, this.weight,this.medHistory=""});
 
   Map<String,dynamic> map(){
     Map<String,dynamic> temp={
@@ -21,7 +21,7 @@ class Profile{
       "gender":gender,
       "height":height,
       "weight":weight,
-      "bmi":(height!=null && weight!=null)?(height!/weight!):null,
+      "bmi":(height!=null && weight!=null)?(weight!/(height!*height!/10000)):null,
       "medHistory":medHistory,
       "uid":FirebaseAuth.instance.currentUser!.uid
     };
