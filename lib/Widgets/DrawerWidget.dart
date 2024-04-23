@@ -152,29 +152,20 @@ class DrawerWidget extends StatelessWidget {
                   color: Colors.black),
             ),
           ),
-          ElevatedButton(
-            onPressed: () {
+          ListTile(
+            onTap: () {
               Navigator.pushNamed(context, "/signin");
             },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.blue,
-              elevation: 0,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(0),
-              ),
+            leading: const Icon(
+              Icons.exit_to_app,
+              color: Colors.blue,
             ),
-            child:ListTile(
-              leading: const Icon(
-                Icons.exit_to_app,
-                color: Colors.blue,
-              ),
-              title: const Text(
-                "Log Out",
-                style: TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white),
-              ),
+            title: const Text(
+              "Log Out",
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black),
             ),
           ),
         ],
