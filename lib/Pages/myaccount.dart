@@ -1,13 +1,14 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/services.dart';
 import 'package:itrm_screen/main.dart' show myApp;
 import 'package:google_sign_in/google_sign_in.dart';
+
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _MyAccountPageState createState() => _MyAccountPageState();
 }
 
@@ -17,18 +18,21 @@ class _MyAccountPageState extends State<MyAccountPage> {
   TextEditingController phoneController = TextEditingController();
   TextEditingController heightController = TextEditingController();
   TextEditingController weightController = TextEditingController();
-  String selectedGender = 'Male'; // Default selected gender
+  TextEditingController medicalHistoryController = TextEditingController();
+  String selectedGender = 'Male';
   double bmi = 0.0;
   User? user;
+  String selectedCountryCode = '+91';
 
   @override
   void initState() {
     super.initState();
-    // Initialize controllers with default values
     user = FirebaseAuth.instance.currentUser;
     nameController.text = 'Name';
     emailController.text = user!.email!;
-    phoneController.text = '+91';
+    phoneController.text = '';
+    heightController.addListener(_calculateBMI);
+    weightController.addListener(_calculateBMI);
   }
 
   @override
@@ -43,31 +47,24 @@ class _MyAccountPageState extends State<MyAccountPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-          Align(
+            Align(
               alignment: Alignment.bottomRight,
-              // Centering the button
               child: ElevatedButton(
                 onPressed: () {
-                  print('Saved Name: $nameController.text');
-                  print(
-                      'Saved Email-id: $emailController.text');
-                  print(
-                      'Saved Phone_number: $phoneController.text');
+                  _saveAccount();
                 },
-                // Apply TextStyle with color black to the button text
                 child: const Text(
                   'Save',
                   style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
-
             const SizedBox(height: 20.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 GestureDetector(
-                  onTap: _chooseImage, // Function to choose image
+                  onTap: _chooseImage,
                   child: Container(
                     width: 120,
                     height: 120,
@@ -81,53 +78,63 @@ class _MyAccountPageState extends State<MyAccountPage> {
               ],
             ),
             const SizedBox(height: 20.0),
-            buildContainerWithLabel('Name', buildInputField(nameController)),
-            buildContainerWithLabel('Email', buildInputField(emailController)),
-            buildContainerWithLabel('Phone', buildInputField(phoneController)),
+            buildContainerWithLabel(
+                'Name', buildInputField(nameController, inputType: TextInputType.text)),
+            buildContainerWithLabel(
+                'Email', buildInputField(emailController, inputType: TextInputType.emailAddress)),
+            buildContainerWithLabel(
+              'Phone',
+              Row(
+                children: [
+                  buildCountryCodeDropdown(),
+                  const SizedBox(width: 8.0),
+                  Expanded(child: buildInputField(phoneController, inputType: TextInputType.phone)),
+                ],
+              ),
+            ),
             const SizedBox(height: 20.0),
             const Divider(),
             buildContainerWithDropdown(
-                'Gender',
-                [
-                  'Male',
-                  'Female',
-                ],
-                selectedGender, (value) {
+                'Gender', ['Male', 'Female', 'Other'], selectedGender,
+                (value) {
               setState(() {
                 selectedGender = value;
               });
             }),
-            buildContainerWithLabel(
-                'Height (cm)', buildInputField(heightController)),
-            buildContainerWithLabel(
-                'Weight (kg)', buildInputField(weightController)),
+            buildContainerWithLabel('Height (cm)',
+                buildInputField(heightController, inputType: TextInputType.number)),
+            buildContainerWithLabel('Weight (kg)',
+                buildInputField(weightController, inputType: TextInputType.number)),
             buildContainerWithLabel('BMI', buildBMIField()),
             const SizedBox(height: 20.0),
             const Divider(),
             buildContainerWithLabel(
                 'Medical History',
-                buildInputField(
-                    TextEditingController())), // Medical history input field
+                buildMedicalHistoryField(
+                    medicalHistoryController)),
             const SizedBox(height: 20.0),
             const Divider(),
             Center(
-              child: ElevatedButton(onPressed: () async {
+              child: ElevatedButton(
+                onPressed: () async {
                   try {
                     switch (user?.providerData[0].providerId) {
                       case 'password':
                         await FirebaseAuth.instance.signOut();
-                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/", (route) => false);
                         break;
                       case 'google.com':
                         await FirebaseAuth.instance.signOut();
                         await GoogleSignIn().signOut();
                         print(FirebaseAuth.instance.currentUser);
-                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
+                        Navigator.pushNamedAndRemoveUntil(
+                            context, "/", (route) => false);
                         break;
                     }
-                  }on FirebaseAuthException catch (e) {
+                  } on FirebaseAuthException catch (e) {
                     print(e);
-                  }catch (e){
+                  } catch (e) {
                     print(e);
                   }
                   runApp(myApp);
@@ -135,8 +142,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
                 },
                 child: Text("Sign Out"),
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all(Colors.red),
-                    foregroundColor: MaterialStateProperty.all(Colors.white),
+                  backgroundColor: MaterialStateProperty.all(Colors.red),
+                  foregroundColor: MaterialStateProperty.all(Colors.white),
                 ),
               ),
             ),
@@ -146,28 +153,99 @@ class _MyAccountPageState extends State<MyAccountPage> {
     );
   }
 
-  Widget buildInputField(TextEditingController controller) {
+  Widget buildCountryCodeDropdown() {
+    return DropdownButton<String>(
+      value: selectedCountryCode,
+      onChanged: (String? value) {
+        setState(() {
+          selectedCountryCode = value!;
+        });
+      },
+      items: <String>['+91', '+1', '+44', '+61']
+          .map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+
+  Widget buildInputField(TextEditingController controller,
+      {required TextInputType inputType}) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.1), // Shadow color
-            spreadRadius: 2, // Spread radius
-            blurRadius: 5, // Blur radius
-            offset: const Offset(0, 3), // Offset in x and y direction
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
           ),
         ],
       ),
       child: TextFormField(
         controller: controller,
+        keyboardType: inputType,
+        onChanged: (value) {
+          // Only update nameController text while typing
+          if (controller == nameController) {
+            setState(() {
+              controller.text = value;
+            });
+          }
+        },
+        inputFormatters: inputType == TextInputType.text
+            ? <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z]*$')),
+              ]
+            : <TextInputFormatter>[
+                FilteringTextInputFormatter.allow(RegExp(r'^[a-zA-Z0-9@.]*$')),
+              ],
         decoration: const InputDecoration(
           border: OutlineInputBorder(
-            borderSide:
-                BorderSide(color: Colors.blue), // Set boundary color to blue
+            borderSide: BorderSide(color: Colors.blue),
+          ),
+        ),
+        validator: (value) {
+          if (inputType == TextInputType.emailAddress && !value!.endsWith('@gmail.com')) {
+            return 'Email must end with @gmail.com';
+          }
+          return null;
+        },
+      ),
+    );
+  }
+
+  Widget buildMedicalHistoryField(TextEditingController controller) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.1),
+            spreadRadius: 2,
+            blurRadius: 5,
+            offset: const Offset(0, 3),
+          ),
+        ],
+      ),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: TextInputType.text,
+        decoration: const InputDecoration(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: Colors.blue),
           ),
         ),
       ),
     );
+  }
+
+  bool isNumeric(String? value) {
+    if (value == null) {
+      return false;
+    }
+    return double.tryParse(value) != null;
   }
 
   Widget buildContainerWithDropdown(String label, List<String> options,
@@ -188,8 +266,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
           DropdownButtonFormField(
             decoration: const InputDecoration(
               border: OutlineInputBorder(
-                borderSide: BorderSide(
-                    color: Colors.blue), // Set boundary color to blue
+                borderSide: BorderSide(color: Colors.blue),
               ),
             ),
             value: selectedOption,
@@ -234,8 +311,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
       readOnly: true,
       decoration: const InputDecoration(
         border: OutlineInputBorder(
-          borderSide:
-              BorderSide(color: Colors.blue), // Set boundary color to blue
+          borderSide: BorderSide(color: Colors.blue),
         ),
       ),
     );
@@ -253,16 +329,46 @@ class _MyAccountPageState extends State<MyAccountPage> {
   }
 
   void _chooseImage() {
-    // Function to choose an image
-    // Implement image picker functionality here
     if (kDebugMode) {
       print('Choose image');
     }
   }
 
+  void _saveAccount() {
+  print('Saved Name: ${nameController.text}');
+  print('Saved Email-id: ${emailController.text}');
+  print('Saved Phone_number: ${phoneController.text}');
+  print('Saved Medical History: ${medicalHistoryController.text}');
+  
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      behavior: SnackBarBehavior.floating,
+      margin: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(10.0),
+      ),
+      backgroundColor: Colors.green,
+      content: Row(
+        children: [
+          Icon(
+            Icons.check_circle,
+            color: Colors.white,
+          ),
+          SizedBox(width: 8.0),
+          Text(
+            'Account saved successfully',
+            style: TextStyle(color: Colors.white),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+
+
   @override
   void dispose() {
-    // Clean up the controllers when the widget is disposed
     nameController.dispose();
     emailController.dispose();
     phoneController.dispose();

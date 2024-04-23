@@ -129,7 +129,7 @@ class DrawerWidget extends StatelessWidget {
               color: Colors.blue,
             ),
             title: const Text(
-              "Setting",
+              "Settings",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
@@ -145,29 +145,38 @@ class DrawerWidget extends StatelessWidget {
               color: Colors.blue,
             ),
             title: const Text(
-              "Help&FAQ",
+              "Help & FAQ",
               style: TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: Colors.black),
             ),
           ),
-          ListTile(
-            onTap: () {
+          ElevatedButton(
+            onPressed: () {
               Navigator.pushNamed(context, "/signin");
             },
-            leading: const Icon(
-              Icons.exit_to_app,
-              color: Colors.blue,
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0),
+              ),
             ),
-            title: const Text(
-              "Log Out",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
+            child:ListTile(
+              leading: const Icon(
+                Icons.exit_to_app,
+                color: Colors.blue,
+              ),
+              title: const Text(
+                "Log Out",
+                style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white),
+              ),
             ),
-          )
+          ),
         ],
       ),
     );
