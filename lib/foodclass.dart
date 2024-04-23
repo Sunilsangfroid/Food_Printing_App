@@ -2,6 +2,7 @@
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FoodItem {
   String name;
@@ -13,6 +14,18 @@ class FoodItem {
   final id = UniqueKey().hashCode;
 
   FoodItem({this.name="",this.description="",this.shortDesc="",this.rating=0.0,this.reviews=0,this.imagePath=""});
+  // factory FoodItem.fromFirestore(
+  //     DocumentSnapshot<Map<String, dynamic>> snapshot,
+  //     SnapshotOptions? options,
+  //     ) {
+  //   final data = snapshot.data();
+  //   return FoodItem(
+  //     name: data?['name'],
+  //     description: data?['description'],
+  //     shortDesc: data?['shortDesc'],
+  //     imagePath: data?['imagePath'],
+  //   );
+  // }
 }
 String roundReviews(int reviews){
   if (reviews<=100){
