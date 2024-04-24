@@ -34,6 +34,12 @@ Future<void> initFireBase() async {
   );
   print("initialized Firebase");
   checkSigned();
+  await globals.initDatabase();
+  await initList();
+  printAvail();
+  initCart();
+  // printCart();
+  initPopNew();
 }
 void checkSigned(){
   FirebaseAuth.instance
@@ -63,7 +69,7 @@ MaterialApp myApp=MaterialApp(
   initialRoute: '/',
   // initialRoute:'/profile',
   routes: {
-    '/': (context) => const WelcomeScreen(),
+    '/': (context) =>  WelcomeScreen(),
     '/signup': (context) => const SignUpScreen(),
     '/signin': (context) => const SignInScreen(),
     // '/forget_password': (context) => ForgetPasswordScreen(),
@@ -79,13 +85,8 @@ MaterialApp myApp=MaterialApp(
     '/help': (context) => const HelpFAQPage(),
   },
 );
-void main() {
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
-  initFireBase();
-  initList();
-  // printAvail();
-  initCart();
-  // printCart();
-  initPopNew();
+  await initFireBase();
   runApp(myApp);
 }

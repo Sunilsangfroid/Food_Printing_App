@@ -61,7 +61,7 @@ class _ItemScreenState extends State<ItemScreen> {
   double flavor=0.5;
   String calories="";
   SnackBar snackbar=const SnackBar(content: Text(""));
-  FoodItem chococake=FoodItem();
+  FoodItem chococake=FoodItem(id: 0);
 
   @override
   Widget build(BuildContext context) {
@@ -75,8 +75,8 @@ class _ItemScreenState extends State<ItemScreen> {
       qty = cart[id]!;
     }
 
-    constructSnackbar();
     chococake=availFood[id]!;
+    constructSnackbar();
 
     return Scaffold(
       floatingActionButton: Padding(

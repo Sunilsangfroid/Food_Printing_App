@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'foodclass.dart';
+import 'dart:io';
 bool isSignedIn=false;
 bool checkedSigned=false;
 FirebaseFirestore db= FirebaseFirestore.instance;
@@ -50,10 +51,56 @@ void addUser(Profile user) async{
   var map=user.toFirestore();
   await db.collection("users").doc(map["uid"]).set(map).whenComplete(() => print('DocumentSnapshot added with ID: ${map["uid"]}'));
 }
-void addFood(FoodItem foodItem) async{
-
+void testUser(){
+  Profile user2 = Profile(
+    name: "Pritam",
+    phoneNo: "9348920244",
+    gender: "Male",
+    height: 160,
+    weight: 50,
+    medHistory: "diabetes",
+  );
+  addUser(user2 as Profile);
 }
-void initDatabase() async{
+void pushFood(FoodItem foodItem) async{
+  bool isExists=false;
+  await db
+      .collection('foods')
+      .where("name", isEqualTo: foodItem.name)
+      .get()
+      .then((querySnapshot) {if (querySnapshot.size != 0){print("Food already exists");isExists=true;}});
+  if (isExists){return;}
+  availFood[foodItem.id]=foodItem;
+  await db.collection("foods").add(foodItem.toFirestore()).then((documentSnapshot) =>
+      print("Added Food with docID: ${documentSnapshot.id} and Name ${foodItem.name} and UniqueID ${foodItem.id}"));
+}
+void testFood(FoodItem foodItem) async{
+  bool isUnique=false;
+  int tempId=0;
+  // tempId=UniqueKey().hashCode;
+  while(!isUnique) {
+    tempId=UniqueKey().hashCode;
+    await db
+        .collection('foods')
+        .where("id", isEqualTo: tempId)
+        .get()
+        .then((querySnapshot) {
+      isUnique = (querySnapshot.size == 0);print("notUnique");
+    });
+  }
+  FoodItem temp=FoodItem(name: foodItem.name,
+      description: foodItem.description,
+      shortDesc: foodItem.shortDesc,
+      rating: foodItem.rating,
+      reviews: foodItem.reviews,
+      imagePath: foodItem.imagePath,
+      id: tempId
+  );
+  pushFood(temp);
+}
+Future<void> initDatabase() async {
+  print("starting globals");
+
   print("starting Database");
   try{
     WidgetsFlutterBinding.ensureInitialized();
@@ -64,21 +111,14 @@ void initDatabase() async{
       print('User is not signed in.');
       return;
     }
-    Profile user2 = Profile(
-      name: "Pritam",
-      phoneNo: "9348920244",
-      gender: "Male",
-      height: 160,
-      weight: 50,
-      medHistory: "diabetes",
-    );
-    addUser(user2 as Profile);
+    // print(availFood.length);
+    // for (FoodItem foodItem in availFood.values) {
+    //   testFood(foodItem);
+    // }
+    // testUser();
+
   } catch (e) {
     print('Error: $e');
   }
   print("accessed Database");
-}
-void main(){
-  print("starting globals");
-  // initDatabase();
 }
