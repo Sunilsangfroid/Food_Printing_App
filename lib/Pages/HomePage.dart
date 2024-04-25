@@ -96,6 +96,10 @@ class _HomePageState extends State<HomePage> {
                     ),
                     Expanded(
                       child: TextFormField(
+                        onFieldSubmitted: (search) {
+                          //Search here
+                          Navigator.pushNamed(context, "/search",arguments: search);
+                        },
                         decoration: const InputDecoration(
                           hintText: "What would you like to eat ?",
                           border: InputBorder.none,
