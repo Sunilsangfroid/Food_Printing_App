@@ -12,6 +12,7 @@ import 'Pages/sigin.dart';
 import 'Pages/signup.dart';
 import 'Pages/welcome.dart';
 import 'Pages/search.dart';
+import 'Pages/categoryPage.dart';
 import 'item_screen.dart';
 import 'cart_screen.dart';
 import 'colors_ext.dart';
@@ -84,7 +85,8 @@ MaterialApp myApp=MaterialApp(
     '/notification': (context) => const NotificationScreen(),
     '/aiassi': (context) => const ChatScreen(),
     '/help': (context) => const HelpFAQPage(),
-    '/search': (context) => const SearchPage()
+    '/search': (context) => const SearchPage(),
+    '/category': (context) => const CategoryPage(),
   },
 );
 void main() async{
