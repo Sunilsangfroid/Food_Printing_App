@@ -64,7 +64,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
       if (signUpSuccess) {
         print("signUpSuccess= ${signUpSuccess}");
-        Navigator.pushReplacementNamed(context, '/home');
+        ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Signup is successfully Completed!',
+              style: TextStyle(color: Colors.green)),
+        ),
+      );
+        Navigator.pushReplacementNamed(context, '/register');
         // ignore: dead_code
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

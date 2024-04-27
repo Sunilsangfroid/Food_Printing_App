@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -7,16 +9,19 @@ import 'dart:io';
 bool isSignedIn=false;
 bool checkedSigned=false;
 FirebaseFirestore db= FirebaseFirestore.instance;
-
+Profile userProfile=Profile(name: "name");
 class Profile{
   String name;
   String phoneNo;
   String gender;
-  int? height=null;
-  int? weight=null;
+  double? height=null;
+  double? weight=null;
   String medHistory;
+  String dob;
+  String? email;
+  
 
-  Profile({required this.name, this.phoneNo="", this.gender="", this.height, this.weight,this.medHistory=""});
+  Profile({required this.name, this.phoneNo="", this.gender="", this.height, this.weight,this.medHistory="",this.dob="",this.email=""});
 
   factory Profile.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
@@ -33,22 +38,25 @@ class Profile{
     );
   }
 
-  Map<String,dynamic> toFirestore(){
+  Map<String,dynamic> toFirestore(String? imagePath){
     Map<String,dynamic> temp={
       "name":name,
       "phoneNo":phoneNo,
+      "email":email,
+      "dob":dob,
       "gender":gender,
       "height":height,
       "weight":weight,
       "bmi":(height!=null && weight!=null)?(weight!/(height!*height!/10000)):null,
       "medHistory":medHistory,
+      "imageUrl":imagePath,
       "uid":FirebaseAuth.instance.currentUser!.uid
     };
     return temp;
   }
 }
-void addUser(Profile user) async{
-  var map=user.toFirestore();
+void addUser(Profile user,String imagePath) async{
+  var map=user.toFirestore(imagePath);
   await db.collection("users").doc(map["uid"]).set(map).whenComplete(() => print('DocumentSnapshot added with ID: ${map["uid"]}'));
 }
 void testUser(){
@@ -60,7 +68,7 @@ void testUser(){
     weight: 50,
     medHistory: "diabetes",
   );
-  addUser(user2 as Profile);
+  addUser(user2 as Profile,"");
 }
 void pushFood(FoodItem foodItem) async{
   bool isExists=false;

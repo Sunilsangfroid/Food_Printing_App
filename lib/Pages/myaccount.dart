@@ -44,25 +44,15 @@ class _MyAccountPageState extends State<MyAccountPage> {
       appBar: AppBar(
         title: const Text('My Account'),
         backgroundColor: Colors.transparent,
+        actions: [
+          IconButton(onPressed: (){},icon: Icon(Icons.edit),),
+        ],
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
-              alignment: Alignment.bottomRight,
-              child: ElevatedButton(
-                onPressed: () {
-                  _saveAccount();
-                },
-                child: const Text(
-                  'Save',
-                  style: TextStyle(color: Colors.black),
-                ),
-              ),
-            ),
-            const SizedBox(height: 0.0),
             Stack(
               alignment: Alignment.bottomRight,
               children: [
@@ -131,49 +121,19 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     medicalHistoryController)),
             const SizedBox(height: 20.0),
             const Divider(),
-            Center(
+            Align(
+              alignment: Alignment.center,
               child: ElevatedButton(
-                onPressed: () async {
-                  try {
-                    switch (user?.providerData[0].providerId) {
-                      case 'password':
-                        await FirebaseAuth.instance.signOut();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Signed out successfully.'),
-                          ),
-                        );
-                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "/", (route) => false);
-                        break;
-                      case 'google.com':
-                        await FirebaseAuth.instance.signOut();
-                        await GoogleSignIn().signOut();
-                        print(FirebaseAuth.instance.currentUser);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('Signed out successfully.'),
-                          ),
-                        );
-                        Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
-                        Navigator.pushNamedAndRemoveUntil(
-                            context, "/", (route) => false);
-                        break;
-                    }
-                  } on FirebaseAuthException catch (e) {
-                    print(e);
-                  } catch (e) {
-                    print(e);
-                  }
+                onPressed: () {
+                  _saveAccount();
                 },
-                child: Text("Sign Out"),
-                style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all(Colors.red),
-                  foregroundColor: MaterialStateProperty.all(Colors.white),
+                child: const Text(
+                  'Save',
+                  style: TextStyle(color: Colors.black),
                 ),
               ),
             ),
+            const SizedBox(height: 0.0),
           ],
         ),
       ),

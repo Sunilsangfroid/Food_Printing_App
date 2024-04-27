@@ -25,6 +25,7 @@ import 'Pages/feedback _page.dart';
 import 'Pages/chats.dart';
 import 'Pages/help.dart';
 import 'package:itrm_screen/globals.dart' as globals;
+import 'Pages/register.dart';
 
 const defaultBlue = Color(0xff4c7efe);
 const starColor = Color(0xffffc529);
@@ -87,6 +88,7 @@ MaterialApp myApp=MaterialApp(
     '/help': (context) => const HelpFAQPage(),
     '/search': (context) => const SearchPage(),
     '/category': (context) => const CategoryPage(),
+    '/register': (context) => const RegistrationPage(),
   },
 );
 void main() async{

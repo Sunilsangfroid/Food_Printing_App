@@ -154,6 +154,22 @@ class DrawerWidget extends StatelessWidget {
                   color: Colors.black),
             ),
           ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, "/test");
+          //   },
+          //   leading: const Icon(
+          //     CupertinoIcons.question,
+          //     color: Colors.blue,
+          //   ),
+          //   title: const Text(
+          //     "testing",
+          //     style: TextStyle(
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black),
+          //   ),
+          // ),
           ListTile(
             onTap:
               () async {
