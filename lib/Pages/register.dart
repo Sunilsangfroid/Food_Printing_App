@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:itrm_screen/globals.dart';
+import 'package:mime/mime.dart';
+
 
 Future<void> initializeFirebase() async {
   await Firebase.initializeApp();
@@ -29,10 +31,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String selectedGender = 'Male';
   String selectedCountryCode = '+91';
   int profileCompletion = 0;
-  File? selectedImage;
+  // File? selectedImage;
 
   @override
   Widget build(BuildContext context) {
+    selectedImage=null;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -284,6 +287,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
     if (pickedFile != null) {
       setState(() {
         selectedImage = File(pickedFile.path);
+        if (selectedImage!=null) {
+          selectedImage!.copy('$docPath/pfp.jpg');
+        }
         print("selectedImage = ${pickedFile.path}");
       });
     }
@@ -352,8 +358,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
         String? imageUrl;
         if (selectedImage != null) {
           final storageRef = FirebaseStorage.instance.ref().child('user_images/${FirebaseAuth.instance.currentUser!.uid}');
-          final uploadTask = storageRef.putFile(selectedImage!);
-          final snapshot = await uploadTask.whenComplete(() => null);
+          final uploadTask = storageRef.putFile(selectedImage!,SettableMetadata(contentType: lookupMimeType(selectedImage!.path)));
+          final snapshot = await uploadTask.whenComplete(() => print('uploaded pfp'));
           imageUrl = await snapshot.ref.getDownloadURL();
         }
         userProfile=Profile(
@@ -366,7 +372,8 @@ class _RegistrationPageState extends State<RegistrationPage> {
           gender: selectedGender,
           phoneNo: phoneController.text,
           );
-        addUser(userProfile, imageUrl!);
+        addUser(userProfile!, imageUrl!);
+        localDb.collection('data').doc('user').set(userProfile!.toFirestore("image path here"));
 
         // await FirebaseFirestore.instance.collection('users').add({
         //   'name': nameController.text,

@@ -3,6 +3,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'firebase_options.dart';
+import 'package:localstore/localstore.dart';
 import 'package:flutter/material.dart';
 
 import 'Pages/notification.dart';
@@ -39,7 +40,8 @@ Future<void> initFireBase() async {
   checkSigned();
   await globals.initDatabase();
   await initList();
-  printAvail();
+  globals.testFetch();
+  // printAvail();
   initCart();
   // printCart();
   initPopNew();

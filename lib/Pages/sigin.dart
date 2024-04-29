@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/material.dart';
+import 'package:itrm_screen/globals.dart';
 import '../Pages/forget_passwod.dart';
 import '../Pages/signup.dart';
 import '../theme/theme.dart';
@@ -38,6 +39,8 @@ class _SignInScreenState extends State<SignInScreen> {
     // Once signed in, return the UserCredential
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
+      fetchUser();
+      print(userProfile);
       Navigator.pop(context);
       Navigator.pushReplacementNamed(
           context, '/home');
@@ -70,6 +73,8 @@ class _SignInScreenState extends State<SignInScreen> {
       if (loginSuccess) {
         // If login is successful, navigate to the home page
         print("loginSuccess= ${loginSuccess}");
+        fetchUser();
+        print(userProfile);
         Navigator.pop(context);
         Navigator.pushReplacementNamed(
             context, '/home');

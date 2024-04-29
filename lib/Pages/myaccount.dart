@@ -2,7 +2,10 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:mime/mime.dart';
 import 'package:flutter/services.dart';
+import 'package:itrm_screen/globals.dart';
 import 'package:itrm_screen/main.dart' show myApp;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
@@ -25,17 +28,21 @@ class _MyAccountPageState extends State<MyAccountPage> {
   double bmi = 0.0;
   User? user;
   String selectedCountryCode = '+91';
-  File? selectedImage; // Define a File variable to hold the selected image
+  bool editMode=false;
+  // File? selectedImage; // Define a File variable to hold the selected image
 
   @override
   void initState() {
     super.initState();
     user = FirebaseAuth.instance.currentUser;
-    nameController.text = 'Name';
+    nameController.text = (userProfile!=null)?userProfile!.name:"";
     emailController.text = user!.email!;
-    phoneController.text = '';
+    phoneController.text = (userProfile!=null)?userProfile!.phoneNo:"";
+    medicalHistoryController.text = (userProfile!=null)?userProfile!.medHistory:"";
     heightController.addListener(_calculateBMI);
     weightController.addListener(_calculateBMI);
+    heightController.text = (userProfile!=null)?userProfile!.height.toString():"";
+    weightController.text = (userProfile!=null)?userProfile!.weight.toString():'';
   }
 
   @override
@@ -45,7 +52,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
         title: const Text('My Account'),
         backgroundColor: Colors.transparent,
         actions: [
-          IconButton(onPressed: (){},icon: Icon(Icons.edit),),
+          if (!editMode)
+          IconButton(onPressed: (){setState(() {
+            editMode=true;
+          });},icon: Icon(Icons.edit),),
         ],
       ),
       body: SingleChildScrollView(
@@ -121,6 +131,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                     medicalHistoryController)),
             const SizedBox(height: 20.0),
             const Divider(),
+            if (editMode)
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
@@ -172,8 +183,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
         ],
       ),
       child: TextFormField(
+        key: ValueKey(editMode),
         controller: controller,
         keyboardType: inputType,
+        readOnly: (!editMode || controller==emailController)? true:false,
         onChanged: (value) {
           // Only update nameController text while typing
           if (controller == nameController) {
@@ -219,6 +232,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.text,
+        readOnly: !editMode,
         decoration: const InputDecoration(
           border: OutlineInputBorder(
             borderSide: BorderSide(color: Colors.blue),
@@ -324,12 +338,26 @@ class _MyAccountPageState extends State<MyAccountPage> {
     }
   }
 
-  void _saveAccount() {
+  void _saveAccount() async{
     print('Saved Name: ${nameController.text}');
     print('Saved Email-id: ${emailController.text}');
     print('Saved Phone_number: ${phoneController.text}');
     print('Saved Medical History: ${medicalHistoryController.text}');
-    
+    userProfile!.name=nameController.text;
+    userProfile!.phoneNo=phoneController.text;
+    userProfile!.height=double.parse(heightController.text);
+    userProfile!.weight=double.parse(weightController.text);
+    userProfile!.medHistory=medicalHistoryController.text;
+    var imageUrl;
+    if (selectedImage!=null) {
+      selectedImage!.copy('$docPath/pfp.jpg');
+      final storageRef = FirebaseStorage.instance.ref().child('user_images/${FirebaseAuth.instance.currentUser!.uid}');
+      final uploadTask = storageRef.putFile(selectedImage!,SettableMetadata(contentType: lookupMimeType(selectedImage!.path)));
+      final snapshot = await uploadTask.whenComplete(() => print('uploaded pfp'));
+      imageUrl = await snapshot.ref.getDownloadURL();
+    }
+    addUser(userProfile!, imageUrl!);
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
@@ -353,6 +381,9 @@ class _MyAccountPageState extends State<MyAccountPage> {
         ),
       ),
     );
+    setState(() {
+      editMode=false;
+    });
   }
 
   @override

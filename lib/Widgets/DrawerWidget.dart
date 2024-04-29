@@ -4,6 +4,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:itrm_screen/globals.dart';
 
 class DrawerWidget extends StatelessWidget {
   VoidCallback func = () {};
@@ -15,24 +16,25 @@ class DrawerWidget extends StatelessWidget {
       backgroundColor: Colors.white,
       child: ListView(
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             padding: EdgeInsets.zero,
             child: UserAccountsDrawerHeader(
               decoration: BoxDecoration(
                 color: Colors.blue,
               ),
               accountName: Text(
-                "Ch.Sunil Patra",
+                (userProfile!=null)?userProfile!.name:"",
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
               accountEmail: Text(
-                "sunilsangfroid@gmail.com",
+                FirebaseAuth.instance.currentUser!.email!,
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
               currentAccountPicture: CircleAvatar(
+                foregroundImage: FileImage(selectedImage!),
                   backgroundImage: AssetImage("assets/images/avatar.png")),
               margin: EdgeInsets.only(bottom: 1),
             ),

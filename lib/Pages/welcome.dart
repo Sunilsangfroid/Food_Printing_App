@@ -20,6 +20,7 @@ class WelcomeScreen extends StatelessWidget {
               content: Text('Signed in as ${FirebaseAuth.instance.currentUser?.email}.'),
             ),
           );
+          fetchUser();
           print("switch");Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
         }
         _isLoading=false;

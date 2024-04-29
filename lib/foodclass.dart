@@ -10,8 +10,8 @@ class FoodItem {
   String name;
   String description;
   String shortDesc;
-  double rating;
-  int reviews;
+  double? rating;
+  int? reviews;
   String imagePath;
   List<String> tags;
   final int id;
@@ -20,15 +20,15 @@ class FoodItem {
   FoodItem({this.name="",this.description="",this.shortDesc="",this.rating=0.0,this.reviews=0,this.imagePath="",this.tags=const <String>[],required this.id});
   factory FoodItem.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
-      SnapshotOptions? options,
+      List<num?> rates,
       ) {
     final data = snapshot.data();
     return FoodItem(
       name: data?['name'],
       description: data?['description'],
       shortDesc: data?['shortDesc'],
-      rating: Random().nextDouble()*5,
-      reviews: Random().nextInt(5000),
+      rating: rates.first?.toDouble(),
+      reviews: rates.last?.toInt(),
       imagePath: data?['imagePath'],
       tags: List<String>.from(data?["tags"]),
       id: data?['id']
@@ -46,7 +46,10 @@ class FoodItem {
     return temp;
   }
 }
-String roundReviews(int reviews){
+String roundReviews(int? reviews){
+  if (reviews==null || reviews==0){
+    return "No Reviews";
+  }
   if (reviews<=100){
     return reviews.toString();
   }
@@ -70,10 +73,12 @@ Future<void> initList() async {
   await db
       .collection('foods')
       .get()
-      .then((querySnapshot) {
+      .then((querySnapshot) async{
         for (var docSnapshot in querySnapshot.docs) {
+          List<num?> rates=[];
+          await fetchAvgRating(docSnapshot.data()?['id']).then((value) {rates=value;});
           print('${docSnapshot.id} => ${docSnapshot.data()}');
-          addFood(FoodItem.fromFirestore(docSnapshot,null));
+          addFood(FoodItem.fromFirestore(docSnapshot,rates));
         }
         print("fetched foods");
   });

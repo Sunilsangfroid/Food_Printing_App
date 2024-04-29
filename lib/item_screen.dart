@@ -133,7 +133,7 @@ class _ItemScreenState extends State<ItemScreen> {
                 children: [
                   const Icon(Icons.star_rate_rounded,color: starColor,),
                   Text(
-                    " ${chococake.rating.toStringAsFixed(1)}  ",
+                    chococake.reviews!=0 ?" ${chococake.rating?.toStringAsFixed(1)}  ":"",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
                   Text(
