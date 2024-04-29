@@ -22,7 +22,8 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
+
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController heightController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
@@ -32,10 +33,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
   String selectedCountryCode = '+91';
   int profileCompletion = 0;
   // File? selectedImage;
-
+  void initImage(){
+    selectedImage=null;
+  }
   @override
   Widget build(BuildContext context) {
-    selectedImage=null;
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -95,6 +97,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               'Email', 
               TextFormField(
                 controller: emailController,
+                readOnly: true,
                 keyboardType: TextInputType.emailAddress,
                 decoration: InputDecoration(
                   border: OutlineInputBorder(),
@@ -372,7 +375,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           gender: selectedGender,
           phoneNo: phoneController.text,
           );
-        addUser(userProfile!, imageUrl!);
+        addUser(userProfile!, (imageUrl!=null)?imageUrl!:'');
         localDb.collection('data').doc('user').set(userProfile!.toFirestore("image path here"));
 
         // await FirebaseFirestore.instance.collection('users').add({

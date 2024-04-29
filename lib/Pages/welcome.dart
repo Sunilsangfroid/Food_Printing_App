@@ -21,7 +21,14 @@ class WelcomeScreen extends StatelessWidget {
             ),
           );
           fetchUser();
-          print("switch");Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+          print(userProfile.toString());
+          if (userProfile==null){
+            Navigator.pushReplacementNamed(context, '/register');
+          }
+          else {
+            print("switch");
+            Navigator.pushNamedAndRemoveUntil(context, "/home", (route) => false);
+          }
         }
         _isLoading=false;
     });

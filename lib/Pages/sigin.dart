@@ -42,8 +42,12 @@ class _SignInScreenState extends State<SignInScreen> {
       fetchUser();
       print(userProfile);
       Navigator.pop(context);
-      Navigator.pushReplacementNamed(
-          context, '/home');
+      if (userProfile==null){
+        Navigator.pushReplacementNamed(context, '/register');
+      }
+      else {
+        Navigator.pushReplacementNamed(context, '/home');
+      }
     }catch (e){
       print(e);
     }
@@ -76,9 +80,13 @@ class _SignInScreenState extends State<SignInScreen> {
         fetchUser();
         print(userProfile);
         Navigator.pop(context);
-        Navigator.pushReplacementNamed(
-            context, '/home');
-        // ignore: dead_code
+        if (userProfile==null){
+          Navigator.pushReplacementNamed(context, '/register');
+        }
+        else {
+          Navigator.pushReplacementNamed(
+              context, '/home');
+        }// ignore: dead_code
       } else {
         // If login fails, show a snackbar with an error message
         ScaffoldMessenger.of(context).showSnackBar(

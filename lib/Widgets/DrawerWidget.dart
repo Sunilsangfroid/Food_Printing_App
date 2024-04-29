@@ -34,7 +34,7 @@ class DrawerWidget extends StatelessWidget {
                 style: TextStyle(fontSize: 16, color: Colors.white),
               ),
               currentAccountPicture: CircleAvatar(
-                foregroundImage: FileImage(selectedImage!),
+                  foregroundImage: (selectedImage!=null)?FileImage(selectedImage!):null,
                   backgroundImage: AssetImage("assets/images/avatar.png")),
               margin: EdgeInsets.only(bottom: 1),
             ),
