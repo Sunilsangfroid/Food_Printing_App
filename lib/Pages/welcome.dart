@@ -13,14 +13,14 @@ class WelcomeScreen extends StatelessWidget {
 
   void check(context) async {
     if (isSignedIn)_isLoading=true;
-    await Future.delayed(Duration(seconds: 1), () {
+    await Future.delayed(Duration(seconds: 1), () async{
         if (isSignedIn){
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text('Signed in as ${FirebaseAuth.instance.currentUser?.email}.'),
             ),
           );
-          fetchUser();
+          await fetchUser();
           print(userProfile.toString());
           if (userProfile==null){
             Navigator.pushReplacementNamed(context, '/register');

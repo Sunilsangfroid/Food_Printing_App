@@ -76,7 +76,7 @@ void testUser(){
   );
   addUser(user2 as Profile,"");
 }
-void fetchUser() async{
+Future<void> fetchUser() async{
   Map<String,dynamic>? data= await localDb.collection("data").doc("user").get();
   if (data==null){
     print("data not stored bfore");
