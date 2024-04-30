@@ -6,7 +6,7 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +21,9 @@ class MyApp extends StatelessWidget {
 }
 
 class ChatScreen extends StatefulWidget {
-  const ChatScreen({super.key});
+  const ChatScreen({Key? key}) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
   _ChatScreenState createState() => _ChatScreenState();
 }
 
@@ -32,51 +31,52 @@ class _ChatScreenState extends State<ChatScreen> {
   final stt.SpeechToText _speech = stt.SpeechToText();
   bool _isListening = false;
   String _text = '';
+  final List<ChatMessage> _messages = []; // List to hold chat messages
 
   @override
   void initState() {
     super.initState();
     _initSpeech();
+    _addInitialMessages(); // Add initial messages
   }
 
   void _initSpeech() async {
     bool available = await _speech.initialize(
-      // ignore: avoid_print
       onStatus: (status) => print('Status: $status'),
-      // ignore: avoid_print
       onError: (error) => print('Error: $error'),
     );
     if (available) {
       setState(() => _isListening = true);
     } else {
-      // ignore: avoid_print
       print('The user has denied the use of speech recognition.');
     }
+  }
+
+  void _addInitialMessages() {
+    _messages.add(ChatMessage(
+      text: 'Hello! How can I help you today?',
+      isMe: false,
+    ));
+    _messages.add(ChatMessage(
+      text: 'I want to know about your products.',
+      isMe: true,
+    ));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Chatbot'),
-        backgroundColor: Colors.transparent,
+        title: const Text('Chat Bot'),
       ),
       body: Column(
-        children: <Widget>[
+        children: [
           Expanded(
-            child: ListView(
-              children: const <Widget>[
-                // Chat messages display area
-                ChatMessage(
-                  text: 'Hello! How can I help you today?',
-                  isMe: false,
-                ),
-                ChatMessage(
-                  text: 'I want to know about your products.',
-                  isMe: true,
-                ),
-                // Add more chat messages as needed
-              ],
+            child: ListView.builder(
+              itemCount: _messages.length,
+              itemBuilder: (context, index) {
+                return _messages[index];
+              },
             ),
           ),
           _buildInputArea(),
@@ -105,11 +105,12 @@ class _ChatScreenState extends State<ChatScreen> {
                   _text = value;
                 });
               },
+              onSubmitted: _handleSubmit, // Pass the _handleSubmit function directly
             ),
           ),
           IconButton(
             icon: const Icon(Icons.send),
-            onPressed: _text.trim().isEmpty ? null : _handleSubmit,
+            onPressed: _text.trim().isEmpty ? null : () => _handleSubmit(_text), // Pass _text to _handleSubmit
           ),
         ],
       ),
@@ -126,11 +127,32 @@ class _ChatScreenState extends State<ChatScreen> {
     );
   }
 
-  void _handleSubmit() {
-    // Send message logic
-    setState(() {
-      // Clear text field
-      _text = '';
+  void _handleSubmit(String text) {
+    if (text.isNotEmpty) {
+      // Add message to the list
+      setState(() {
+        _messages.add(ChatMessage(
+          text: text,
+          isMe: true,
+        ));
+        _text = ''; // Clear text field
+      });
+
+      // Perform any logic here for responding to user messages
+
+      // Simulate a response after a delay (for demo purposes)
+      _simulateResponse();
+    }
+  }
+
+  void _simulateResponse() {
+    Future.delayed(const Duration(seconds: 1), () {
+      setState(() {
+        _messages.add(ChatMessage(
+          text: 'Thank you for your message!',
+          isMe: false,
+        ));
+      });
     });
   }
 }
@@ -150,19 +172,18 @@ class ChatMessage extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 10.0),
       padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-      decoration: BoxDecoration(
-        color: isMe ? Colors.blue : Colors.grey[300],
-        borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(isMe ? 20.0 : 5.0),
-          topRight: Radius.circular(isMe ? 5.0 : 20.0),
-          bottomLeft: const Radius.circular(20.0),
-          bottomRight: const Radius.circular(20.0),
+      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        decoration: BoxDecoration(
+          color: isMe ? Colors.blue : Colors.grey[300],
+          borderRadius: BorderRadius.circular(10.0),
         ),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          color: isMe ? Colors.white : Colors.black,
+        padding: const EdgeInsets.all(10.0),
+        child: Text(
+          text,
+          style: TextStyle(
+            color: isMe ? Colors.white : Colors.black,
+          ),
         ),
       ),
     );

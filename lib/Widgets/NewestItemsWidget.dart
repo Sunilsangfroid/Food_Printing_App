@@ -20,6 +20,15 @@ class _NewestItemsWidgetState extends State<NewestItemsWidget> {
     setState(() {});
   }
 
+  void addToCart(int id) {
+    if (cart.containsKey(id)) {
+      cart[id] = cart[id]! + 1; // Increment quantity if item exists in cart
+    } else {
+      cart[id] = 1; // Add item to cart with quantity 1
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -131,10 +140,10 @@ class _NewestItemsWidgetState extends State<NewestItemsWidget> {
                                     size: 26,
                                   ),
                                 ),
-                                const SizedBox(height: 30),
+                                const SizedBox(height: 8),
                                 IconButton(
                                   onPressed: () {
-                                    cart[id] = 0;
+                                    addToCart(id); // Add item to cart
                                   },
                                   icon: const Icon(
                                     CupertinoIcons.cart,

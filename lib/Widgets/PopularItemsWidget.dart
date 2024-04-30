@@ -18,6 +18,10 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
     setState(() {});
   }
 
+  bool isFavorited(int id) {
+    return favourites.contains(id);
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -98,10 +102,12 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
                                       favouriteItem(id);
                                     },
                                     icon: Icon(
-                                      favourites.contains(id)
+                                      isFavorited(id)
                                           ? Icons.favorite
                                           : Icons.favorite_border,
-                                      color: Colors.blue,
+                                      color: isFavorited(id)
+                                          ? Colors.red
+                                          : Colors.blue,
                                       size: 20,
                                     ),
                                   ),

@@ -28,21 +28,24 @@ class _MyAccountPageState extends State<MyAccountPage> {
   double bmi = 0.0;
   User? user;
   String selectedCountryCode = '+91';
-  bool editMode=false;
+  bool editMode = false;
   // File? selectedImage; // Define a File variable to hold the selected image
 
   @override
   void initState() {
     super.initState();
     user = FirebaseAuth.instance.currentUser;
-    nameController.text = (userProfile!=null)?userProfile!.name:"";
+    nameController.text = (userProfile != null) ? userProfile!.name : "";
     emailController.text = user!.email!;
-    phoneController.text = (userProfile!=null)?userProfile!.phoneNo:"";
-    medicalHistoryController.text = (userProfile!=null)?userProfile!.medHistory:"";
+    phoneController.text = (userProfile != null) ? userProfile!.phoneNo : "";
+    medicalHistoryController.text =
+        (userProfile != null) ? userProfile!.medHistory : "";
     heightController.addListener(_calculateBMI);
     weightController.addListener(_calculateBMI);
-    heightController.text = (userProfile!=null)?userProfile!.height.toString():"";
-    weightController.text = (userProfile!=null)?userProfile!.weight.toString():'';
+    heightController.text =
+        (userProfile != null) ? userProfile!.height.toString() : "";
+    weightController.text =
+        (userProfile != null) ? userProfile!.weight.toString() : '';
   }
 
   @override
@@ -53,9 +56,14 @@ class _MyAccountPageState extends State<MyAccountPage> {
         backgroundColor: Colors.transparent,
         actions: [
           if (!editMode)
-          IconButton(onPressed: (){setState(() {
-            editMode=true;
-          });},icon: Icon(Icons.edit),),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  editMode = true;
+                });
+              },
+              icon: Icon(Icons.edit),
+            ),
         ],
       ),
       body: SingleChildScrollView(
@@ -95,55 +103,60 @@ class _MyAccountPageState extends State<MyAccountPage> {
               ],
             ),
             const SizedBox(height: 20.0),
+            buildContainerWithLabel('Name',
+                buildInputField(nameController, inputType: TextInputType.text)),
             buildContainerWithLabel(
-                'Name', buildInputField(nameController, inputType: TextInputType.text)),
-            buildContainerWithLabel(
-                'Email', buildInputField(emailController, inputType: TextInputType.emailAddress)),
+                'Email',
+                buildInputField(emailController,
+                    inputType: TextInputType.emailAddress)),
             buildContainerWithLabel(
               'Phone',
               Row(
                 children: [
                   buildCountryCodeDropdown(),
                   const SizedBox(width: 8.0),
-                  Expanded(child: buildInputField(phoneController, inputType: TextInputType.phone)),
+                  Expanded(
+                      child: buildInputField(phoneController,
+                          inputType: TextInputType.phone)),
                 ],
               ),
             ),
             const SizedBox(height: 20.0),
             const Divider(),
             buildContainerWithDropdown(
-                'Gender', ['Male', 'Female', 'Other'], selectedGender,
-                (value) {
+                'Gender', ['Male', 'Female', 'Other'], selectedGender, (value) {
               setState(() {
                 selectedGender = value;
               });
             }),
-            buildContainerWithLabel('Height (cm)',
-                buildInputField(heightController, inputType: TextInputType.number)),
-            buildContainerWithLabel('Weight (kg)',
-                buildInputField(weightController, inputType: TextInputType.number)),
+            buildContainerWithLabel(
+                'Height (cm)',
+                buildInputField(heightController,
+                    inputType: TextInputType.number)),
+            buildContainerWithLabel(
+                'Weight (kg)',
+                buildInputField(weightController,
+                    inputType: TextInputType.number)),
             buildContainerWithLabel('BMI', buildBMIField()),
             const SizedBox(height: 20.0),
             const Divider(),
-            buildContainerWithLabel(
-                'Medical History',
-                buildMedicalHistoryField(
-                    medicalHistoryController)),
+            buildContainerWithLabel('Medical History',
+                buildMedicalHistoryField(medicalHistoryController)),
             const SizedBox(height: 20.0),
             const Divider(),
             if (editMode)
-            Align(
-              alignment: Alignment.center,
-              child: ElevatedButton(
-                onPressed: () {
-                  _saveAccount();
-                },
-                child: const Text(
-                  'Save',
-                  style: TextStyle(color: Colors.black),
+              Align(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  onPressed: () {
+                    _saveAccount();
+                  },
+                  child: const Text(
+                    'Save',
+                    style: TextStyle(color: Colors.black),
+                  ),
                 ),
               ),
-            ),
             const SizedBox(height: 0.0),
           ],
         ),
@@ -186,7 +199,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
         key: ValueKey(editMode),
         controller: controller,
         keyboardType: inputType,
-        readOnly: (!editMode || controller==emailController)? true:false,
+        readOnly: (!editMode || controller == emailController) ? true : false,
         onChanged: (value) {
           // Only update nameController text while typing
           if (controller == nameController) {
@@ -208,7 +221,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
           ),
         ),
         validator: (value) {
-          if (inputType == TextInputType.emailAddress && !value!.endsWith('@gmail.com')) {
+          if (inputType == TextInputType.emailAddress &&
+              !value!.endsWith('@gmail.com')) {
             return 'Email must end with @gmail.com';
           }
           return null;
@@ -330,7 +344,8 @@ class _MyAccountPageState extends State<MyAccountPage> {
   }
 
   void _chooseImage() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         selectedImage = File(pickedFile.path); // Store the selected image file
@@ -338,22 +353,26 @@ class _MyAccountPageState extends State<MyAccountPage> {
     }
   }
 
-  void _saveAccount() async{
+  void _saveAccount() async {
     print('Saved Name: ${nameController.text}');
     print('Saved Email-id: ${emailController.text}');
     print('Saved Phone_number: ${phoneController.text}');
     print('Saved Medical History: ${medicalHistoryController.text}');
-    userProfile!.name=nameController.text;
-    userProfile!.phoneNo=phoneController.text;
-    userProfile!.height=double.parse(heightController.text);
-    userProfile!.weight=double.parse(weightController.text);
-    userProfile!.medHistory=medicalHistoryController.text;
+    userProfile!.name = nameController.text;
+    userProfile!.phoneNo = phoneController.text;
+    userProfile!.height = double.parse(heightController.text);
+    userProfile!.weight = double.parse(weightController.text);
+    userProfile!.medHistory = medicalHistoryController.text;
     var imageUrl;
-    if (selectedImage!=null) {
+    if (selectedImage != null) {
       selectedImage!.copy('$docPath/pfp.jpg');
-      final storageRef = FirebaseStorage.instance.ref().child('user_images/${FirebaseAuth.instance.currentUser!.uid}');
-      final uploadTask = storageRef.putFile(selectedImage!,SettableMetadata(contentType: lookupMimeType(selectedImage!.path)));
-      final snapshot = await uploadTask.whenComplete(() => print('uploaded pfp'));
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('user_images/${FirebaseAuth.instance.currentUser!.uid}');
+      final uploadTask = storageRef.putFile(selectedImage!,
+          SettableMetadata(contentType: lookupMimeType(selectedImage!.path)));
+      final snapshot =
+          await uploadTask.whenComplete(() => print('uploaded pfp'));
       imageUrl = await snapshot.ref.getDownloadURL();
     }
     addUser(userProfile!, imageUrl!);
@@ -382,7 +401,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
       ),
     );
     setState(() {
-      editMode=false;
+      editMode = false;
     });
   }
 

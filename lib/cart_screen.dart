@@ -12,21 +12,23 @@ class CartScreen extends StatefulWidget {
 class _CartScreenState extends State<CartScreen> {
   void incrementCounter(int id) {
     setState(() {
-      if (cart[id]! >= 99) {
-        cart[id] = 99;
-        return;
+      if (cart[id]! >= 9) {
+        cart[id] = 9;
+      } else {
+        cart[id] = (cart[id]!) + 1;
       }
-      cart[id] = (cart[id]!) + 1;
     });
   }
 
   void decrementCounter(int id) {
     setState(() {
-      if (cart[id]! <= 0) {
-        cart[id] = 0;
-        return;
+      if (cart[id]! > 1) {
+        cart[id] = cart[id]! - 1;
       }
-      cart[id] = (cart[id]!) - 1;
+      // Ensure minimum quantity is 1
+      if (cart[id]! <= 0) {
+        cart[id] = 1;
+      }
     });
   }
 
@@ -181,7 +183,6 @@ class _CartScreenState extends State<CartScreen> {
                                         icon: const Icon(
                                           Icons.add,
                                         ),
-                                        //style: FilledButton.styleFrom(backgroundColor: defaultBlue),
                                       ),
                                     ),
                                   ],

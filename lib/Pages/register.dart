@@ -1,18 +1,11 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:itrm_screen/globals.dart';
+import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:mime/mime.dart';
 
-
-Future<void> initializeFirebase() async {
-  await Firebase.initializeApp();
-}
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
 
@@ -22,20 +15,19 @@ class RegistrationPage extends StatefulWidget {
 
 class _RegistrationPageState extends State<RegistrationPage> {
   final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
-
+  final TextEditingController emailController =
+      TextEditingController(text: FirebaseAuth.instance.currentUser!.email);
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController heightController = TextEditingController();
   final TextEditingController weightController = TextEditingController();
   final TextEditingController dobController = TextEditingController();
-  final TextEditingController medicalHistoryController = TextEditingController();
+  final TextEditingController medicalHistoryController =
+      TextEditingController();
+
   String selectedGender = 'Male';
   String selectedCountryCode = '+91';
-  int profileCompletion = 0;
-  // File? selectedImage;
-  void initImage(){
-    selectedImage=null;
-  }
+  File? selectedImage;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,7 +49,6 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             SizedBox(height: 20.0),
-            // Profile Image Field
             GestureDetector(
               onTap: _pickImage,
               child: Container(
@@ -84,7 +75,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
             ),
             SizedBox(height: 20.0),
             buildContainerWithLabel(
-              'Name', 
+              'Name',
               TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
@@ -94,7 +85,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             buildContainerWithLabel(
-              'Email', 
+              'Email',
               TextFormField(
                 controller: emailController,
                 readOnly: true,
@@ -110,12 +101,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 children: [
                   buildCountryCodeDropdown(),
                   const SizedBox(width: 8.0),
-                  Expanded(child: buildInputField(phoneController, inputType: TextInputType.phone)),
+                  Expanded(
+                    child: buildInputField(phoneController,
+                        inputType: TextInputType.phone),
+                  ),
                 ],
               ),
             ),
             buildContainerWithLabel(
-              'Date of Birth', 
+              'Date of Birth',
               GestureDetector(
                 onTap: _pickDateOfBirth,
                 child: AbsorbPointer(
@@ -130,52 +124,54 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             buildContainerWithDropdown(
-                'Gender', ['Male', 'Female', 'Other'], selectedGender,
-                (value) {
+                'Gender', ['Male', 'Female', 'Other'], selectedGender, (value) {
               setState(() {
                 selectedGender = value;
               });
             }),
             buildContainerWithLabel(
-              'Height (cm)', 
-              buildInputField(heightController, inputType: TextInputType.number),
+              'Height (cm)',
+              buildInputField(heightController,
+                  inputType: TextInputType.number),
             ),
             buildContainerWithLabel(
-              'Weight (kg)', 
-              buildInputField(weightController, inputType: TextInputType.number),
+              'Weight (kg)',
+              buildInputField(weightController,
+                  inputType: TextInputType.number),
             ),
             buildContainerWithLabel(
-              'Medical History*', 
+              'Medical History*',
               buildMedicalHistoryField(medicalHistoryController),
             ),
             SizedBox(height: 20.0),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
-                onPressed: () {
-                  _register();
-                },
+                onPressed: _register,
                 style: ButtonStyle(
-                  backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                  foregroundColor: MaterialStateProperty.all<Color>(Colors.black),
+                  backgroundColor:
+                      MaterialStateProperty.all<Color>(Colors.blue),
+                  foregroundColor:
+                      MaterialStateProperty.all<Color>(Colors.black),
                 ),
                 child: Text('Register'),
               ),
             ),
-
-
           ],
         ),
       ),
     );
   }
+
   Widget buildCountryCodeDropdown() {
     return DropdownButton<String>(
       value: selectedCountryCode,
       onChanged: (String? value) {
-        setState(() {
-          selectedCountryCode = value!;
-        });
+        if (value != null) {
+          setState(() {
+            selectedCountryCode = value;
+          });
+        }
       },
       items: <String>['+91', '+1', '+44', '+61']
           .map<DropdownMenuItem<String>>((String value) {
@@ -186,7 +182,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
       }).toList(),
     );
   }
-  Widget buildInputField(TextEditingController controller, {required TextInputType inputType}) {
+
+  Widget buildInputField(TextEditingController controller,
+      {required TextInputType inputType}) {
     return Container(
       decoration: BoxDecoration(
         boxShadow: [
@@ -207,6 +205,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     );
   }
+
   Widget buildContainerWithDropdown(String label, List<String> options,
       String selectedOption, Function onChanged) {
     return Container(
@@ -243,6 +242,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     );
   }
+
   Widget buildMedicalHistoryField(TextEditingController controller) {
     return Container(
       decoration: BoxDecoration(
@@ -286,68 +286,49 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 
   void _pickImage() async {
-    final pickedFile = await ImagePicker().getImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().getImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         selectedImage = File(pickedFile.path);
-        if (selectedImage!=null) {
-          selectedImage!.copy('$docPath/pfp.jpg');
-        }
-        print("selectedImage = ${pickedFile.path}");
       });
     }
   }
 
-  void _pickDateOfBirth() {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Enter Date of Birth'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextFormField(
-              controller: dobController,
-              keyboardType: TextInputType.datetime,
-              decoration: InputDecoration(
-                hintText: 'DD/MM/YYYY',
-                border: OutlineInputBorder(),
-              ),
+  Future<void> _pickDateOfBirth() async {
+    final DateTime? pickedDate = await showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1900),
+      lastDate: DateTime.now(),
+      builder: (BuildContext context, Widget? child) {
+        return Theme(
+          data: ThemeData.light().copyWith(
+            colorScheme: ColorScheme.light(
+              primary: Colors.blue, // Color for the selected day
+              onPrimary: Colors.white, // Text color for the selected day
+              surface: Colors.white, // Background color of the calendar
+              onSurface: Colors.black, // Default text color
             ),
-          ],
-        ),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('Cancel'),
           ),
-          TextButton(
-            onPressed: () {
-              setState(() {
-              });
-              Navigator.of(context).pop();
-            },
-            child: Text('OK'),
-          ),
-        ],
-      );
-    },
-  );
-}
+          child: child!,
+        );
+      },
+    );
 
+    if (pickedDate != null) {
+      setState(() {
+        dobController.text = DateFormat('dd/MM/yyyy').format(pickedDate);
+      });
+    }
+  }
 
-
-  void _register() async {
-    if (nameController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        dobController.text.isEmpty ||
-        heightController.text.isEmpty ||
-        weightController.text.isEmpty ||
-        phoneController.text.isEmpty ||
-        medicalHistoryController.text.isEmpty) {
+  void _register() {
+    if (_isFormValid()) {
+      // Perform registration logic here
+      // You can access form field values using controllers
+      print('Registration successful!');
+    } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
@@ -356,61 +337,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
           ),
         ),
       );
-    } else {
-      try {
-        String? imageUrl;
-        if (selectedImage != null) {
-          final storageRef = FirebaseStorage.instance.ref().child('user_images/${FirebaseAuth.instance.currentUser!.uid}');
-          final uploadTask = storageRef.putFile(selectedImage!,SettableMetadata(contentType: lookupMimeType(selectedImage!.path)));
-          final snapshot = await uploadTask.whenComplete(() => print('uploaded pfp'));
-          imageUrl = await snapshot.ref.getDownloadURL();
-        }
-        userProfile=Profile(
-          name: nameController.text,
-          email: FirebaseAuth.instance.currentUser!.email,
-          dob: dobController.text,
-          height: double.parse(heightController.text),
-          weight: double.parse(weightController.text),
-          medHistory: medicalHistoryController.text,
-          gender: selectedGender,
-          phoneNo: phoneController.text,
-          );
-        addUser(userProfile!, (imageUrl!=null)?imageUrl!:'');
-        localDb.collection('data').doc('user').set(userProfile!.toFirestore("image path here"));
-
-        // await FirebaseFirestore.instance.collection('users').add({
-        //   'name': nameController.text,
-        //   'email': emailController.text,
-        //   'dob': dobController.text,
-        //   'height': double.parse(heightController.text),
-        //   'weight': double.parse(weightController.text),
-        //   'medicalHistory': medicalHistoryController.text,
-        //   'imageUrl': imageUrl,
-        // });
-
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'Registration successful!',
-              style: TextStyle(color: Colors.green),
-            ),
-          ),
-        );
-
-        Navigator.pushReplacementNamed(context, '/home');
-      } catch (error) {
-        print('Error registering user: $error');
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              'An error occurred. Please try again later.',
-              style: TextStyle(color: Colors.red),
-            ),
-          ),
-        );
-      }
     }
   }
 
-
+  bool _isFormValid() {
+    return nameController.text.isNotEmpty &&
+        emailController.text.isNotEmpty &&
+        dobController.text.isNotEmpty &&
+        heightController.text.isNotEmpty &&
+        weightController.text.isNotEmpty &&
+        phoneController.text.isNotEmpty &&
+        medicalHistoryController.text.isNotEmpty;
+  }
 }
