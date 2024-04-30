@@ -10,6 +10,7 @@ import 'package:itrm_screen/main.dart' show myApp;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
+
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({Key? key}) : super(key: key);
 
@@ -345,10 +346,10 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   void _chooseImage() async {
     final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        selectedImage = File(pickedFile.path); // Store the selected image file
+        selectedImage = File(pickedFile.path); 
       });
     }
   }

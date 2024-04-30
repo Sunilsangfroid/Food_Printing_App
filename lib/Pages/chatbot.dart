@@ -53,11 +53,11 @@ class _ChatScreenState extends State<ChatScreen> {
   }
 
   void _addInitialMessages() {
-    _messages.add(ChatMessage(
+    _messages.add(const ChatMessage(
       text: 'Hello! How can I help you today?',
       isMe: false,
     ));
-    _messages.add(ChatMessage(
+    _messages.add(const ChatMessage(
       text: 'I want to know about your products.',
       isMe: true,
     ));
@@ -148,7 +148,7 @@ class _ChatScreenState extends State<ChatScreen> {
   void _simulateResponse() {
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        _messages.add(ChatMessage(
+        _messages.add(const ChatMessage(
           text: 'Thank you for your message!',
           isMe: false,
         ));

@@ -197,9 +197,7 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {
-                Navigator.pushNamed(context, "/connect");
-              },
+              onPressed: () {},
               child: const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(

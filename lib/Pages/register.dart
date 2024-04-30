@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:mime/mime.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -124,11 +122,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             buildContainerWithDropdown(
-                'Gender', ['Male', 'Female', 'Other'], selectedGender, (value) {
-              setState(() {
-                selectedGender = value;
-              });
-            }),
+              'Gender',
+              ['Male', 'Female', 'Other'],
+              selectedGender,
+              (value) {
+                setState(() {
+                  selectedGender = value;
+                });
+              },
+            ),
             buildContainerWithLabel(
               'Height (cm)',
               buildInputField(heightController,
@@ -173,11 +175,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
           });
         }
       },
-      items: <String>['+91', '+1', '+44', '+61']
+      items: <String>['+91', '+92', '+1', '+44', '+61']
           .map<DropdownMenuItem<String>>((String value) {
+        String countryCode = value.substring(1); // Remove the '+' sign
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/images/${countryCode.toLowerCase()}.png', // Use asset path directly
+                width: 24,
+                height: 24,
+              ),
+              SizedBox(width: 8.0),
+              Text(value),
+            ],
+          ),
         );
       }).toList(),
     );
@@ -287,7 +300,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _pickImage() async {
     final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         selectedImage = File(pickedFile.path);
@@ -328,6 +341,20 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // Perform registration logic here
       // You can access form field values using controllers
       print('Registration successful!');
+
+      // Show a snackbar to indicate successful registration
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Registration successful!',
+            style: TextStyle(color: Colors.green),
+          ),
+        ),
+      );
+
+      // Navigate to the home screen after registration
+      Navigator.pushReplacementNamed(
+          context, '/home'); // Replace '/home' with your home screen route
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
