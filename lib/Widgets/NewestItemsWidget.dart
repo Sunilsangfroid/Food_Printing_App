@@ -50,10 +50,8 @@ class _NewestItemsWidgetState extends State<NewestItemsWidget> {
                         ),
                       ],
                     ),
-                    child: Flex(
-                      direction: Axis.horizontal,
+                    child: Row(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Expanded(
                           flex: 3,
@@ -77,43 +75,35 @@ class _NewestItemsWidgetState extends State<NewestItemsWidget> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
                               children: [
                                 Text(
                                   newest[id]!.name,
                                   style: const TextStyle(
-                                    fontSize: 22,
+                                    fontSize: 18,
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
+                                const SizedBox(height: 8),
                                 Text(
                                   newest[id]!.shortDesc,
                                   style: const TextStyle(
                                     fontSize: 14,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 53,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    RatingBar.builder(
-                                      initialRating: 4,
-                                      minRating: 1,
-                                      direction: Axis.horizontal,
-                                      itemCount: 5,
-                                      itemSize: 18,
-                                      itemPadding: const EdgeInsets.symmetric(
-                                          horizontal: 4),
-                                      itemBuilder: (context, _) => const Icon(
-                                        Icons.star,
-                                        color: Colors.yellow,
-                                      ),
-                                      onRatingUpdate: (index) {},
-                                    ),
-                                  ],
+                                const SizedBox(height: 8),
+                                RatingBar.builder(
+                                  initialRating: 4,
+                                  minRating: 1,
+                                  direction: Axis.horizontal,
+                                  itemCount: 5,
+                                  itemSize: 18,
+                                  itemPadding:
+                                      const EdgeInsets.symmetric(horizontal: 4),
+                                  itemBuilder: (context, _) => const Icon(
+                                    Icons.star,
+                                    color: Colors.yellow,
+                                  ),
+                                  onRatingUpdate: (index) {},
                                 ),
                               ],
                             ),
@@ -122,9 +112,10 @@ class _NewestItemsWidgetState extends State<NewestItemsWidget> {
                         Expanded(
                           flex: 2,
                           child: Padding(
-                            padding: const EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.symmetric(vertical: 8.0),
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 IconButton(
                                   onPressed: () {
@@ -140,9 +131,7 @@ class _NewestItemsWidgetState extends State<NewestItemsWidget> {
                                     size: 26,
                                   ),
                                 ),
-                                const SizedBox(
-                                  height: 65,
-                                ),
+                                const SizedBox(height: 30),
                                 IconButton(
                                   onPressed: () {
                                     cart[id] = 0;

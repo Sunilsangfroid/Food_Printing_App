@@ -2,14 +2,14 @@ import 'package:flutter/material.dart';
 import '../foodclass.dart';
 
 class PopularItemsWidget extends StatefulWidget {
-  const PopularItemsWidget({super.key});
+  const PopularItemsWidget({Key? key}) : super(key: key);
 
   @override
   State<PopularItemsWidget> createState() => _PopularItemsWidgetState();
 }
 
 class _PopularItemsWidgetState extends State<PopularItemsWidget> {
-  void favouriteItem(id) {
+  void favouriteItem(int id) {
     if (favourites.contains(id)) {
       favourites.remove(id);
     } else {
@@ -23,459 +23,101 @@ class _PopularItemsWidgetState extends State<PopularItemsWidget> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Padding(
-          padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
-          child: Row(
-            children: [
-              // Single Item
-              for (int id in popular.keys)
-                GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(context, "/item", arguments: id)
-                        .then((value) => setState(() {}));
-                  },
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 7),
-                    child: Container(
-                      width: 170,
-                      height: 225,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(10),
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 3,
-                              blurRadius: 10,
-                              offset: const Offset(0, 3),
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 5),
+        child: Row(
+          children: [
+            // Loop through popular items
+            for (int id in popular.keys)
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 7),
+                child: Container(
+                  width: 170,
+                  height: 250,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(10),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 3,
+                        blurRadius: 10,
+                        offset: const Offset(0, 3),
+                      ),
+                    ],
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Navigator.pushNamed(context, "/item", arguments: id)
+                          .then((value) => setState(() {}));
+                    },
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Expanded(
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.asset(
+                              popular[id]!.imagePath,
+                              width: double.infinity,
+                              fit: BoxFit.cover,
                             ),
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Container(
-                              alignment: Alignment.center,
-                              child: Image.asset(
-                                popular[id]!.imagePath,
-                                height: 130,
-                              ),
-                            ),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
                                 popular[id]!.name,
                                 style: const TextStyle(
-                                  fontSize: 20,
+                                  fontSize: 18,
                                   fontWeight: FontWeight.bold,
                                 ),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                            const SizedBox(height: 4),
-                            FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: Text(
-                                popular[id]!.shortDesc != ""
+                              const SizedBox(height: 4),
+                              Text(
+                                popular[id]!.shortDesc.isNotEmpty
                                     ? popular[id]!.shortDesc
                                     : "No Description",
                                 style: const TextStyle(
-                                  fontSize: 15,
-                                  // fontWeight: FontWeight.bold,
+                                  fontSize: 14,
                                 ),
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                            const SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                SizedBox(
-                                  width: 16,
-                                  height: 16,
-                                  child: IconButton(
-                                    padding: EdgeInsets.zero,
+                              const SizedBox(height: 8),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  IconButton(
                                     onPressed: () {
                                       favouriteItem(id);
                                     },
-                                    iconSize: 16,
                                     icon: Icon(
                                       favourites.contains(id)
                                           ? Icons.favorite
                                           : Icons.favorite_border,
                                       color: Colors.blue,
-                                      size: 16,
+                                      size: 20,
                                     ),
                                   ),
-                                ),
-                              ],
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Container(
-                  width: 170,
-                  height: 225,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/pizza.jpg",
-                            height: 130,
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        const Text(
-                          "Chessy pizza",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Taste Our Pizza",
-                          style: TextStyle(
-                            fontSize: 15,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
                       ],
                     ),
                   ),
                 ),
               ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Container(
-                  width: 170,
-                  height: 225,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/sandwich.jpg",
-                            height: 130,
-                          ),
-                        ),
-                        const Text(
-                          "Spicy Sandwich",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Taste Our Sandwich",
-                          style: TextStyle(
-                            fontSize: 15,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Container(
-                  width: 170,
-                  height: 225,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/alooparatha.jpg",
-                            height: 130,
-                          ),
-                        ),
-                        const Text(
-                          "Aloo Paratha",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Taste Our Paratha",
-                          style: TextStyle(
-                            fontSize: 15,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Container(
-                  width: 170,
-                  height: 225,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/frenchfries.jpg",
-                            height: 130,
-                          ),
-                        ),
-                        const Text(
-                          "French fries",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Taste Our french fries",
-                          style: TextStyle(
-                            fontSize: 15,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Container(
-                  width: 170,
-                  height: 225,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/biryani.jpg",
-                            height: 130,
-                          ),
-                        ),
-                        const Text(
-                          "Dum Biryani",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Taste Our Biryani",
-                          style: TextStyle(
-                            fontSize: 15,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 7),
-                child: Container(
-                  width: 170,
-                  height: 225,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 3,
-                          blurRadius: 10,
-                          offset: const Offset(0, 3),
-                        ),
-                      ]),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          alignment: Alignment.center,
-                          child: Image.asset(
-                            "assets/images/poha.jpg",
-                            height: 130,
-                          ),
-                        ),
-                        const Text(
-                          "Masala Poha",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 4),
-                        const Text(
-                          "Taste our Poha",
-                          style: TextStyle(
-                            fontSize: 15,
-                            // fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 12),
-                        const Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Icon(
-                              Icons.favorite_border,
-                              color: Colors.blue,
-                              size: 16,
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-              ),
-            ],
-          )),
+          ],
+        ),
+      ),
     );
   }
 }
