@@ -2,6 +2,7 @@
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:itrm_screen/Pages/connectprinter.dart';
 import 'firebase_options.dart';
 import 'package:localstore/localstore.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ import 'Pages/chats.dart';
 import 'Pages/help.dart';
 import 'package:itrm_screen/globals.dart' as globals;
 import 'Pages/register.dart';
+
 
 const defaultBlue = Color(0xff4c7efe);
 const starColor = Color(0xffffc529);
@@ -91,6 +93,7 @@ MaterialApp myApp=MaterialApp(
     '/search': (context) => const SearchPage(),
     '/category': (context) => const CategoryPage(),
     '/register': (context) => const RegistrationPage(),
+    '/connect':(context) => ConnectToPrinterScreen(),
   },
 );
 void main() async{
