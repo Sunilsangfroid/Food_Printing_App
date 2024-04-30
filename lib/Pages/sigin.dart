@@ -39,7 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
     // Once signed in, return the UserCredential
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
-      fetchUser();
+      await fetchUser();
       print(userProfile);
       Navigator.pop(context);
       if (userProfile==null){
@@ -77,7 +77,7 @@ class _SignInScreenState extends State<SignInScreen> {
       if (loginSuccess) {
         // If login is successful, navigate to the home page
         print("loginSuccess= ${loginSuccess}");
-        fetchUser();
+        await fetchUser();
         print(userProfile);
         Navigator.pop(context);
         if (userProfile==null){

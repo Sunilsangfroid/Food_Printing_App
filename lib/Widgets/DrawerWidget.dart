@@ -179,6 +179,7 @@ class DrawerWidget extends StatelessWidget {
                   switch (FirebaseAuth.instance.currentUser?.providerData[0].providerId) {
                     case 'password':
                       await FirebaseAuth.instance.signOut();
+                      localDb.collection('data').doc('user').delete();
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text('Signed out successfully.'),
