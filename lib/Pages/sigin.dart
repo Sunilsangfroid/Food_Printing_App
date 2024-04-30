@@ -39,7 +39,7 @@ class _SignInScreenState extends State<SignInScreen> {
     // Once signed in, return the UserCredential
     try {
       await FirebaseAuth.instance.signInWithCredential(credential);
-      fetchUser();
+      await fetchUser();
       print(userProfile);
       Navigator.pop(context);
       if (userProfile==null){
