@@ -169,20 +169,32 @@ class _MyAccountPageState extends State<MyAccountPage> {
     return DropdownButton<String>(
       value: selectedCountryCode,
       onChanged: (String? value) {
-        setState(() {
-          selectedCountryCode = value!;
-        });
+        if (value != null) {
+          setState(() {
+            selectedCountryCode = value;
+          });
+        }
       },
-      items: <String>['+91', '+1', '+44', '+61']
+      items: <String>['+91', '+92', '+1', '+44', '+61']
           .map<DropdownMenuItem<String>>((String value) {
+        String countryCode = value.substring(1); // Remove the '+' sign
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/images/${countryCode.toLowerCase()}.png', // Use asset path directly
+                width: 24,
+                height: 24,
+              ),
+              const SizedBox(width: 8.0),
+              Text(value),
+            ],
+          ),
         );
       }).toList(),
     );
   }
-
   Widget buildInputField(TextEditingController controller,
       {required TextInputType inputType}) {
     return Container(
