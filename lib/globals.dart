@@ -16,6 +16,7 @@ final localDb = Localstore.instance;
 Profile? userProfile;
 String docPath="";
 File? selectedImage;
+FirebaseAuth firebaseAuth=FirebaseAuth.instance;
 
 class Profile{
   String name;
@@ -167,6 +168,7 @@ void addRating(int fid,double rating,String review) async{
   Map<String,dynamic> rate={
     "fid":fid,
     "uid":FirebaseAuth.instance.currentUser!.uid,
+    "name":userProfile!.name,
     "rating":rating,
     "review":review,
   };
@@ -210,6 +212,10 @@ void addRating(int fid,double rating,String review) async{
       print(e);
     }
   }
+  List<num?> rates=[];
+  await fetchAvgRating(fid).then((value) => rates=value);
+  availFood[fid]!.rating=rates.first?.toDouble();
+  availFood[fid]!.reviews=rates.last?.toInt();
 }
 void testRating(){
   int fid=availFood.keys.firstWhere((element) => availFood[element]!.name.toLowerCase().trim()=="Hot Pizza".toLowerCase().trim());

@@ -166,27 +166,27 @@ class _ItemScreenState extends State<ItemScreen> {
                           decoration: TextDecoration.underline,
                           decorationColor: Colors.lightBlue),
                     ),
-                    // onTap: () {
-                    //   Navigator.push(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //       builder: (context) => ReviewScreen(itemId: id),
-                    //     ),
-                    //   );
-
-                    // To see  feedback page
-
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => const FeedbackScreen(
-                              foodImage: 'assets/images/burger.jpg',
-                              categoryImage: 'assets/images/fast_food.png',
-                              foodName: 'Burger'),
+                          builder: (context) => ReviewScreen(itemId: id),
                         ),
                       );
-                    },
+                    }
+                    // To see  feedback page
+
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => const FeedbackScreen(
+                    //           foodImage: 'assets/images/burger.jpg',
+                    //           categoryImage: 'assets/images/fast_food.png',
+                    //           foodName: 'Burger'),
+                    //     ),
+                    //   );
+                    // },
                   )
                 ],
               ),

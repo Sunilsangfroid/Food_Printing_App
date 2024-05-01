@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:itrm_screen/foodclass.dart';
+import 'package:itrm_screen/globals.dart';
 
 class FeedbackScreen extends StatefulWidget {
-  final String foodImage;
-  final String categoryImage;
-  final String foodName;
 
   const FeedbackScreen({
     Key? key,
-    required this.foodImage,
-    required this.categoryImage,
-    required this.foodName,
   }) : super(key: key);
 
   @override
@@ -23,6 +19,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final fid=ModalRoute.of(context)!.settings.arguments as int;
+    // final fid=availFood.keys.first;
+    final foodImage=availFood[fid]!.imagePath;
+    final foodName=availFood[fid]!.name;
+    final categoryImage=availFood[fid]!.tags.first;
     return Scaffold(
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
@@ -65,7 +66,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       height: 200,
                       decoration: BoxDecoration(
                         image: DecorationImage(
-                          image: AssetImage(widget.foodImage),
+                          image: AssetImage(foodImage),
                           fit: BoxFit.cover,
                         ),
                       ),
@@ -81,7 +82,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               color: Colors.white,
                             ),
                             child: CircleAvatar(
-                              backgroundImage: AssetImage(widget.categoryImage),
+                              backgroundImage: AssetImage(categoryImage),
                               radius: 35,
                               backgroundColor: Colors.transparent,
                             ),
@@ -96,7 +97,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         crossAxisAlignment: CrossAxisAlignment.stretch,
                         children: [
                           Text(
-                            widget.foodName,
+                            foodName,
                             textAlign: TextAlign.center,
                             style: const TextStyle(
                               color: Colors.black,
@@ -171,9 +172,11 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                           const SizedBox(height: 16),
                           // Submit Button
                           ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async{
                               // Handle submit feedback
+                              addRating(fid, rating, review);
                               print('Rating: $rating, Review: $review');
+                              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
                             },
                             child: const Text(
                               'Submit',
@@ -196,10 +199,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
 void main() {
   runApp(const MaterialApp(
-    home: FeedbackScreen(
-      foodImage: 'assets/images/alooparatha.jpg',
-      categoryImage: 'assets/images/fast_food.png',
-      foodName: 'Delicious Food',
-    ),
+    home: FeedbackScreen(),
   ));
 }

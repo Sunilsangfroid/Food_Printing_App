@@ -75,11 +75,7 @@ final myApp = MaterialApp(
       final itemId = ModalRoute.of(context)!.settings.arguments as int;
       return ReviewScreen(itemId: itemId);
     },
-    '/feedback': (context) => const FeedbackScreen(
-          foodImage: 'assets/images/burger.jpg',
-          categoryImage: 'assets/images/fast_food.png',
-          foodName: 'Burger',
-        ),
+    '/feedback': (context) => const FeedbackScreen(),
     '/cart': (context) => const CartScreen(),
     '/favourite': (context) => const FoodDeliveryScreen(),
     // '/feedback': (context) => const UI22(),

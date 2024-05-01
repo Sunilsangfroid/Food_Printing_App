@@ -197,7 +197,10 @@ class _CartScreenState extends State<CartScreen> {
               ),
             ),
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () {
+                //testing reviewing
+                Navigator.pushNamed(context, '/feedback', arguments: cart.keys.first);
+              },
               child: const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
