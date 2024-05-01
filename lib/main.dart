@@ -16,7 +16,7 @@ import 'cart_screen.dart';
 import 'foodclass.dart';
 import 'Pages/HomePage.dart';
 import 'Pages/favourite_screen.dart';
-import 'Pages/chats.dart';
+import 'Pages/chats.dart';      
 import 'Pages/help.dart';
 import 'Pages/register.dart';
 import 'firebase_options.dart';

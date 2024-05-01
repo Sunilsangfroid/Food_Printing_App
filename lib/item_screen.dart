@@ -1,4 +1,6 @@
 // import 'package:flutter/foundation.dart';
+// ignore_for_file: unused_import, avoid_print
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:itrm_screen/Pages/feedback%20_page.dart';
@@ -28,8 +30,8 @@ class _ItemScreenState extends State<ItemScreen> {
 
   void decrementCounter() {
     setState(() {
-      if (qty <= 0) {
-        qty = 0;
+      if (qty <= 1) {
+        qty = 10;
       } else {
         qty = qty - 1;
       }
@@ -164,26 +166,26 @@ class _ItemScreenState extends State<ItemScreen> {
                           decoration: TextDecoration.underline,
                           decorationColor: Colors.lightBlue),
                     ),
+                    // onTap: () {
+                    //   Navigator.push(
+                    //     context,
+                    //     MaterialPageRoute(
+                    //       builder: (context) => ReviewScreen(itemId: id),
+                    //     ),
+                    //   );
+
+                    // To see  feedback page
+
                     onTap: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => ReviewScreen(itemId: id),
+                          builder: (context) => const FeedbackScreen(
+                              foodImage: 'assets/images/burger.jpg',
+                              categoryImage: 'assets/images/fast_food.png',
+                              foodName: 'Burger'),
                         ),
                       );
-
-                      // To see  feedback page
-
-                      // onTap: () {
-                      //   Navigator.push(
-                      //     context,
-                      //     MaterialPageRoute(
-                      //       builder: (context) => const FeedbackScreen(
-                      //           foodImage: 'assets/images/burger.jpg',
-                      //           categoryImage: 'assets/images/fast_food.png',
-                      //           foodName: 'Burger'),
-                      //     ),
-                      //   );
                     },
                   )
                 ],
