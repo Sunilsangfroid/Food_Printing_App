@@ -1,10 +1,8 @@
 import 'dart:io';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
-import 'package:mime/mime.dart';
 
 class RegistrationPage extends StatefulWidget {
   const RegistrationPage({Key? key}) : super(key: key);
@@ -33,7 +31,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
-        title: Text('Registration Form'),
+        title: const Text('Registration Form'),
         backgroundColor: Colors.transparent,
       ),
       body: SingleChildScrollView(
@@ -41,14 +39,16 @@ class _RegistrationPageState extends State<RegistrationPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              'Complete Your Profile',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
+            const Center(
+              child: Text(
+                'Complete Your Profile',
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             GestureDetector(
               onTap: _pickImage,
               child: Container(
@@ -67,19 +67,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           fit: BoxFit.cover,
                         ),
                       )
-                    : Icon(
+                    : const Icon(
                         Icons.person,
                         size: 60,
                       ),
               ),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             buildContainerWithLabel(
               'Name',
               TextFormField(
                 controller: nameController,
                 keyboardType: TextInputType.text,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -90,7 +90,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 controller: emailController,
                 readOnly: true,
                 keyboardType: TextInputType.emailAddress,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -115,7 +115,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                 child: AbsorbPointer(
                   child: TextFormField(
                     controller: dobController,
-                    decoration: InputDecoration(
+                    decoration: const InputDecoration(
                       border: OutlineInputBorder(),
                       hintText: 'Select Date',
                     ),
@@ -124,11 +124,15 @@ class _RegistrationPageState extends State<RegistrationPage> {
               ),
             ),
             buildContainerWithDropdown(
-                'Gender', ['Male', 'Female', 'Other'], selectedGender, (value) {
-              setState(() {
-                selectedGender = value;
-              });
-            }),
+              'Gender',
+              ['Male', 'Female', 'Other'],
+              selectedGender,
+              (value) {
+                setState(() {
+                  selectedGender = value;
+                });
+              },
+            ),
             buildContainerWithLabel(
               'Height (cm)',
               buildInputField(heightController,
@@ -143,7 +147,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
               'Medical History*',
               buildMedicalHistoryField(medicalHistoryController),
             ),
-            SizedBox(height: 20.0),
+            const SizedBox(height: 20.0),
             Align(
               alignment: Alignment.center,
               child: ElevatedButton(
@@ -154,7 +158,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   foregroundColor:
                       MaterialStateProperty.all<Color>(Colors.black),
                 ),
-                child: Text('Register'),
+                child: const Text('Register'),
               ),
             ),
           ],
@@ -173,11 +177,22 @@ class _RegistrationPageState extends State<RegistrationPage> {
           });
         }
       },
-      items: <String>['+91', '+1', '+44', '+61']
+      items: <String>['+91', '+92', '+1', '+44', '+61']
           .map<DropdownMenuItem<String>>((String value) {
+        String countryCode = value.substring(1); // Remove the '+' sign
         return DropdownMenuItem<String>(
           value: value,
-          child: Text(value),
+          child: Row(
+            children: [
+              Image.asset(
+                'assets/images/flags/${countryCode.toLowerCase()}.png', // Use asset path directly
+                width: 24,
+                height: 24,
+              ),
+              const SizedBox(width: 8.0),
+              Text(value),
+            ],
+          ),
         );
       }).toList(),
     );
@@ -199,7 +214,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       child: TextFormField(
         controller: controller,
         keyboardType: inputType,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: OutlineInputBorder(),
         ),
       ),
@@ -258,7 +273,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       child: TextFormField(
         controller: controller,
         keyboardType: TextInputType.text,
-        decoration: InputDecoration(
+        decoration: const InputDecoration(
           border: OutlineInputBorder(),
         ),
       ),
@@ -273,12 +288,12 @@ class _RegistrationPageState extends State<RegistrationPage> {
         children: [
           Text(
             label,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 16.0,
               fontWeight: FontWeight.bold,
             ),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           child,
         ],
       ),
@@ -287,7 +302,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   void _pickImage() async {
     final pickedFile =
-        await ImagePicker().getImage(source: ImageSource.gallery);
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
         selectedImage = File(pickedFile.path);
@@ -304,7 +319,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
       builder: (BuildContext context, Widget? child) {
         return Theme(
           data: ThemeData.light().copyWith(
-            colorScheme: ColorScheme.light(
+            colorScheme: const ColorScheme.light(
               primary: Colors.blue, // Color for the selected day
               onPrimary: Colors.white, // Text color for the selected day
               surface: Colors.white, // Background color of the calendar
@@ -328,9 +343,23 @@ class _RegistrationPageState extends State<RegistrationPage> {
       // Perform registration logic here
       // You can access form field values using controllers
       print('Registration successful!');
+
+      // Show a snackbar to indicate successful registration
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text(
+            'Registration successful!',
+            style: TextStyle(color: Colors.green),
+          ),
+        ),
+      );
+
+      // Navigate to the home screen after registration
+      Navigator.pushReplacementNamed(
+          context, '/home'); // Replace '/home' with your home screen route
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
+        const SnackBar(
           content: Text(
             'Please fill all sections',
             style: TextStyle(color: Colors.red),

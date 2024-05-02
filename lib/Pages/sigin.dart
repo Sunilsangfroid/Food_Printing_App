@@ -11,7 +11,7 @@ import '../theme/theme.dart';
 import '../Widgets/custom_scaffold.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+  const SignInScreen({super.key});
 
   @override
   State<SignInScreen> createState() => _SignInScreenState();
@@ -329,7 +329,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   width: 30,
                                   height: 30,
                                   child: Image.asset(
-                                    'assets/images/google.png',
+                                    'assets/images/home/google.png',
                                   ),
                                 ),
                               ),

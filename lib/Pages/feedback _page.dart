@@ -1,269 +1,204 @@
-
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:itrm_screen/foodclass.dart';
+import 'package:itrm_screen/globals.dart';
 
-class UI22 extends StatefulWidget {
-  const UI22({super.key});
+class FeedbackScreen extends StatefulWidget {
+
+  const FeedbackScreen({
+    Key? key,
+  }) : super(key: key);
 
   @override
-  // ignore: library_private_types_in_public_api
-  _UI22State createState() => _UI22State();
+  _FeedbackScreenState createState() => _FeedbackScreenState();
 }
 
-class _UI22State extends State<UI22> {
-  List<bool> isTypeSelected = [false, false, false, true, true];
+class _FeedbackScreenState extends State<FeedbackScreen> {
+  double rating = 4.0;
+  String review = '';
 
   @override
   Widget build(BuildContext context) {
+    final fid=ModalRoute.of(context)!.settings.arguments as int;
+    // final fid=availFood.keys.first;
+    final foodImage=availFood[fid]!.imagePath;
+    final foodName=availFood[fid]!.name;
+    final categoryImage=availFood[fid]!.tags.first;
     return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(color: Colors.black),
-        backgroundColor: Colors.white,
-        elevation: 2.0,
-        centerTitle: true,
-        title: const Text(
-          "Feedback",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
-        ),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () {},
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+        child: BackButton(
+          color: Colors.black,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(
-              height: 10.0,
-            ),
-            const Text(
-              "Please select the type of the feedback",
-              style: TextStyle(
-                color: Color(0xFFC5C5C5),
-              ),
-            ),
-            const SizedBox(height: 25.0),
-            GestureDetector(
-              child: buildCheckItem(
-                  title: "Login trouble", isSelected: isTypeSelected[0]),
-              onTap: () {
-                setState(() {
-                  isTypeSelected[0] = !isTypeSelected[0];
-                });
-              },
-            ),
-            GestureDetector(
-              child: buildCheckItem(
-                  title: "Phone number related", isSelected: isTypeSelected[1]),
-              onTap: () {
-                setState(() {
-                  isTypeSelected[1] = !isTypeSelected[1];
-                });
-              },
-            ),
-            GestureDetector(
-              child: buildCheckItem(
-                  title: "Personal profile", isSelected: isTypeSelected[2]),
-              onTap: () {
-                setState(() {
-                  isTypeSelected[2] = !isTypeSelected[2];
-                });
-              },
-            ),
-            GestureDetector(
-              child: buildCheckItem(
-                  title: "Other issues", isSelected: isTypeSelected[3]),
-              onTap: () {
-                setState(() {
-                  isTypeSelected[3] = !isTypeSelected[3];
-                });
-              },
-            ),
-            GestureDetector(
-              child: buildCheckItem(
-                  title: "Suggestions", isSelected: isTypeSelected[4]),
-              onTap: () {
-                setState(() {
-                  isTypeSelected[4] = !isTypeSelected[4];
-                });
-              },
-            ),
-            const SizedBox(
-              height: 20.0,
-            ),
-            buildFeedbackForm(),
-            const SizedBox(height: 20.0),
-            buildNumberField(),
-            const Spacer(),
-            Row(
-  children: [
-    Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: TextButton(
-          onPressed: () {},
-          style: TextButton.styleFrom(
-            backgroundColor: const Color(0xFFE5E5E5),
-            padding: const EdgeInsets.all(16.0),
-          ),
-          child: const Text(
-            "SUBMIT",
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ),
-    ),
-  ],
-)
-
-          ],
-        ),
-      ),
-    );
-  }
-
-  buildNumberField() {
-    return TextField(
-      style: const TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        contentPadding: const EdgeInsets.all(0.0),
-        prefixIcon: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  right: BorderSide(
-                    width: 1.0,
-                    color: Color(0xFFC5C5C5),
-                  ),
-                ),
-              ),
-              child: const Row(
-                mainAxisSize: MainAxisSize.min,
-                children: [
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                  Text(
-                    "+60",
-                    style: TextStyle(
-                      fontWeight: FontWeight.bold,
-                      color: Color(0xFFC5C5C5),
-                    ),
-                  ),
-                  Icon(
-                    Icons.arrow_drop_down,
-                    color: Colors.cyan,
-                  ),
-                  SizedBox(
-                    width: 10.0,
-                  ),
-                ],
-              ),
-            ),
-            const SizedBox(
-              width: 10.0,
-            ),
-          ],
-        ),
-        hintStyle: const TextStyle(
-          fontSize: 14.0,
-          color: Color(0xFFC5C5C5),
-        ),
-        hintText: "Phone Number",
-        border: const OutlineInputBorder(),
-      ),
-    );
-  }
-
-  buildFeedbackForm() {
-    return SizedBox(
-      height: 200,
-      child: Stack(
-        children: [
-          const TextField(
-            maxLines: 10,
-            decoration: InputDecoration(
-              hintText: "Please briefly describe the issue",
-              hintStyle: TextStyle(
-                fontSize: 13.0,
-                color: Color(0xFFC5C5C5),
-              ),
-              border: OutlineInputBorder(
-                borderSide: BorderSide(
-                  color: Color(0xFFE5E5E5),
+            const SizedBox(height: 31),
+            const Center(
+              child: Text(
+                "Feedback",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              decoration: const BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    width: 1.0,
-                    color: Color(0xFFA6A6A6),
-                  ),
-                ),
-              ),
-              padding: const EdgeInsets.all(8.0),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFE5E5E5),
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                    child: const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Icon(
-                        Icons.add,
-                        color: Color(0xFFA5A5A5),
+            const SizedBox(height: 20), 
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    
+                    Container(
+                      height: 200,
+                      decoration: BoxDecoration(
+                        image: DecorationImage(
+                          image: AssetImage(foodImage),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                      child: Stack(
+                        alignment: Alignment.bottomCenter,
+                        children: [
+                          // White background circle
+                          Container(
+                            width: 100,
+                            height: 100,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            child: CircleAvatar(
+                              backgroundImage: AssetImage(categoryImage),
+                              radius: 35,
+                              backgroundColor: Colors.transparent,
+                            ),
+                          ),
+                        ],
                       ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 10.0,
-                  ),
-                  const Text(
-                    "Upload screenshot (optional)",
-                    style: TextStyle(
-                      color: Color(0xFFC5C5C5),
+                    
+                    Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            foodName,
+                            textAlign: TextAlign.center,
+                            style: const TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(
+                            height: 8,
+                          ),
+                          const Text(
+                            '45 Reviews',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+                          const Text(
+                            'Food Printed',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              color: Colors.green,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          const Text(
+                            'Please Rate Printing Service',
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 18,
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          Container(
+                            alignment: Alignment.center,
+                            child: RatingBar.builder(
+                              initialRating: rating,
+                              minRating: 1,
+                              direction: Axis.horizontal,
+                              itemCount: 5,
+                              itemSize: 40,
+                              itemBuilder: (context, _) => const Icon(
+                                Icons.star,
+                                color: Colors.yellow,
+                              ),
+                              onRatingUpdate: (newRating) {
+                                setState(() {
+                                  rating = newRating;
+                                });
+                              },
+                            ),
+                          ),
+                          const SizedBox(height: 16),
+                          // Review Text Field
+                          TextField(
+                            decoration: const InputDecoration(
+                              hintText: 'Write your review...',
+                              border: OutlineInputBorder(),
+                            ),
+                            maxLines: 3,
+                            onChanged: (value) {
+                              setState(() {
+                                review = value;
+                              });
+                            },
+                          ),
+                          const SizedBox(height: 16),
+                          // Submit Button
+                          ElevatedButton(
+                            onPressed: () async{
+                              // Handle submit feedback
+                              addRating(fid, rating, review);
+                              print('Rating: $rating, Review: $review');
+                              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                            },
+                            child: const Text(
+                              'Submit',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
+}
 
-  Widget buildCheckItem({required String title, required bool isSelected}) {
-    return Container(
-      padding: const EdgeInsets.all(6.0),
-      child: Row(
-        children: [
-          Icon(
-            isSelected ? Icons.check_circle : Icons.circle,
-            color: isSelected ? Colors.blue : Colors.grey,
-          ),
-          const SizedBox(width: 10.0),
-          Text(
-            title,
-            style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: isSelected ? Colors.blue : Colors.grey),
-          ),
-        ],
-      ),
-    );
-  }
+void main() {
+  runApp(const MaterialApp(
+    home: FeedbackScreen(),
+  ));
 }

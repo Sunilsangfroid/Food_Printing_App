@@ -328,7 +328,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   width: 30,
                                   height: 30,
                                   child: Image.asset(
-                                    'assets/images/google.png',
+                                    'assets/images/home/google.png',
                                   ),
                                 ),
                               ),

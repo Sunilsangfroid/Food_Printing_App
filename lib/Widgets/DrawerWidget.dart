@@ -124,22 +124,22 @@ class DrawerWidget extends StatelessWidget {
               ),
             ),
           ),
-          ListTile(
-            onTap: () {
-              Navigator.pushNamed(context, "/setting");
-            },
-            leading: const Icon(
-              CupertinoIcons.settings,
-              color: Colors.blue,
-            ),
-            title: const Text(
-              "Settings",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black),
-            ),
-          ),
+          // ListTile(
+          //   onTap: () {
+          //     Navigator.pushNamed(context, "/setting");
+          //   },
+          //   leading: const Icon(
+          //     CupertinoIcons.settings,
+          //     color: Colors.blue,
+          //   ),
+          //   title: const Text(
+          //     "Settings",
+          //     style: TextStyle(
+          //         fontSize: 18,
+          //         fontWeight: FontWeight.bold,
+          //         color: Colors.black),
+          //   ),
+          // ),
           ListTile(
             onTap: () {
               Navigator.pushNamed(context, "/help");

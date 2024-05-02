@@ -120,75 +120,108 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("ChatBot AI"),
-        backgroundColor: Colors.transparent,
-      ),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 10,
-            child: ListView.builder(
-              reverse: true,
-              itemCount: chatList.length,
-              itemBuilder: (context, index) {
-                return ListTile(
-                  title: Text(chatList[index].isMe ? "Me" : "Gemini"),
-                  subtitle: chatList[index].base64EncodedImage != null
-                      ? Column(
-                          children: [
-                            Image.memory(
-                              base64Decode(chatList[index].base64EncodedImage!),
-                              height: 300,
-                              width: double.infinity,
-                            ),
-                            Text(chatList[index].message),
-                          ],
-                        )
-                      : Text(chatList[index].message),
-                );
-              },
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+        child: BackButton(
+          color: Colors.black,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
           ),
-          const SizedBox(
-            height: 10,
-          ),
-          SizedBox(
-            height: 60,
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    controller: controller,
-                    decoration: InputDecoration(
-                      prefixIcon: IconButton(
-                        onPressed: () {
-                          selectImage();
-                        },
-                        icon: const Icon(Icons.upload_file),
-                      ),
-                      hintText: "Message",
-                      border: const OutlineInputBorder(
-                        borderRadius: BorderRadius.all(
-                          Radius.circular(30),
-                        ),
-                      ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 55),
+            const Center(
+              child: Text(
+                "Chatbot",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20), // Added space below the centered text
+            Expanded(
+              child: Column(
+                children: [
+                  Expanded(
+                    flex: 10,
+                    child: ListView.builder(
+                      reverse: true,
+                      itemCount: chatList.length,
+                      itemBuilder: (context, index) {
+                        return ListTile(
+                          title: Text(chatList[index].isMe ? "Me" : "Gemini"),
+                          subtitle: chatList[index].base64EncodedImage != null
+                              ? Column(
+                                  children: [
+                                    Image.memory(
+                                      base64Decode(
+                                          chatList[index].base64EncodedImage!),
+                                      height: 300,
+                                      width: double.infinity,
+                                    ),
+                                    Text(chatList[index].message),
+                                  ],
+                                )
+                              : Text(chatList[index].message),
+                        );
+                      },
                     ),
                   ),
-                ),
-                IconButton(
-                  onPressed: () {
-                    onSendMessage();
-                  },
-                  icon: const Icon(Icons.send),
-                ),
-              ],
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  SizedBox(
+                    height: 60,
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: TextField(
+                            controller: controller,
+                            decoration: InputDecoration(
+                              prefixIcon: IconButton(
+                                onPressed: () {
+                                  selectImage();
+                                },
+                                icon: const Icon(Icons.upload_file),
+                              ),
+                              hintText: "Message",
+                              border: const OutlineInputBorder(
+                                borderRadius: BorderRadius.all(
+                                  Radius.circular(30),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            onSendMessage();
+                          },
+                          icon: const Icon(Icons.send),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  )
+                ],
+              ),
             ),
-          ),
-          const SizedBox(
-            height: 10,
-          )
-        ],
+          ],
+        ),
       ),
     );
   }

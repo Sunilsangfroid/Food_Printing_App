@@ -12,6 +12,8 @@ import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 class ConnectToPrinterScreen extends StatelessWidget {
   final String octoPrintUrl = 'http://octo.local';
 
+  const ConnectToPrinterScreen({super.key});
+
   void _launchOctoPrintURL() async {
     print(124);
     try {
