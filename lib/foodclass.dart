@@ -14,10 +14,11 @@ class FoodItem {
   int? reviews;
   String imagePath;
   List<String> tags;
+  String? gcodePath;
   final int id;
   // final id = UniqueKey().hashCode;
 
-  FoodItem({this.name="",this.description="",this.shortDesc="",this.rating=0.0,this.reviews=0,this.imagePath="",this.tags=const <String>[],required this.id});
+  FoodItem({this.name="",this.description="",this.shortDesc="",this.rating=0.0,this.reviews=0,this.imagePath="",this.tags=const <String>[],required this.id,this.gcodePath});
   factory FoodItem.fromFirestore(
       DocumentSnapshot<Map<String, dynamic>> snapshot,
       List<num?> rates,
@@ -31,7 +32,8 @@ class FoodItem {
       reviews: rates.last?.toInt(),
       imagePath: data?['imagePath'],
       tags: List<String>.from(data?["tags"]),
-      id: data?['id']
+      id: data?['id'],
+      gcodePath: data?['gcodePath'],
     );
   }
   Map<String,dynamic> toFirestore(){
@@ -41,7 +43,8 @@ class FoodItem {
       "shortDesc":shortDesc,
       "imagePath":imagePath,
       "tags":tags,
-      "id":id
+      "id":id,
+      "gcodePath":gcodePath,
     };
     return temp;
   }
