@@ -185,7 +185,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
           child: Row(
             children: [
               Image.asset(
-                'assets/images/${countryCode.toLowerCase()}.png', // Use asset path directly
+                'assets/images/flags/${countryCode.toLowerCase()}.png', // Use asset path directly
                 width: 24,
                 height: 24,
               ),

@@ -12,23 +12,29 @@ class CategoriesWidget extends StatelessWidget {
         child: Row(
           children: [
             // Single Item
-            _buildCategoryItem("assets/images/fast_food.png", "Fast Food", context),
-            _buildCategoryItem("assets/images/sweet.png", "Sweet", context),
             _buildCategoryItem(
-                "assets/images/south_indian.png", "South Indian", context),
-            _buildCategoryItem("assets/images/icecream.png", "Icecream", context),
-            _buildCategoryItem("assets/images/frenchfries.jpg", "French Fries", context),
-            _buildCategoryItem("assets/images/sandwich.jpg", "Sandwich", context),
+                "assets/images/categories/fast_food.png", "Fast Food", context),
             _buildCategoryItem(
-                "assets/images/chholebhature.jpg", "North Indian", context),
-            _buildCategoryItem("assets/images/poha.jpg", "Poha", context),
+                "assets/images/categories/sweet.png", "Sweet", context),
+            _buildCategoryItem("assets/images/categories/south_indian.png",
+                "South Indian", context),
+            _buildCategoryItem(
+                "assets/images/categories/icecream.png", "Icecream", context),
+            _buildCategoryItem("assets/images/categories/frenchfries.jpg",
+                "French Fries", context),
+            _buildCategoryItem(
+                "assets/images/categories/sandwich.jpg", "Sandwich", context),
+            _buildCategoryItem("assets/images/categories/north_indian.jpg",
+                "North Indian", context),
+            // _buildCategoryItem("assets/images/poha.jpg", "Poha", context),
           ],
         ),
       ),
     );
   }
 
-  Widget _buildCategoryItem(String imagePath, String categoryName, BuildContext context) {
+  Widget _buildCategoryItem(
+      String imagePath, String categoryName, BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 10),
       child: SizedBox(
@@ -37,8 +43,9 @@ class CategoriesWidget extends StatelessWidget {
         child: Column(
           children: [
             InkWell(
-              onTap: (){
-                Navigator.pushNamed(context, "/category",arguments: categoryName.toLowerCase());
+              onTap: () {
+                Navigator.pushNamed(context, "/category",
+                    arguments: categoryName.toLowerCase());
               },
               child: Container(
                 width: 80,

@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 class ConnectToPrinterScreen extends StatelessWidget {
   final String octoPrintUrl = 'octo.local';
 
+  const ConnectToPrinterScreen({super.key});
+
   void _launchOctoPrintURL()  async{
     print(124);
     // if (await canLaunch(octoPrintUrl)) {

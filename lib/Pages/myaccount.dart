@@ -10,7 +10,6 @@ import 'package:itrm_screen/main.dart' show myApp;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
-
 class MyAccountPage extends StatefulWidget {
   const MyAccountPage({Key? key}) : super(key: key);
 
@@ -183,7 +182,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
           child: Row(
             children: [
               Image.asset(
-                'assets/images/${countryCode.toLowerCase()}.png', // Use asset path directly
+                'assets/images/flags/${countryCode.toLowerCase()}.png', // Use asset path directly
                 width: 24,
                 height: 24,
               ),
@@ -195,6 +194,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
       }).toList(),
     );
   }
+
   Widget buildInputField(TextEditingController controller,
       {required TextInputType inputType}) {
     return Container(
@@ -361,7 +361,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
         await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       setState(() {
-        selectedImage = File(pickedFile.path); 
+        selectedImage = File(pickedFile.path);
       });
     }
   }
