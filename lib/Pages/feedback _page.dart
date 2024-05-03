@@ -1,15 +1,10 @@
-// ignore_for_file: library_private_types_in_public_api, avoid_print, file_names
-
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:itrm_screen/foodclass.dart';
 import 'package:itrm_screen/globals.dart';
 
 class FeedbackScreen extends StatefulWidget {
-
-  const FeedbackScreen({
-    super.key,
-  });
+  const FeedbackScreen({Key? key});
 
   @override
   _FeedbackScreenState createState() => _FeedbackScreenState();
@@ -21,49 +16,53 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final fid=ModalRoute.of(context)!.settings.arguments as int;
-    // final fid=availFood.keys.first;
-    final foodImage=availFood[fid]!.imagePath;
-    final foodName=availFood[fid]!.name;
-    final categoryImage=availFood[fid]!.tags.first;
-    return Scaffold(
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
-        child: BackButton(
-          color: Colors.black,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
+    final fid = ModalRoute.of(context)?.settings.arguments as int?;
+
+    if (fid == null) {
+      // Handle if fid is null (for example, show an error message)
+      return Scaffold(
+        body: Center(
+          child: Text(
+            'Error: Food ID not provided',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.bold,
+              color: Colors.red,
             ),
           ),
         ),
+      );
+    }
+
+    final foodImage = availFood[fid]?.imagePath ?? '';
+    final foodName = availFood[fid]?.name ?? '';
+    final categoryImage = availFood[fid]?.tags.first ?? '';
+
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Feedback'),
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
       body: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 31),
-            const Center(
+            const SizedBox(height: 20),
+            Center(
               child: Text(
-                "Feedback",
+                'Feedback for $foodName',
                 style: TextStyle(
                   fontSize: 20,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-            const SizedBox(height: 20), 
+            const SizedBox(height: 20),
             Expanded(
               child: SingleChildScrollView(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    
                     Container(
                       height: 200,
                       decoration: BoxDecoration(
@@ -75,7 +74,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                       child: Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          // White background circle
                           Container(
                             width: 100,
                             height: 100,
@@ -92,7 +90,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                         ],
                       ),
                     ),
-                    
                     Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: Column(
@@ -107,9 +104,7 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          const SizedBox(
-                            height: 8,
-                          ),
+                          const SizedBox(height: 8),
                           const Text(
                             '45 Reviews',
                             textAlign: TextAlign.center,
@@ -158,7 +153,6 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             ),
                           ),
                           const SizedBox(height: 16),
-                          // Review Text Field
                           TextField(
                             decoration: const InputDecoration(
                               hintText: 'Write your review...',
@@ -172,13 +166,15 @@ class _FeedbackScreenState extends State<FeedbackScreen> {
                             },
                           ),
                           const SizedBox(height: 16),
-                          // Submit Button
                           ElevatedButton(
-                            onPressed: () async{
-                              // Handle submit feedback
+                            onPressed: () {
                               addRating(fid, rating, review);
                               print('Rating: $rating, Review: $review');
-                              Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+                              Navigator.pushNamedAndRemoveUntil(
+                                context,
+                                '/home',
+                                (route) => false,
+                              );
                             },
                             child: const Text(
                               'Submit',

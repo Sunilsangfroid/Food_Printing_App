@@ -205,7 +205,7 @@ class _CartScreenState extends State<CartScreen> {
               child: const Padding(
                 padding: EdgeInsets.all(20.0),
                 child: Text(
-                  "CONNECT TO PRINTER",
+                  "Next",
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,
