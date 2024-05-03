@@ -52,7 +52,7 @@ class ConnectToPrinterScreen extends StatelessWidget {
     // final url = Uri.parse('http://octo.local/api/files/local'); // Update with the correct API endpoint
     print(9876);
     final request = http.MultipartRequest(
-        'POST', Uri.parse('http://192.168.79.45/api/files/local'));
+        'POST', Uri.parse('http://192.168.252.45/api/files/local'));
     request.headers['X-Api-Key'] = 'B6FA89611CF149A3B08E4E7A6E6DDC72';
 
     // Add the file to the request
@@ -169,10 +169,11 @@ class ConnectToPrinterScreen extends StatelessWidget {
           onPressed: () {
             // getAllFiles();
             // downloadGCodeFile();
-            // for (var fid in cart.keys){
-            //   fetcher(fid);
-            // }
-            Navigator.pushNamed(context, '/opwebview');
+            for (var fid in cart.keys){
+              print('uploading ${availFood[fid]!.name}');
+              fetcher(fid);
+            }
+            Navigator.pushNamed(context, '/opwebview',arguments: cart.keys.first);
           },
           child:const Text(
             'Connect to OctoPrint',
@@ -183,8 +184,6 @@ class ConnectToPrinterScreen extends StatelessWidget {
     );
   }
 }
-
-//hi this is sunil
 
 void main() {
   runApp(const MaterialApp(

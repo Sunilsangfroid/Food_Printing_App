@@ -18,6 +18,7 @@ class _MyWidgetState extends State<OctoWebView> {
   @override
   Widget build(BuildContext context) {
     // return WebViewWidget(controller: webViewController);
+    int fid = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
       appBar: AppBar(
         title: const Text("Flutter WebView"),
@@ -32,7 +33,7 @@ class _MyWidgetState extends State<OctoWebView> {
           ,),
           Container(height: 50,),
           ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/feedback');
+            Navigator.pushNamed(context, '/feedback',arguments: fid);
           },
            child: Text('FeedBack'  ,
             style: TextStyle(color: Colors.black),)
