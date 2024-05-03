@@ -163,7 +163,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       itemCount: chatList.length,
                       itemBuilder: (context, index) {
                         return ListTile(
-                          title: Text(chatList[index].isMe ? "Me" : "Gemini"),
+                          title: Text(chatList[index].isMe ? "Me" : "Help Bot"),
                           subtitle: chatList[index].base64EncodedImage != null
                               ? Column(
                                   children: [
