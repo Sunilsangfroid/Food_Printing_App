@@ -1,3 +1,5 @@
+// ignore_for_file: file_names
+
 import '../Widgets/AppBarWidget.dart';
 import '../Widgets/DrawerWidget.dart';
 import 'package:flutter/cupertino.dart';

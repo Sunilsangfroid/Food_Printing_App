@@ -1,3 +1,5 @@
+// ignore_for_file: file_names, unused_element, avoid_print, deprecated_member_use
+
 import 'dart:io';
 
 import 'package:itrm_screen/foodclass.dart';
@@ -41,11 +43,11 @@ class _HomePageState extends State<HomePage> {
       actions: <Widget>[
         TextButton(
           onPressed: () => Navigator.of(context).pop(false),
-          child: Text('No'),
+          child: const Text('No'),
         ),
         TextButton(
           onPressed: () => exit(0),
-          child: Text('Yes'),
+          child: const Text('Yes'),
         ),
       ],
     );

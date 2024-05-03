@@ -1,10 +1,12 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import '../foodclass.dart';
 
 class NewestItemsWidget extends StatefulWidget {
-  const NewestItemsWidget({Key? key}) : super(key: key);
+  const NewestItemsWidget({super.key});
 
   @override
   State<NewestItemsWidget> createState() => _NewestItemsWidgetState();

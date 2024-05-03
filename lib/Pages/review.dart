@@ -1,10 +1,12 @@
+// ignore_for_file: override_on_non_overriding_member, avoid_init_to_null, prefer_if_null_operators, avoid_print, annotate_overrides
+
 import 'package:flutter/material.dart';
 import 'package:itrm_screen/globals.dart';
 
 class ReviewScreen extends StatefulWidget {
   final int itemId; // Item ID to fetch related reviews
 
-  const ReviewScreen({Key? key, required this.itemId}) : super(key: key);
+  const ReviewScreen({super.key, required this.itemId});
 
   @override
   State<ReviewScreen> createState() => _ReviewScreenState();
@@ -93,7 +95,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
           },
           backgroundColor: Colors.white,
           foregroundColor: Colors.black,
-          child:  Icon(Icons.arrow_back),
+          child:  const Icon(Icons.arrow_back),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
@@ -115,7 +117,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
             const SizedBox(height: 40),
             if (userReview!=null)
             buildReviewCard(userReview!),
-            Divider(),
+            const Divider(),
             if (reviews.isNotEmpty)
             Expanded(
               child: ListView.builder(
@@ -156,7 +158,7 @@ class _ReviewScreenState extends State<ReviewScreen> {
                   ),
                 ),
                 if (review.uid==firebaseAuth.currentUser!.uid)
-                  Text(' (you)', style: const TextStyle(color: Colors.grey),)
+                  const Text(' (you)', style: TextStyle(color: Colors.grey),)
               ],
             ),
             const SizedBox(height: 8),

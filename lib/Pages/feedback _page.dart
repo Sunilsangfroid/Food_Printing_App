@@ -1,3 +1,5 @@
+// ignore_for_file: library_private_types_in_public_api, avoid_print, file_names
+
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:itrm_screen/foodclass.dart';
@@ -6,8 +8,8 @@ import 'package:itrm_screen/globals.dart';
 class FeedbackScreen extends StatefulWidget {
 
   const FeedbackScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
 
   @override
   _FeedbackScreenState createState() => _FeedbackScreenState();

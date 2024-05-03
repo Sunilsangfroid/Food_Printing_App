@@ -1,3 +1,5 @@
+// ignore_for_file: must_be_immutable, avoid_print
+
 import 'package:firebase_auth/firebase_auth.dart';
 
 import '../Pages/sigin.dart';
@@ -13,7 +15,7 @@ class WelcomeScreen extends StatelessWidget {
 
   void check(context) async {
     if (isSignedIn)_isLoading=true;
-    await Future.delayed(Duration(seconds: 1), () async{
+    await Future.delayed(const Duration(seconds: 1), () async{
         if (isSignedIn){
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -92,7 +94,7 @@ class WelcomeScreen extends StatelessWidget {
             ),
           ],
         ),
-          _isLoading ? Center(child: CircularProgressIndicator()) : Container(),
+          _isLoading ? const Center(child: CircularProgressIndicator()) : Container(),
         ]
       ),
     );

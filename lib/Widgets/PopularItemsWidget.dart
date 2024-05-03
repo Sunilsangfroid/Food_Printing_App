@@ -1,8 +1,10 @@
+// ignore_for_file: file_names
+
 import 'package:flutter/material.dart';
 import '../foodclass.dart';
 
 class PopularItemsWidget extends StatefulWidget {
-  const PopularItemsWidget({Key? key}) : super(key: key);
+  const PopularItemsWidget({super.key});
 
   @override
   State<PopularItemsWidget> createState() => _PopularItemsWidgetState();
