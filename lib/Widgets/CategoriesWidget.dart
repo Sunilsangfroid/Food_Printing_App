@@ -28,6 +28,8 @@ class CategoriesWidget extends StatelessWidget {
                 "assets/images/categories/sandwich.jpg", "Sandwich", context),
             _buildCategoryItem("assets/images/categories/north_indian.jpg",
                 "North Indian", context),
+            _buildCategoryItem(
+                "assets/images/categories/healthy.png", "Healthy", context),
             // _buildCategoryItem("assets/images/poha.jpg", "Poha", context),
           ],
         ),

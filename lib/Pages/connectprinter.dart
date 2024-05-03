@@ -52,7 +52,7 @@ class ConnectToPrinterScreen extends StatelessWidget {
     // final url = Uri.parse('http://octo.local/api/files/local'); // Update with the correct API endpoint
     print(9876);
     final request = http.MultipartRequest(
-        'POST', Uri.parse('http://192.168.252.45/api/files/local'));
+        'POST', Uri.parse('http://192.168.69.45/api/files/local'));
     request.headers['X-Api-Key'] = 'B6FA89611CF149A3B08E4E7A6E6DDC72';
 
     // Add the file to the request
@@ -160,25 +160,58 @@ class ConnectToPrinterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Connect to Printer'),
-        backgroundColor: Colors.transparent,
-      ),
-      body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            // getAllFiles();
-            // downloadGCodeFile();
-            for (var fid in cart.keys){
-              print('uploading ${availFood[fid]!.name}');
-              fetcher(fid);
-            }
-            Navigator.pushNamed(context, '/opwebview',arguments: cart.keys.first);
-          },
-          child:const Text(
-            'Connect to OctoPrint',
-            style: TextStyle(color: Colors.black),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+        child: BackButton(
+          color: Colors.black,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
           ),
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 55),
+            const Center(
+              child: Text(
+                "Notifications",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20), // Added space below the centered text
+            Expanded(
+              child: Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    // getAllFiles();
+                    // downloadGCodeFile();
+                    for (var fid in cart.keys) {
+                      print('uploading ${availFood[fid]!.name}');
+                      fetcher(fid);
+                    }
+                    Navigator.pushNamed(context, '/opwebview',
+                        arguments: cart.keys.first);
+                  },
+                  child: const Text(
+                    'Connect to OctoPrint',
+                    style: TextStyle(color: Colors.black),
+                  ),
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

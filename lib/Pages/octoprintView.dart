@@ -20,26 +20,66 @@ class _MyWidgetState extends State<OctoWebView> {
     // return WebViewWidget(controller: webViewController);
     int fid = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("Flutter WebView"),
+      floatingActionButton: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+        child: BackButton(
+          color: Colors.black,
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all(Colors.white),
+            shape: MaterialStateProperty.all(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+            ),
+          ),
+        ),
       ),
-      // body: Container());
-      body: Column(
-        children: [
-          Container(
-            height:700,
-            width: double.infinity,
-            child: WebViewWidget(controller: webViewController)
-          ,),
-          Container(height: 50,),
-          ElevatedButton(onPressed: (){
-            Navigator.pushNamed(context, '/feedback',arguments: fid);
-          },
-           child: Text('FeedBack'  ,
-            style: TextStyle(color: Colors.black),)
-          )
-      ],)
-      ,
+      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
+      body: Padding(
+        padding: const EdgeInsets.all(20.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 30),
+            const Center(
+              child: Text(
+                "OctoPrint",
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ),
+            const SizedBox(height: 20), // Added space below the centered text
+            Expanded(
+              flex: 4,
+              child: Column(
+                children: [
+                  Container(
+                    height: 650,
+                    width: double.infinity,
+                    child: WebViewWidget(controller: webViewController),
+                  ),
+                  Expanded(
+                      flex: 1,
+                      child: Container(
+                        height: 10,
+                      )),
+                  ElevatedButton(
+                      onPressed: () {
+                        Navigator.pushNamed(context, '/feedback',
+                            arguments: fid);
+                      },
+                      child: const Text(
+                        'FeedBack',
+                        style: TextStyle(color: Colors.black),
+                      ))
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
