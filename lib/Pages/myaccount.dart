@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_import, unused_import, library_private_types_in_public_api, prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,7 +13,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import 'package:image_picker/image_picker.dart';
 
 class MyAccountPage extends StatefulWidget {
-  const MyAccountPage({Key? key}) : super(key: key);
+  const MyAccountPage({super.key});
 
   @override
   _MyAccountPageState createState() => _MyAccountPageState();
@@ -62,7 +64,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                   editMode = true;
                 });
               },
-              icon: Icon(Icons.edit),
+              icon: const Icon(Icons.edit),
             ),
         ],
       ),
@@ -97,7 +99,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
                 ),
                 IconButton(
                   onPressed: _chooseImage,
-                  icon: Icon(Icons.camera_alt),
+                  icon: const Icon(Icons.camera_alt),
                   tooltip: 'Choose Image',
                 ),
               ],
@@ -393,12 +395,12 @@ class _MyAccountPageState extends State<MyAccountPage> {
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         behavior: SnackBarBehavior.floating,
-        margin: EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
+        margin: const EdgeInsets.only(top: 16.0, left: 16.0, right: 16.0),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         backgroundColor: Colors.green,
-        content: Row(
+        content: const Row(
           children: [
             Icon(
               Icons.check_circle,

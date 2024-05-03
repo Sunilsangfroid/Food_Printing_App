@@ -1,5 +1,7 @@
 // import 'dart:html';
 
+// ignore_for_file: use_build_context_synchronously, avoid_print, unnecessary_brace_in_string_interps, unused_local_variable
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -236,7 +238,7 @@ class _SignInScreenState extends State<SignInScreen> {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                  builder: (context) => ResetPassword(),
+                                  builder: (context) => const ResetPassword(),
                                 ),
                               );
                             },

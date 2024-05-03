@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_init_to_null, avoid_print, unnecessary_cast
+
 import 'package:path_provider/path_provider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

@@ -1,4 +1,4 @@
-// ignore_for_file: file_names
+// ignore_for_file: file_names, must_be_immutable, use_build_context_synchronously, avoid_print
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -19,24 +19,24 @@ class DrawerWidget extends StatelessWidget {
           DrawerHeader(
             padding: EdgeInsets.zero,
             child: UserAccountsDrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.blue,
               ),
               accountName: Text(
                 (userProfile!=null)?userProfile!.name:"",
-                style: TextStyle(
+                style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
                     color: Colors.white),
               ),
               accountEmail: Text(
                 FirebaseAuth.instance.currentUser!.email!,
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
               currentAccountPicture: CircleAvatar(
                   foregroundImage: (selectedImage!=null)?FileImage(selectedImage!):null,
-                  backgroundImage: AssetImage("assets/images/avatar.png")),
-              margin: EdgeInsets.only(bottom: 1),
+                  backgroundImage: const AssetImage("assets/images/avatar.png")),
+              margin: const EdgeInsets.only(bottom: 1),
             ),
           ),
           ListTile(

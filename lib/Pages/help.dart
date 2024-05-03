@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class HelpFAQPage extends StatelessWidget {
-  const HelpFAQPage({Key? key}) : super(key: key);
+  const HelpFAQPage({super.key});
 
   @override
   Widget build(BuildContext context) {

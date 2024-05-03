@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -90,7 +92,7 @@ final myApp = MaterialApp(
     '/category': (context) => const CategoryPage(),
     '/register': (context) => const RegistrationPage(),
     '/connect':(context) =>const ConnectToPrinterScreen(),
-    '/opwebview': (context) => OctoWebView(),
+    '/opwebview': (context) => const OctoWebView(),
   },
 );
 
