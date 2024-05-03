@@ -9,17 +9,34 @@ class OctoWebView extends StatefulWidget {
 }
 
 class _MyWidgetState extends State<OctoWebView> {
-  //  final webViewController = WebViewController()
-  //   ..loadRequest(Uri.parse('https://www.youtube.com/'));
+  final webViewController = WebViewController()
+    ..loadRequest(Uri.parse('http://octo.local/?temp'))
+    ..setJavaScriptMode(JavaScriptMode.unrestricted);
 
   @override
   Widget build(BuildContext context) {
     // return WebViewWidget(controller: webViewController);
-     return Scaffold(
-        appBar: AppBar(
-          title: const Text("Flutter WebView"),
-        ),
-        body: Container());
-        // body: WebViewWidget(controller: webViewController));
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Flutter WebView"),
+      ),
+      // body: Container());
+      body: Column(
+        children: [
+          Container(
+            height:700,
+            width: double.infinity,
+            child: WebViewWidget(controller: webViewController)
+          ,),
+          Container(height: 50,),
+          ElevatedButton(onPressed: (){
+            Navigator.pushNamed(context, '/feedback');
+          },
+           child: Text('FeedBack'  ,
+            style: TextStyle(color: Colors.black),)
+          )
+      ],)
+      ,
+    );
   }
 }

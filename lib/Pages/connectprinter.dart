@@ -160,9 +160,9 @@ class ConnectToPrinterScreen extends StatelessWidget {
           onPressed: () {
             // getAllFiles();
             // downloadGCodeFile();
-            // for (var fid in cart.keys){
-            //   fetcher(fid);
-            // }
+            for (var fid in cart.keys){
+              fetcher(fid);
+            }
             Navigator.pushNamed(context, '/opwebview');
           },
           child: Text(
