@@ -180,7 +180,7 @@ class ConnectToPrinterScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const SizedBox(height: 35),
+            const SizedBox(height: 30),
             const Center(
               child: Text(
                 "Connect With Printer",
