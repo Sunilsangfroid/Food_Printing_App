@@ -160,7 +160,6 @@ class ConnectToPrinterScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-<<<<<<< HEAD
       appBar: AppBar(
         title: Text('Connect to Printer'),
         backgroundColor: Colors.transparent,
@@ -170,71 +169,22 @@ class ConnectToPrinterScreen extends StatelessWidget {
           onPressed: () {
             // getAllFiles();
             // downloadGCodeFile();
-            for (var fid in cart.keys){
-              fetcher(fid);
-            }
+            // for (var fid in cart.keys){
+            //   fetcher(fid);
+            // }
             Navigator.pushNamed(context, '/opwebview');
           },
-          child: Text(
+          child:const Text(
             'Connect to OctoPrint',
             style: TextStyle(color: Colors.black),
-=======
-      floatingActionButton: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
-        child: BackButton(
-          color: Colors.black,
-          style: ButtonStyle(
-            backgroundColor: MaterialStateProperty.all(Colors.white),
-            shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-            ),
->>>>>>> 08419981d867c2a0fcc5982b4ce2047cbcdc086e
           ),
-        ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.startTop,
-      body: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Container(height: 30),
-            const Center(
-              child: Text(
-                "Connect to Printer",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ),
-            const SizedBox(height: 20), // Added space below the centered text
-            Expanded(
-              child: Center(
-                child: ElevatedButton(
-                  onPressed: () {
-                    // getAllFiles();
-                    // downloadGCodeFile();
-                    // for (var fid in cart.keys){
-                    //   fetcher(fid);
-                    // }
-                    Navigator.pushNamed(context, '/opwebview');
-                  },
-                  child: const Text(
-                    'Connect to OctoPrint',
-                    style: TextStyle(color: Colors.black),
-                  ),
-                ),
-              ),
-            ),
-          ],
         ),
       ),
     );
   }
 }
+
+//hi this is sunil
 
 void main() {
   runApp(const MaterialApp(
