@@ -199,7 +199,8 @@ class _CartScreenState extends State<CartScreen> {
             ElevatedButton(
               onPressed: () {
                 //testing reviewing
-                Navigator.pushNamed(context, '/feedback', arguments: cart.keys.first);
+                // Navigator.pushNamed(context, '/feedback', arguments: cart.keys.first);
+                Navigator.pushNamed(context, '/connect', arguments: availFood[cart.keys.first]!.gcodePath);
               },
               child: const Padding(
                 padding: EdgeInsets.all(20.0),

@@ -43,9 +43,9 @@ class ConnectToPrinterScreen extends StatelessWidget {
         return;
       }
       // // var url = Uri.parse('$octoPrintUrl/api/files/local');
-      final url = Uri.parse('http://octo.local/api/files/local'); // Update with the correct API endpoint
+      // final url = Uri.parse('http://octo.local/api/files/local'); // Update with the correct API endpoint
       print(9876);
-      final request = http.MultipartRequest('POST', Uri.parse('http://octo.local/api/files/local'));
+      final request = http.MultipartRequest('POST', Uri.parse('http://192.168.79.45/api/files/local'));
       request.headers['X-Api-Key'] = 'B6FA89611CF149A3B08E4E7A6E6DDC72';
       
       // Add the file to the request
@@ -160,9 +160,10 @@ class ConnectToPrinterScreen extends StatelessWidget {
           onPressed: () {
             // getAllFiles();
             // downloadGCodeFile();
-            for (var fid in cart.keys){
-              fetcher(fid);
-            }
+            // for (var fid in cart.keys){
+            //   fetcher(fid);
+            // }
+            Navigator.pushNamed(context, '/opwebview');
           },
           child: Text(
             'Connect to OctoPrint',

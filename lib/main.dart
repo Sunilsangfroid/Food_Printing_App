@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:itrm_screen/Pages/connectprinter.dart';
+import 'package:itrm_screen/Pages/octoprintView.dart';
 import 'Pages/feedback _page.dart';
 import 'Pages/review.dart';
 import 'Pages/notification.dart';
@@ -87,6 +89,8 @@ final myApp = MaterialApp(
     '/search': (context) => const SearchPage(),
     '/category': (context) => const CategoryPage(),
     '/register': (context) => const RegistrationPage(),
+    '/connect':(context) =>const ConnectToPrinterScreen(),
+    '/opwebview': (context) => OctoWebView(),
   },
 );
 
