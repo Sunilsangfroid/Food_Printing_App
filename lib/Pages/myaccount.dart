@@ -1,6 +1,7 @@
 // ignore_for_file: unnecessary_import, unused_import, library_private_types_in_public_api, prefer_typing_uninitialized_variables, avoid_print, use_build_context_synchronously
 
 import 'dart:io';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -31,6 +32,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
   User? user;
   String selectedCountryCode = '+91';
   bool editMode = false;
+  VoidCallback func = () {};
   // File? selectedImage; // Define a File variable to hold the selected image
 
   @override
@@ -52,6 +54,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
 
   @override
   Widget build(BuildContext context) {
+    func = ModalRoute.of(context)!.settings.arguments as VoidCallback;
     return Scaffold(
       appBar: AppBar(
         title: const Text('My Account'),
@@ -415,6 +418,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
         ),
       ),
     );
+    func();
     setState(() {
       editMode = false;
     });

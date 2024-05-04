@@ -6,10 +6,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:itrm_screen/globals.dart';
 
-class DrawerWidget extends StatelessWidget {
+class DrawerWidget extends StatefulWidget {
   VoidCallback func = () {};
 
   DrawerWidget(this.func, {super.key});
+
+  @override
+  State<DrawerWidget> createState() => _DrawerWidgetState();
+}
+
+class _DrawerWidgetState extends State<DrawerWidget> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -23,7 +29,7 @@ class DrawerWidget extends StatelessWidget {
                 color: Colors.blue,
               ),
               accountName: Text(
-                (userProfile!=null)?userProfile!.name:"",
+                (userProfile != null) ? userProfile!.name : "",
                 style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,
@@ -34,8 +40,11 @@ class DrawerWidget extends StatelessWidget {
                 style: const TextStyle(fontSize: 16, color: Colors.white),
               ),
               currentAccountPicture: CircleAvatar(
-                  foregroundImage: (selectedImage!=null)?FileImage(selectedImage!):null,
-                  backgroundImage: const AssetImage("assets/images/avatar.png")),
+                  foregroundImage: (selectedImage != null)
+                      ? FileImage(selectedImage!)
+                      : null,
+                  backgroundImage:
+                      const AssetImage("assets/images/avatar.png")),
               margin: const EdgeInsets.only(bottom: 1),
             ),
           ),
@@ -57,7 +66,9 @@ class DrawerWidget extends StatelessWidget {
           ),
           ListTile(
             onTap: () {
-              Navigator.pushNamed(context, "/profile");
+              Navigator.pushNamed(context, "/profile", arguments: () {
+                setState(() {});
+              });
             },
             leading: const Icon(
               CupertinoIcons.person,
@@ -109,7 +120,7 @@ class DrawerWidget extends StatelessWidget {
           ListTile(
             onTap: () async {
               await Navigator.pushNamed(context, "/favourite");
-              func();
+              widget.func();
             },
             leading: const Icon(
               CupertinoIcons.heart_fill,
@@ -173,38 +184,39 @@ class DrawerWidget extends StatelessWidget {
           //   ),
           // ),
           ListTile(
-            onTap:
-              () async {
-                try {
-                  switch (FirebaseAuth.instance.currentUser?.providerData[0].providerId) {
-                    case 'password':
-                      await FirebaseAuth.instance.signOut();
-                      localDb.collection('data').doc('user').delete();
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Signed out successfully.'),
-                        ),
-                      );
-                      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
-                      break;
-                    case 'google.com':
-                      await FirebaseAuth.instance.signOut();
-                      await GoogleSignIn().signOut();
-                      print(FirebaseAuth.instance.currentUser);
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(
-                          content: Text('Signed out successfully.'),
-                        ),
-                      );
-                      Navigator.pushNamedAndRemoveUntil(context, "/", (route) => false);
-                      break;
-                  }
-                }on FirebaseAuthException catch (e) {
-                  print(e);
-                }catch (e){
-                  print(e);
+            onTap: () async {
+              try {
+                switch (FirebaseAuth
+                    .instance.currentUser?.providerData[0].providerId) {
+                  case 'password':
+                    await FirebaseAuth.instance.signOut();
+                    localDb.collection('data').doc('user').delete();
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Signed out successfully.'),
+                      ),
+                    );
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/", (route) => false);
+                    break;
+                  case 'google.com':
+                    await FirebaseAuth.instance.signOut();
+                    await GoogleSignIn().signOut();
+                    print(FirebaseAuth.instance.currentUser);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text('Signed out successfully.'),
+                      ),
+                    );
+                    Navigator.pushNamedAndRemoveUntil(
+                        context, "/", (route) => false);
+                    break;
                 }
-
+              } on FirebaseAuthException catch (e) {
+                print(e);
+              } catch (e) {
+                print(e);
+              }
             },
             leading: const Icon(
               Icons.exit_to_app,
