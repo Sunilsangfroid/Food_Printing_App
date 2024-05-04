@@ -20,6 +20,7 @@ class _MyWidgetState extends State<OctoWebView> {
     // return WebViewWidget(controller: webViewController);
     int fid = ModalRoute.of(context)!.settings.arguments as int;
     return Scaffold(
+      resizeToAvoidBottomInset: false      ,
       floatingActionButton: Padding(
         padding: const EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
         child: BackButton(
