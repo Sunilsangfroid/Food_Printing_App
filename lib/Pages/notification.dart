@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:itrm_screen/globals.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({super.key});
@@ -39,11 +40,13 @@ class NotificationScreen extends StatelessWidget {
             const SizedBox(height: 20), // Added space below the centered text
             Expanded(
               child: ListView.builder(
-                itemCount: 10, // Example: Assuming there are 10 notifications
+                itemCount: notifications.length, // Example: Assuming there are 10 notifications
                 itemBuilder: (context, index) {
+                  List<Notif> nots=notifications.toList();
                   return ListTile(
-                    title: Text('Notification ${index + 1}'),
-                    subtitle: const Text('This is a sample notification.'),
+                    // title: Text('Notification ${index + 1}'),
+                    title: Text(nots[index].text),
+                    subtitle: Text(getTime(nots[index].time),style: TextStyle(color: Colors.grey),),
                     leading: const CircleAvatar(
                       child: Icon(Icons.notifications),
                     ),

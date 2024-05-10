@@ -1,4 +1,6 @@
 // ignore_for_file: avoid_init_to_null, avoid_print, unnecessary_cast
+import 'dart:collection';
+
 import 'package:flutter/foundation.dart' show kIsWeb;
 
 import 'package:path_provider/path_provider.dart';
@@ -19,6 +21,46 @@ Profile? userProfile;
 String docPath = "";
 File? selectedImage;
 FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+class Notif{
+  DateTime time;
+  String text;
+  Notif({required this.time,required this.text});
+}
+Queue<Notif> notifications=Queue();
+int maxNotifLen=12;
+void pushNotification(DateTime time, String text) async{
+  notifications.addFirst(Notif(time: time, text: text));
+  if (notifications.length>maxNotifLen){
+    notifications.removeLast();
+  }
+  List<Map<int,String>> data=[];
+  for (var i in notifications){
+    data.add({i.time.millisecondsSinceEpoch:i.text});
+  }
+  await localDb.collection('notifs').doc('notifs').set({'data':data});
+}
+getNotifications() async{
+  await localDb.collection('notifs').doc('notifs').get().then((map) {
+    List<Map<int,String>> data=map?['data'];
+    for (Map<int,String> i in data){
+      notifications.addLast(Notif(time: DateTime.fromMillisecondsSinceEpoch(i.keys.first), text: i.values.first));
+    }
+  });
+}
+getTime(time) {
+  if (!DateTime.now().difference(time).isNegative) {
+    if (DateTime.now().difference(time).inMinutes < 1) {
+      return "a few seconds ago";
+    } else if (DateTime.now().difference(time).inMinutes < 60) {
+      return "${DateTime.now().difference(time).inMinutes} minutes ago";
+    } else if (DateTime.now().difference(time).inMinutes < 1440) {
+      return "${DateTime.now().difference(time).inHours} hours ago";
+    } else if (DateTime.now().difference(time).inMinutes > 1440) {
+      return "${DateTime.now().difference(time).inDays} days ago";
+    }
+  }
+}
 
 class Profile {
   String name;
@@ -122,6 +164,7 @@ Future<void> fetchUser() async {
     print("data stored bfore");
     userProfile = Profile.fromFirestore(data);
     selectedImage = File('$docPath/pfp.jpg');
+    getNotifications();
   }
 }
 

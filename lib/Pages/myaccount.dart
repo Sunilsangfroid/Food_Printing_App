@@ -418,6 +418,7 @@ class _MyAccountPageState extends State<MyAccountPage> {
         ),
       ),
     );
+    pushNotification(DateTime.now(), 'Profile Updated');
     func();
     setState(() {
       editMode = false;
