@@ -40,14 +40,7 @@ Ensure you have the following software installed on your machine:
    flutter pub get
    ```
 
-### Running the App
-
-Now you're ready to run the app:
-
-```
-flutter run
-```
-
-This command will build and launch the FoodCraft application on your connected device or emulator.
-
-
+4. **Run the app**:
+   ```
+   flutter run
+   ```
