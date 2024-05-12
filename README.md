@@ -1,6 +1,6 @@
 # FoodCraft - 3D Food Printing Application
 
-FoodCraft is an innovative application developed by students from IIT Mandi. It allows users to print food items using a 3D printer and is designed to integrate with upcoming 3D food printers that are currently in development. The printed food is edible and can be produced in real-time.
+FoodCraft is an innovative application developed by students from IIT Mandi. It allows users to print food items using a 3D printer and is designed to integrate with upcoming 3D food printers that are currently in development. The printed food will be edible and can be produced in real-time.
 
 ## Technologies Used
 
